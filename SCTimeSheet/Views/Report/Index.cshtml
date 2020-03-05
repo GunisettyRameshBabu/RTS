@@ -1,0 +1,740 @@
+﻿
+@model  SCTimeSheet.Models.ReportUIModel
+@{
+    ViewBag.Title = "Report";
+}
+@using (Html.BeginForm())
+{
+    <style>
+        .k-grid td {
+            border-width: 1px;
+        }
+
+        div.dt-buttons {
+            float: right;
+        }
+
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 8px;
+            /*width: 100px;*/
+        }
+
+        tr:nth-child(even) {
+            background-color: #f1f1f1;
+        }
+    </style>
+
+    <div class="card-body" style="background-color: #fff;border-radius:10px;">
+        @*<h5 style="font-size: 26px; color: #646464;">Reports</h5>*@
+
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
+                    @Html.LabelFor(model => model.ReportID, new { style = "color: #646464;" })
+                    <span class="req">*</span>
+                    @Html.DropDownListFor(model => model.ReportID, new SelectList(ViewBag.Reportlist, "ReportID", "ReportName"), "--Select Any--", new { @class = "form-control select2", style = "width: 100%; background-color: #f6f6f6;border-radius: 9px;" })
+                    @*@Html.DropDownListFor(model => model.RoleId, new SelectList(Model.Roles, "RoleId", "RoleName"), new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Html.ValidationMessageFor(model => model.ReportID, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.StartDate, new { style = "color: #646464;" })
+
+                    @(Html.Kendo().DatePickerFor(x => x.StartDate)
+                                                                                                                                                             .Name("StartDate")
+                                                                                                                                                             .Value(DateTime.Now)
+                                                                                                                                                             .Format("dd MMM yyyy")
+                                                                                                                                                              .Events(e =>
+                                                                                                          {
+                                                                                                              e.Change("StartDateChange");
+                                                                                                          })
+                                                                                                                                                             .HtmlAttributes(new { style = "width: 100%", title = "Select Start Date" })
+                    )
+                    @*@Html.DropDownListFor(model => model.RoleId, new SelectList(Model.Roles, "RoleId", "RoleName"), new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.EndDate, new { style = "color: #646464;" })
+
+                    @(Html.Kendo().DatePickerFor(x => x.EndDate)
+                                                                                                                                                             .Name("EndDate")
+                                                                                                                                                             .Value(DateTime.Now)
+                                                                                                                                                             .Format("dd MMM yyyy")
+                                                                                                                                                             .Max("31 Dec 2999")
+                                                                                                                                                              .Events(e =>
+                                                                                                                  {
+                                                                                                                      e.Change("EndDateChange").Open("EndDateOpen");
+                                                                                                                  })
+                                                                                                                                            .HtmlAttributes(new { style = "width: 100%", title = "Select End Date" })
+                    )
+                    @*@Html.DropDownListFor(model => model.RoleId, new SelectList(Model.Roles, "RoleId", "RoleName"), new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+
+
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div>
+                        <button type="button" class="btn btn-success" id="Generate" value="Generate" style="background-color:rgb(0,108,83); border-color: none;margin-top:25px;">Generate</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body" id="print" style="background-color: #fff;border-radius:10px;margin-top:10px;">
+        @*<h3 style="padding-left:20px;">  Report Section</h3>*@
+        <div class="row">
+            <div class="col-10" style="float:left">
+                <h3>Report Section</h3>
+            </div>
+            <div class="col-1" style="float:right">
+                <button class="btn" style="float:right;" type="button" id="export_b">Export to Excel</button>
+            </div>
+            <div class="col-1" style="float:right">
+                <button class="btn" style="float:right;" type="button" id="print_b">Print Report</button>
+            </div>
+        </div>
+
+        <div>
+            @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.ReportShowListHC>()
+                                                                                                                                                                                                                                              .Name("timesheetReportHC")
+                                                                                                                                                                                                                                              .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                                                                                                                                                                                                              .DataSource(dataSource => dataSource
+                                                                                                                                                                                                                                                  .Ajax()
+
+                                                                                                                                                                                                                                                  .Batch(true)
+                                                                                                                                                                                                                                                  .PageSize(50)
+                                                                                                                                                                                                                                                  .ServerOperation(false)
+
+                                                                                                                                                                                                                                                  .Read(read => read
+                                                                                                                                                                                                                                                      .Action("Generate", "Report")
+                                                                                                                                                                                                                                                      .Data("GetData")
+                                                                                                                                                                                                                                                  )
+
+                                                                                                                                                                                                                                              )
+                                                                                                                                                                                                                                              .Events(x => x.DataBound("onDB").ExcelExport("onExport"))
+                                                                                                                                                                                                                                              .Columns(columns =>
+                                                                                                                                                                                                                                              {
+                                                                                                                                                                                                                                                  columns.Bound(product => product.Citizenship).Title("Citizenship");
+                                                                                                                                                                                                                                                  columns.Group(group => group
+                                                                                                                                                                                                                                              .Title("Researcher")
+                                                                                                                                                                                                                                              .Columns(info =>
+                                                                                                                                                                                                                                              {
+                                                                                                                                                                                                                                                  info.Group(grp =>
+                                                                                                                                                                                                                                          grp.Title("Degree")
+                                                                                                                                                                                                                                          .Columns(col =>
+                                                                                                                                                                                                                                          {
+                                                                                                                                                                                                                                              col.Bound(x => x.DegreePhd).Title("Phd");
+                                                                                                                                                                                                                                              col.Bound(x => x.DegreeMaster).Title("Master");
+                                                                                                                                                                                                                                              col.Bound(x => x.DegreeBachelor).Title("Bachelor");
+                                                                                                                                                                                                                                          }));
+
+                                                                                                                                                                                                                                                  info.Bound(x => x.NonDegree).Title("Non Degree");
+
+                                                                                                                                                                                                                                              })
+                                                                                                                                                                                                                                          );
+                                                                                                                                                                                                                                                  columns.Bound(product => product.Technician).Title("Technician");
+                                                                                                                                                                                                                                                  columns.Bound(product => product.OtherStaff).Title("Other Supporting Staff");
+                                                                                                                                                                                                                                                  columns.Bound(product => product.Total).Title("Total R&D Manpower");
+
+
+                                                                                                                                                                                                                                              })
+                                                                                                                                                                                                                                                      //.ToolBar(toolbar => { toolbar.Excel().Text("Export To Excel");
+                                                                                                                                                                                                                                                      //    toolbar.Pdf().Text("Print to Pdf");
+                                                                                                                                                                                                                                                      //})
+                                                                                                                                                                                                                                                      .AutoBind(false)
+
+                    //.Pageable()
+                    //.Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+
+            )
+
+            @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.ReportShowListHC>()
+                                                                                                                                                                                                                                             .Name("timesheetReportHCFTE")
+                                                                                                                                                                                                                                             .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                                                                                                                                                                                                             .DataSource(dataSource => dataSource
+                                                                                                                                                                                                                                                 .Ajax()
+
+                                                                                                                                                                                                                                                 .Batch(true)
+                                                                                                                                                                                                                                                 .PageSize(50)
+                                                                                                                                                                                                                                                 .ServerOperation(false)
+
+                                                                                                                                                                                                                                                 .Read(read => read
+                                                                                                                                                                                                                                                     .Action("Generate", "Report")
+                                                                                                                                                                                                                                                     .Data("GetData")
+                                                                                                                                                                                                                                                 )
+
+                                                                                                                                                                                                                                             )
+                                                                                                                                                                                                                                             .Events(x => x.DataBound("onDB").ExcelExport("onExport"))
+                                                                                                                                                                                                                                             .Columns(columns =>
+                                                                                                                                                                                                                                             {
+                                                                                                                                                                                                                                                 columns.Bound(product => product.Citizenship).Title("Citizenship");
+                                                                                                                                                                                                                                                 columns.Group(group => group
+                                                                                                                                                                                                                                             .Title("Researcher")
+                                                                                                                                                                                                                                             .Columns(info =>
+                                                                                                                                                                                                                                             {
+                                                                                                                                                                                                                                                 info.Group(grp =>
+                                                                                                                                                                                                                                         grp.Title("Degree")
+                                                                                                                                                                                                                                         .Columns(col =>
+                                                                                                                                                                                                                                         {
+                                                                                                                                                                                                                                             col.Bound(x => x.DegreePhd).Title("Phd");
+                                                                                                                                                                                                                                             col.Bound(x => x.DegreeMaster).Title("Master");
+                                                                                                                                                                                                                                             col.Bound(x => x.DegreeBachelor).Title("Bachelor");
+                                                                                                                                                                                                                                         }));
+
+                                                                                                                                                                                                                                                 info.Bound(x => x.NonDegree).Title("Degree");
+
+                                                                                                                                                                                                                                             })
+                                                                                                                                                                                                                                         );
+                                                                                                                                                                                                                                                 columns.Bound(product => product.Technician).Title("Technician");
+                                                                                                                                                                                                                                                 columns.Bound(product => product.OtherStaff).Title("Other Supporting Staff");
+                                                                                                                                                                                                                                                 columns.Bound(product => product.Total).Title("Total R&D Manpower FTE");
+
+
+                                                                                                                                                                                                                                             })
+                                                                                                                                                                                                                                                     //.ToolBar(toolbar => { toolbar.Excel().Text("Export To Excel");
+                                                                                                                                                                                                                                                     //    toolbar.Pdf().Text("Print to Pdf");
+                                                                                                                                                                                                                                                     //})
+                                                                                                                                                                                                                                                     .AutoBind(false)
+
+                    //.Pageable()
+                    //.Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+
+            )
+
+            @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.ReportShowListAgeGroup>()
+                                                                                                                                                                                                                                             .Name("timesheetReportAgeGroup")
+                                                                                                                                                                                                                                             .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                                                                                                                                                                                                             .DataSource(dataSource => dataSource
+                                                                                                                                                                                                                                                 .Ajax()
+
+                                                                                                                                                                                                                                                 .Batch(true)
+                                                                                                                                                                                                                                                 .PageSize(50)
+                                                                                                                                                                                                                                                 .ServerOperation(false)
+
+                                                                                                                                                                                                                                                 .Read(read => read
+                                                                                                                                                                                                                                                     .Action("Generate", "Report")
+                                                                                                                                                                                                                                                     .Data("GetData")
+                                                                                                                                                                                                                                                 )
+
+                                                                                                                                                                                                                                             )
+                                                                                                                                                                                                                                             .Events(x => x.DataBound("onDB").ExcelExport("onExport"))
+                                                                                                                                                                                                                                             .Columns(columns =>
+                                                                                                                                                                                                                                             {
+                                                                                                                                                                                                                                                 columns.Bound(product => product.Citizenship).Title("Citizenship");
+                                                                                                                                                                                                                                                 columns.Group(group => group
+                                                                                                                                                                                                                                             .Title("Researcher")
+                                                                                                                                                                                                                                             .Columns(info =>
+                                                                                                                                                                                                                                             {
+                                                                                                                                                                                                                                                 info.Group(grp =>
+                                                                                                                                                                                                                                         grp.Title("Degree")
+                                                                                                                                                                                                                                         .Columns(col =>
+                                                                                                                                                                                                                                         {
+                                                                                                                                                                                                                                             col.Bound(x => x.DegreePhd).Title("Phd");
+                                                                                                                                                                                                                                             col.Bound(x => x.DegreeMaster).Title("Master");
+                                                                                                                                                                                                                                             col.Bound(x => x.DegreeBachelor).Title("Bachelor");
+                                                                                                                                                                                                                                         }));
+
+                                                                                                                                                                                                                                                 info.Bound(x => x.NonDegree).Title("Non Degree");
+
+                                                                                                                                                                                                                                             })
+                                                                                                                                                                                                                                         );
+                                                                                                                                                                                                                                                 columns.Bound(product => product.Technician).Title("Technician");
+                                                                                                                                                                                                                                                 columns.Bound(product => product.OtherStaff).Title("Other Supporting Staff");
+                                                                                                                                                                                                                                                 columns.Bound(product => product.Total).Title("Total R&D Manpower");
+
+
+                                                                                                                                                                                                                                             })
+                                                                                                                                                                                                                                                     //.ToolBar(toolbar => { toolbar.Excel().Text("Export To Excel");
+                                                                                                                                                                                                                                                     //    toolbar.Pdf().Text("Print to Pdf");
+                                                                                                                                                                                                                                                     //})
+                                                                                                                                                                                                                                                     .AutoBind(false)
+
+                    //.Pageable()
+                    //.Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+
+            )
+
+            @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.ReportShowListAgeGroupByGender>()
+                                                                                                                                                                                                                                           .Name("timesheetReportAgeGroupByGender")
+                                                                                                                                                                                                                                           .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                                                                                                                                                                                                           .DataSource(dataSource => dataSource
+                                                                                                                                                                                                                                               .Ajax()
+
+                                                                                                                                                                                                                                               .Batch(true)
+                                                                                                                                                                                                                                               .PageSize(50)
+                                                                                                                                                                                                                                               .ServerOperation(false)
+
+                                                                                                                                                                                                                                               .Read(read => read
+                                                                                                                                                                                                                                                   .Action("Generate", "Report")
+                                                                                                                                                                                                                                                   .Data("GetData")
+                                                                                                                                                                                                                                               )
+
+                                                                                                                                                                                                                                           )
+                                                                                                                                                                                                                                           .Events(x => x.DataBound("onDB").ExcelExport("onExport"))
+                                                                                                                                                                                                                                           .Columns(columns =>
+                                                                                                                                                                                                                                           {
+                                                                                                                                                                                                                                               columns.Bound(product => product.Citizenship).Title("Citizenship");
+                                                                                                                                                                                                                                               columns.Group(group => group
+                                                                                                                                                                                                                                           .Title("Researcher")
+                                                                                                                                                                                                                                           .Columns(info =>
+                                                                                                                                                                                                                                           {
+                                                                                                                                                                                                                                               info.Group(grp =>
+                                                                                                                                                                                                                                       grp.Title("Degree")
+                                                                                                                                                                                                                                       .Columns(col =>
+                                                                                                                                                                                                                                       {
+                                                                                                                                                                                                                                           col.Group(g => g
+                                                                                                                                                                                                                                          .Title("Phd")
+                                                                                                                                                                                                                                          .Columns(i =>
+                                                                                                                                                                                                                                          {
+                                                                                                                                                                                                                                              i.Bound(x => x.DegreePhdMale).Title("Male");
+                                                                                                                                                                                                                                              i.Bound(x => x.DegreePhdFemale).Title("Female");
+                                                                                                                                                                                                                                          }));
+                                                                                                                                                                                                                                           col.Group(g => g
+                                                                                                                                                                                                                                          .Title("Master")
+                                                                                                                                                                                                                                          .Columns(i =>
+                                                                                                                                                                                                                                          {
+                                                                                                                                                                                                                                              i.Bound(x => x.DegreeMasterMale).Title("Male");
+                                                                                                                                                                                                                                              i.Bound(x => x.DegreeMasterFemale).Title("Female");
+                                                                                                                                                                                                                                          }));
+                                                                                                                                                                                                                                           col.Group(g => g
+                                                                                                                                                                                                                                         .Title("Bachelor")
+                                                                                                                                                                                                                                         .Columns(i =>
+                                                                                                                                                                                                                                         {
+                                                                                                                                                                                                                                             i.Bound(x => x.DegreeBachelorMale).Title("Male");
+                                                                                                                                                                                                                                             i.Bound(x => x.DegreeBachelorFemale).Title("Female");
+                                                                                                                                                                                                                                         }));
+
+
+                                                                                                                                                                                                                                       }));
+
+                                                                                                                                                                                                                                               info.Group(g => g
+                                                                                                                                                                                                                                               .Title("Non Degree")
+                                                                                                                                                                                                                                               .Columns(i =>
+                                                                                                                                                                                                                                               {
+                                                                                                                                                                                                                                                   i.Bound(x => x.NonDegreeMale).Title("Male");
+                                                                                                                                                                                                                                                   i.Bound(x => x.NonDegreeFemale).Title("Female");
+                                                                                                                                                                                                                                               }));
+
+                                                                                                                                                                                                                                           })
+                                                                                                                                                                                                                                       );
+                                                                                                                                                                                                                                               columns.Group(g => g
+                                                                                                                                                                                                                                               .Title("Technician")
+                                                                                                                                                                                                                                               .Columns(i =>
+                                                                                                                                                                                                                                               {
+                                                                                                                                                                                                                                                   i.Bound(x => x.TechnicianMale).Title("Male");
+                                                                                                                                                                                                                                                   i.Bound(x => x.TechnicianFemale).Title("Female");
+                                                                                                                                                                                                                                               }));
+                                                                                                                                                                                                                                               columns.Group(g => g
+                                                                                                                                                                                                                                               .Title("Other Supporting Staff")
+                                                                                                                                                                                                                                               .Columns(i =>
+                                                                                                                                                                                                                                               {
+                                                                                                                                                                                                                                                   i.Bound(x => x.OtherStaffMale).Title("Male");
+                                                                                                                                                                                                                                                   i.Bound(x => x.OtherStaffFemale).Title("Female");
+                                                                                                                                                                                                                                               }));
+                                                                                                                                                                                                                                               columns.Group(g => g
+                                                                                                                                                                                                                                                .Title("Total R&D Manpower")
+                                                                                                                                                                                                                                                .Columns(i =>
+                                                                                                                                                                                                                                                {
+                                                                                                                                                                                                                                                    i.Bound(x => x.TotalMale).Title("Male");
+                                                                                                                                                                                                                                                    i.Bound(x => x.TotalFemale).Title("Female");
+                                                                                                                                                                                                                                                }));
+
+                                                                                                                                                                                                                                           })
+                                                                                                                                                                                                                                               //.ToolBar(toolbar => { toolbar.Excel().Text("Export To Excel");
+                                                                                                                                                                                                                                               //    toolbar.Pdf().Text("Print to Pdf");
+                                                                                                                                                                                                                                               //})
+                                                                                                                                                                                                                                               .AutoBind(false)
+
+
+            )
+
+            @*<table class="customers" id="timesheetReportInvolvmentpercentage">
+
+                    <thead>
+                        <tr>
+                            <th style="width: 5px;">Sl.No</th>
+                            <th>Employee Names</th>
+                            <th>P 1</th>
+                            <th>P 1 Percentage</th>
+                            <th>P 2</th>
+                            <th>P 2 Percentage</th>
+                            <th>P 3</th>
+                            <th>P 3 Percentage</th>
+                            <th>P 4</th>
+                            <th>P 4 Percentage</th>
+                            <th>P 5</th>
+                            <th>P 5 Percentage</th>
+                            <th>P 1</th>
+                            <th>P 2</th>
+                            <th>P 3</th>
+                            <th>P 4</th>
+                            <th>P 5</th>
+                        </tr>
+                    </thead>
+
+                </table>*@
+
+            @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.ReportInvolvmentPercentgeListDemo>()
+                                                                                                                    .Name("timesheetReportInvolvmentpercentage")
+                                                                                                                     .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                                                                                     .DataSource(dataSource => dataSource
+                                                                                                                         .Ajax()
+
+                                                                                                                         .Batch(true)
+                                                                                                                         .PageSize(10)
+                                                                                                                         .ServerOperation(false)
+
+                                                                                                                         .Read(read => read
+                                                                                                                             .Action("Generate", "Report")
+                                                                                                                             .Data("GetData")
+                                                                                                                         )
+
+                                                                                                                     )
+                                                                                                                     .Excel(e => e.AllPages(true))
+                                                                                                                     .Pageable()
+                                                                                                                     .Events(x => x.DataBound("onDB").ExcelExport("onExport"))
+                                                                                                                     .Columns(columns =>
+                                                                                                                     {
+                                                                                                                         columns.Bound(product => product.ItemNo).Title("Sl.No");
+                                                                                                                         columns.Bound(product => product.EmployeeName).Title("Employee Names");
+                                                                                                                         columns.Template(product => "").Title("P 1").ClientTemplate("#= buildProjectRow(data,1) #");
+                                                                                                                         columns.Template(product => "").Title("P 2").ClientTemplate("#= buildProjectRow(data,2) #");
+                                                                                                                         columns.Template(product => "").Title("P 3").ClientTemplate("#= buildProjectRow(data,3) #");
+                                                                                                                         columns.Template(product => "").Title("P 4").ClientTemplate("#= buildProjectRow(data,4) #");
+                                                                                                                         columns.Template(product => "").Title("P 5").ClientTemplate("#= buildProjectRow(data,5) #");
+                                                                                                                         columns.Bound(product => product.Project1).Title("P 1").Hidden(true);
+                                                                                                                         columns.Bound(product => product.Project1Percent).Title("P 1 Percentage").Hidden(true);
+                                                                                                                         columns.Bound(product => product.Project2).Title("P 2").Hidden(true);
+                                                                                                                         columns.Bound(product => product.Project2Percent).Title("P 2 Percentage").Hidden(true);
+                                                                                                                         columns.Bound(product => product.Project3).Title("P 3").Hidden(true);
+                                                                                                                         columns.Bound(product => product.Project3Percent).Title("P 3 Percentage").Hidden(true);
+                                                                                                                         columns.Bound(product => product.Project4).Title("P 4").Hidden(true);
+                                                                                                                         columns.Bound(product => product.Project4Percent).Title("P 4 Percentage").Hidden(true);
+                                                                                                                         columns.Bound(product => product.Project5).Title("P 5").Hidden(true);
+                                                                                                                         columns.Bound(product => product.Project5Percent).Title("P 5 Percentage").Hidden(true);
+                                                                                                                     })
+                                                                                                                             .AutoBind(false)
+
+
+            )
+
+
+            @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.ReportShowListFTE>()
+                                                                                                                                                                                                                                                               .Name("timesheetReportFTE")
+                                                                                                                                                                                                                                                               .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                                                                                                                                                                                                                               .DataSource(dataSource => dataSource
+                                                                                                                                                                                                                                                                   .Ajax()
+
+                                                                                                                                                                                                                                                                   .Batch(true)
+                                                                                                                                                                                                                                                                   .PageSize(50)
+                                                                                                                                                                                                                                                                   .ServerOperation(false)
+
+                                                                                                                                                                                                                                                                   .Read(read => read
+                                                                                                                                                                                                                                                                       .Action("Generate", "Report")
+                                                                                                                                                                                                                                                                       .Data("GetData")
+                                                                                                                                                                                                                                                                   )
+
+                                                                                                                                                                                                                                                               )
+                                                                                                                                                                                                                                                               .Events(x => x.DataBound("onDB").ExcelExport("onExport"))
+                                                                                                                                                                                                                                                               .Columns(columns =>
+                                                                                                                                                                                                                                                               {
+                                                                                                                                                                                                                                                                   columns.Bound(product => product.AreaOfResearch).Title("Areas of Research");
+                                                                                                                                                                                                                                                                   columns.Group(group => group
+                                                                                                                                                                                                                                                       .Title("Researchers with")
+                                                                                                                                                                                                                                                       .Columns(info =>
+                                                                                                                                                                                                                                                       {
+                                                                                                                                                                                                                                                           info.Group(grp =>
+                                                                                                                                                                                                                                               grp.Title("Degree")
+                                                                                                                                                                                                                                               .Columns(col =>
+                                                                                                                                                                                                                                               {
+                                                                                                                                                                                                                                                   col.Bound(x => x.phddegree).Title("Phd");
+                                                                                                                                                                                                                                                   col.Bound(x => x.Masterdegree).Title("Master");
+                                                                                                                                                                                                                                                   col.Bound(x => x.bachelorDegree).Title("Bachelor");
+                                                                                                                                                                                                                                               }));
+
+                                                                                                                                                                                                                                                           info.Bound(x => x.nondegree).Title("Non Degree");
+
+                                                                                                                                                                                                                                                       })
+                                                                                                                                                                                                                                                       );
+
+                                                                                                                                                                                                                                                                   columns.Bound(product => product.Total).Title("Total HeadCount");
+                                                                                                                                                                                                                                                                   columns.Group(group => group
+                                                                                                                                                                                                                                                       .Title("Researchers with")
+                                                                                                                                                                                                                                                       .Columns(info =>
+                                                                                                                                                                                                                                                       {
+                                                                                                                                                                                                                                                           info.Group(grp =>
+                                                                                                                                                                                                                                               grp.Title("Degree")
+                                                                                                                                                                                                                                               .Columns(col =>
+                                                                                                                                                                                                                                               {
+                                                                                                                                                                                                                                                   col.Bound(x => x.phddegreeFTE).Title("Phd");
+                                                                                                                                                                                                                                                   col.Bound(x => x.bachelorDegreeFTE).Title("Master");
+                                                                                                                                                                                                                                                   col.Bound(x => x.bachelorDegreeFTE).Title("Bachelor");
+                                                                                                                                                                                                                                               }));
+
+                                                                                                                                                                                                                                                           info.Bound(x => x.nondegreeFTE).Title("Non Degree");
+
+                                                                                                                                                                                                                                                       })
+                                                                                                                                                                                                                                                       );
+
+                                                                                                                                                                                                                                                                   columns.Bound(product => product.TotalFTE).Title("Total FTE");
+
+                                                                                                                                                                                                                                                               })
+                                                                                                                                                                                                                                                                       //.ToolBar(toolbar => { toolbar.Excel().Text("Export To Excel");
+                                                                                                                                                                                                                                                                       //    toolbar.Pdf().Text("Print to Pdf");
+                                                                                                                                                                                                                                                                       //})
+                                                                                                                                                                                                                                                                       .AutoBind(false)
+
+                    //.Pageable()
+                    //.Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+
+            )
+
+        </div>
+    </div>
+}
+
+<script>
+
+    function buildProjectRow(data, type) {
+        switch (type) {
+
+            case 1:
+                if (data.Project1 != null && data.Project1Percent != null)
+                    return "<div style='text-align:center'>" + data.Project1 + '<br/>' + '<b> ' + data.Project1Percent + '</b></div>';
+                return '';
+                break;
+            case 2:
+                if (data.Project2 != null && data.Project2Percent != null)
+                    return "<div style='text-align:center'>" + data.Project2 + '<br/>' + '<b> ' + data.Project2Percent + '</b></div>';
+                return '';
+                break;
+            case 3:
+                if (data.Project3 != null && data.Project3Percent != null)
+                    return "<div style='text-align:center'>" + data.Project3 + '<br/>' + '<b> ' + data.Project3Percent + '</b></div>';
+                return '';
+                break;
+            case 4:
+                if (data.Project4 != null && data.Project4Percent != null)
+                    return "<div style='text-align:center'>" + data.Project4 + '<br/>' + '<b> ' + data.Project4Percent + '</b></div>';
+                return '';
+                break;
+            case 5:
+                if (data.Project5 != null && data.Project5Percent != null)
+                    return "<div style='text-align:center'>" + data.Project5 + '<br/>' + '<b> ' + data.Project5Percent + '</b></div>';
+                return '';
+                break;
+        }
+
+    }
+    $('.select2').select2();
+
+
+    function EndDateChange(e) {
+
+        if ($("#StartDate").val() != '' && $("#EndDate").val() != '') {
+            var startDate = kendo.parseDate($("#StartDate").val());
+            var endDate = kendo.parseDate($("#EndDate").val());
+
+            if (endDate < startDate) {
+                var datepicker = $("#EndDate").data("kendoDatePicker");
+
+                datepicker.min(startDate);
+                datepicker.value(startDate);
+                alert("End date can not be less than start date , Automatically changed the end date as start date");
+            }
+        }
+
+    }
+
+    function StartDateChange(e) {
+        if ($("#StartDate").val() != '' && $("#EndDate").val() != '') {
+            var startDate = kendo.parseDate($("#StartDate").val());
+            var endDate = kendo.parseDate($("#EndDate").val());
+
+            if (endDate < startDate) {
+                var datepicker = $("#EndDate").data("kendoDatePicker");
+                datepicker.min(startDate);
+                datepicker.value(startDate);
+                alert("End date can not be less than start date , Automatically changed the end date as start date");
+            }
+        }
+
+    }
+
+    function EndDateOpen(e) {
+
+        if ($("#StartDate").val() != '') {
+            var datepicker = $("#EndDate").data("kendoDatePicker");
+
+            datepicker.min($("#StartDate").val());
+
+        }
+    }
+
+    $(document).ready(function () {
+        $('#report').css('color', 'black');
+        for (var i = 0; i < reports.length; i++) {
+            $(reports[i].name).hide();
+        }
+        $("#print").hide();
+        $('#export_b').on('click', function () {
+            exportToExcel();
+        });
+    });
+
+    function printData(projid) {
+
+        var is_chrome = Boolean(window.chrome);
+        console.log("is Chrome" + is_chrome);
+        var timeSpan = 2000;
+        var newWin = window.open("", "", "width:700,height:500");
+        switch (projid) {
+            case "11":
+                var divToPrint = document.getElementById("timesheetReportHC");
+                newWin.document.write("<html><head> <title>R&D Manpower Report By Headcount </title><style type='text/css'>table{border:1px solid #000000; font-family:arial,sans-serif; border-collapse:collapse; width:100px;} th {border:1px solid #000000;text-align:center;padding:8px;}  td { border:1px solid #000000; text-align:left; padding:8px;} </style></head><body>" + divToPrint.outerHTML + "</body></html>");
+                break;
+            case "12":
+                var divToPrint = document.getElementById("timesheetReportAgeGroup");
+                newWin.document.write("<html><head> <title>R&D Manpower Report By Age Group </title><style type='text/css'>table{border:1px solid #000000; font-family:arial,sans-serif; border-collapse:collapse; width:100px;} th {border:1px solid #000000;text-align:center;padding:8px;}  td { border:1px solid #000000; text-align:left; padding:8px;} </style></head><body>" + divToPrint.outerHTML + "</body></html>");
+                break;
+            case "13":
+                var divToPrint = document.getElementById("timesheetReportAgeGroupByGender");
+                newWin.document.write("<html><head> <title>R&D Manpower Report By Gender </title><style type='text/css'>table{border:1px solid #000000; font-family:arial,sans-serif; border-collapse:collapse; width:100px;} th {border:1px solid #000000;text-align:center;padding:8px;}  td { border:1px solid #000000; text-align:left; padding:8px;} </style></head><body>" + divToPrint.outerHTML + "</body></html>");
+                break;
+            case "16":
+                var divToPrint = document.getElementById("timesheetReportPG");
+                newWin.document.write("<html><head> <title> Full Time Post Graduation Research Student By Headcount Report </title><style type='text/css'>table{border:1px solid #000000; font-family:arial,sans-serif; border-collapse:collapse; width:100px;} th {border:1px solid #000000;text-align:center;padding:8px;}  td { border:1px solid #000000; text-align:left; padding:8px;} </style></head><body>" + divToPrint.outerHTML + "</body></html>");
+                break;
+            case "18":
+                var divToPrint = document.getElementById("timesheetReportFTE");
+                newWin.document.write("<html><head> <title> Full Time FTE Report </title><style type='text/css'>table{border:1px solid #000000; font-family:arial,sans-serif; border-collapse:collapse; width:100px;} th {border:1px solid #000000;text-align:center;padding:8px;}  td { border:1px solid #000000; text-align:left; padding:8px;} </style></head><body>" + divToPrint.outerHTML + "</body></html>");
+                break;
+            case "10016":
+                var inboxGrid = $('#timesheetReportInvolvmentpercentage').data("kendoGrid");
+                inboxGrid.dataSource.pageSize(100000);
+                inboxGrid.refresh();
+                $(".k-pager-wrap").hide();
+                var divToPrint = document.getElementById("timesheetReportInvolvmentpercentage");
+                newWin.document.write("<html><head> <title> Full Time Post Graduation Research Student By Headcount Report </title><style type='text/css'>table{border:1px solid #000000; font-family:arial,sans-serif; border-collapse:collapse; width:100px;} th {border:1px solid #000000;text-align:center;padding:8px;}  td { border:1px solid #000000; text-align:left; padding:8px;} </style></head><body>" + divToPrint.outerHTML + "</body></html>");
+                inboxGrid.dataSource.pageSize(10);
+                $(".k-pager-wrap").show();
+                inboxGrid.refresh();
+                break;
+            case "10017":
+                var divToPrint = document.getElementById("timesheetReportHCFTE");
+                newWin.document.write("<html><head> <title> R&D Manpower by FTE </title><style type='text/css'>table{border:1px solid #000000; font-family:arial,sans-serif; border-collapse:collapse; width:100px;} th {border:1px solid #000000;text-align:center;padding:8px;}  td { border:1px solid #000000; text-align:left; padding:8px;} </style></head><body>" + divToPrint.outerHTML + "</body></html>");
+                break;
+            default:
+        }
+        newWin.document.close();
+        newWin.focus();
+        if (is_chrome) {
+            newWin.onload = function () {
+                setTimeout(function () { // wait until all resources loaded
+                    newWin.print();  // change window to winPrint
+                    newWin.close();// change window to winPrint
+                }, timeSpan);
+            };
+        }
+        else {
+            winPrint.print();
+            winPrint.close();
+        }
+
+    }
+
+    $('#print_b').on('click', function () {
+        var projid = $("#ReportID").val();
+        printData(projid);
+    });
+    function exportToExcel() {
+        var projid = $("#ReportID").val();
+        var grid = $(reports.filter(x => x.id == projid)[0].name).data("kendoGrid");
+        reports.filter(x => x.id == projid)[0].excelCallBack(grid);
+        grid.saveAsExcel();
+    }
+    function onDB(e) {
+        var projid = $("#ReportID").val();
+        $(reports.filter(x => x.id == projid)[0].name + " tr").css("background-color", "white");
+    }
+    function onExport(e) {
+        var projid = $("#ReportID").val();
+        e.workbook.fileName = reports.filter(x => x.id == projid)[0].fileName;
+        reports.filter(x => x.id == projid)[0].callback(e);
+    }
+
+    let reports = [{ id: 11, name: "#timesheetReportHC", fileName: "R&D Manpower Report By Headcount.xlsx", callback: function (e) { } , excelCallBack: function (grid) { } },
+        { id: 12, name: "#timesheetReportAgeGroup", fileName: "R&D Manpower Report By Age Group.xlsx", callback: function (e) { }, excelCallBack: function (grid) { } },
+        { id: 13, name: "#timesheetReportAgeGroupByGender", fileName: "R&D Manpower Report By Gender.xlsx", callback: function (e) { }, excelCallBack: function (grid) { } },
+    {
+        id: 10016, name: "#timesheetReportInvolvmentpercentage", fileName: "Total Involvement Percentage Report.xlsx", callback: function (e) {
+            var showColumns = ["Project1", "Project2", "Project3", "Project4", "Project5", "Project1Percent", "Project2Percent", "Project3Percent", "Project4Percent", "Project5Percent"];
+            for (var i = 0; i < showColumns.length; i++) {
+                e.sender.hideColumn(showColumns[i]);
+            }
+        }, excelCallBack: function (grid) {
+            var showColumns = ["Project1", "Project2", "Project3", "Project4", "Project5", "Project1Percent", "Project2Percent", "Project3Percent", "Project4Percent", "Project5Percent"];
+            for (var i = 0; i < showColumns.length; i++) {
+                grid.showColumn(showColumns[i]);
+            }
+        }
+    },
+        { id: 16, name: "#timesheetReportPG", fileName: "PG.xlsx", callback: function (e) { }, excelCallBack: function (grid) { } },
+        { id: 18, name: "#timesheetReportFTE", fileName: "R&D Researcher's Headcount and FTE By Areas of Research.xlsx", callback: function (e) { }, excelCallBack: function (grid) { } },
+        { id: 10017, name: "#timesheetReportHCFTE", fileName: "R&D Manpower by FTE.xlsx", callback: function (e) { }, excelCallBack: function (grid) { } }
+    ]
+
+    function GetReport(_reportid) {
+        let hiddenReports = reports.filter(x => x.id != _reportid);
+        let showReports = reports.filter(x => x.id == _reportid);
+        for (var i = 0; i < hiddenReports.length; i++) {
+            $(hiddenReports[i].name).hide();
+        }
+
+        for (var i = 0; i < showReports.length; i++) {
+            $(showReports[i].name).show();
+            $(showReports[i].name).data().kendoGrid.dataSource.read();
+        }
+    }
+
+    function GetData() {
+        var reportid = $("#ReportID").val();
+        var startDate = $("#StartDate").val();
+        var endDate = $("#EndDate").val();
+        return { reportid: reportid, startDate: startDate, endDate: endDate };
+    }
+
+    $("#Generate").click(function () {
+
+        var reportid = $("#ReportID").val();
+        if (reportid > 0) {
+            GetReport(reportid);
+            $("#print").show();
+        }
+        else {
+            alert('Please select report to show');
+        }
+
+    });
+</script>
+
+
+

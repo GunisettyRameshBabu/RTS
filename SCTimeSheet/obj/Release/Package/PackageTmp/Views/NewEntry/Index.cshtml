@@ -1,0 +1,559 @@
+﻿
+@model SCTimeSheet_DAL.Models.NewEntryBox
+@{
+    ViewBag.Title = "New Entry";
+}
+
+<style>
+    .subtabletable {
+        display: table;
+    }
+
+    .subtable .row {
+        display: table-row;
+    }
+
+    .subtable .header {
+        font-weight: bold;
+        font-weight: bold;
+    }
+
+    .subtable .cell {
+        display: table-cell;
+        padding: 5px;
+    }
+
+    .dataTables_wrapper .pagination {
+        float: right !important;
+    }
+
+    .k-grid-toolbar {
+        background-color: white;
+        border-left: none;
+        border-right: none;
+    }
+    p {
+        color: black !important;
+    }
+        p.redColor {
+            color: red !important;
+            font-weight:bold !important;
+            font-size: 20px !important;
+        }
+</style>
+
+@(Html.Kendo().Dialog()
+            .Name("dialog")
+            .Title("Warning")
+            .Visible(false)
+            .Content("<p class='redColor'>Warning: One or more member start date does not start on first of the month or member end date does not end on the last day of the month.<p>" +
+            "<p>Please ensure to enter actual working days between member start date to member end date (exclude public holidays, all leave types, non-working days). </p> <p>Example: </p><p>TS Entry January 2020</p>" +
+"<p>Public Holiday: 1, 24, 27 Jan 2020</p> <p> Leaves: 28 Jan 2020 </p>"+
+"<table class='table table-bordered'><tr><th>Member Start Date</th><th>Member End Date</th><th>No of working days from member start date and member end date</th><th>Maximum Working Days in TS Entry</th></tr>" +
+"<tr><td>3 Jan 2020</td><td>31 Mar 2020</td><td>21</td><td>=21-3<br/>=18</td></tr>" +
+"<tr><td>3 Jan 2020</td><td>31 Mar 2020</td><td>21</td><td>=21-3<br/>=18</td></tr>" +
+"<tr><td>3 Jan 2020</td><td>20 Jan 2020</td><td>12</td><td>=12-0<br/>=12</td></tr>" +
+"<tr><td>3 Jan 2020</td><td>20 Jan 2020</td><td>12</td><td>=12-0<br/>=12</td></tr>" +
+"</table>")
+            .Modal(true)
+            
+            .Actions(actions =>
+            {
+                actions.Add().Text("OK").Primary(true);
+            })
+)
+
+@using (Html.BeginForm())
+{
+                    // @Html.AntiForgeryToken()
+
+                    if (Model != null)
+                    {
+        <div class="card-body" style="background-color: #fff;border-radius:10px; padding: 20px;">
+            <h5 style="font-size: 26px; color: #646464;padding-left: 18px;">Timesheet (TS) for @Html.DisplayFor(Model => Model.QID) @Html.DisplayFor(model => model.CurrentYear)</h5>
+
+            <ul>
+                <li style="color:green">
+                    Enter your man days spent in the next field.
+                </li>
+                <li style="color:green">
+                    Man days can be entered up to 1 decimal point
+                </li>
+                <li style="color:green">
+                    Eg.10 for ten days,11.5 for eleven and half days.
+                </li>
+            </ul>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <h6 style="font-size: 26px; color: #646464;padding-left: 18px;">Select Quarter </h6>
+
+                </div>
+                <div class="col-md-4">
+                    @(Html.Kendo().DropDownListFor(x => x.QID)
+                                                                                                                                                         .Name("Quarter")
+                                                                                                                                                         .DataTextField("Text")
+                                                                                                                                                         .DataValueField("Value")
+                                                                                                                                                         .Events(e => e.Change("change"))
+                                                                                                                                                         .BindTo(ViewBag.QuarterList)
+                                                                                                                                                        .HtmlAttributes(new { style = "width: 50%; background-color: #f6f6f6;border-radius: 9px;" })
+                    )
+                </div>
+            </div>
+            <p>
+                <div class="row">
+                    <div class="col-md-12" style="padding:0px 25px;">
+                        <table class="table" id="tblnewentry" style="border:1px solid #dcd9d9;width:100%">
+                            <tr>
+                                <td><b>Projects</b></td>
+                                <td><b>Member Start Date</b></td>
+                                <td><b>Member End Date</b></td>
+                                @Html.HiddenFor(m => m.QID)
+                                @if (Model.CheckMonth == "1")
+        {
+
+                                    <td colspan="2" style="text-align:center"><b>@Html.DisplayFor(m => m.Month1)@Html.HiddenFor(m => m.Month1)</b></td>
+                                    <td colspan="2" style="text-align:center;"><b>@Html.DisplayFor(m => m.Month2)@Html.HiddenFor(m => m.Month2)</b></td>
+                                    <td colspan="2" style="text-align:center;"><b>@Html.DisplayFor(m => m.Month3)@Html.HiddenFor(m => m.Month3)</b></td>
+                                }
+                                else if (Model.CheckMonth == "2")
+                                {
+
+                                    <td colspan="2" style="text-align:center;"><b>@Html.DisplayFor(m => m.Month1)@Html.HiddenFor(m => m.Month1)</b></td>
+                                    <td colspan="2" style="text-align:center"><b>@Html.DisplayFor(m => m.Month2)@Html.HiddenFor(m => m.Month2)</b></td>
+                                    <td colspan="2" style="text-align:center;"><b>@Html.DisplayFor(m => m.Month3)@Html.HiddenFor(m => m.Month3)</b></td>
+                                }
+                                else if (Model.CheckMonth == "3")
+                                {
+
+                                    <td colspan="2" style="text-align:center"><b>@Html.DisplayFor(m => m.Month1)@Html.HiddenFor(m => m.Month1)</b></td>
+                                    <td colspan="2" style="text-align:center"><b>@Html.DisplayFor(m => m.Month2)@Html.HiddenFor(m => m.Month2)</b></td>
+                                    <td colspan="2" style="text-align:center"><b>@Html.DisplayFor(m => m.Month3)@Html.HiddenFor(m => m.Month3)</b></td>
+                                    @*<td><b></b></td>*@
+                                }
+                            </tr>
+                            <tr>
+                                <td colspan="3"></td>
+
+                                <td style="text-align:center">Sys Calc</td>
+                                <td style="text-align:center">TS entry</td>
+                                <td style="text-align:center">Sys Calc</td>
+                                <td style="text-align:center">TS entry</td>
+                                <td style="text-align:center">Sys Calc</td>
+                                <td style="text-align:center">TS entry</td>
+                            </tr>
+                            @for (int i = 0; i < Model.Items.Count - 1; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        <b>@Html.DisplayFor(x => x.Items[i].ProjectName)</b>
+                                        @Html.HiddenFor(x => x.Items[i].ProjectID)
+                                        @Html.HiddenFor(x => x.Items[i].IsEdit1)
+                                        @Html.HiddenFor(x => x.Items[i].IsEdit2)
+                                        @Html.HiddenFor(x => x.Items[i].IsEdit3)
+                                    </td>
+                                    <td>@Model.Items[i].StartDate.Value.ToString("dd MMM yyyy")</td>
+                                    <td>@Model.Items[i].EndDate.Value.ToString("dd MMM yyyy")</td>
+                                    @if (Model.Items[i].IsEdit1)
+                                    {
+                                        <td style="text-align: -webkit-center;">@Html.TextBoxFor(x => x.Items[i].InvolvementDays1, String.Format("{0:0.0}", Model.Items[i].InvolvementDays1), new { @maxlength = "4", @type = "number", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: #f6f6f6;border-radius: 9px;", @title = Model.Items[i].InvolvementDays1 })</td>
+                                        <td style="text-align: -webkit-center;">@Html.TextBoxFor(x => x.Items[i].InvolvementEditDays1, String.Format("{0:0.0}", Model.Items[i].InvolvementEditDays1), new { @maxlength = "4", @type = "number", @step = "any", @class = "form-control editable1", style = "width: 85px; border-radius: 9px;", @min = "0", @max = "22", @title = Model.Items[i].OldInvolvementEditDays1 })</td>
+                                    }
+                                    else
+                                    {
+                                        if (Model.Items[i].InvolvementEditDays1 == 0 && !Model.Items[i].IsSubmitted1)
+                                        {
+                                            <td style="text-align: -webkit-center;">
+                                                @Html.HiddenFor(x => x.Items[i].InvolvementDays1)
+                                                @Html.TextBox("InvolvementDays1", "", new { @maxlength = "4", @type = "number", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: #f6f6f6;border-radius: 9px;" })
+                                            </td>
+                                            <td style="text-align: -webkit-center;">
+                                                @Html.HiddenFor(x => x.Items[i].InvolvementEditDays1)
+                                                @Html.TextBox("InvolvementEditDays1", "", new { @maxlength = "4", @type = "number", @step = "any", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: #f6f6f6;border-radius: 9px;" })
+                                            </td>
+
+                                        }
+                                        else
+                                        {
+                                            <td style="text-align: -webkit-center;">@Html.TextBoxFor(x => x.Items[i].InvolvementDays1, String.Format("{0:0.0}", Model.Items[i].InvolvementDays1), new { @maxlength = "4", @type = "number", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: #f6f6f6;border-radius: 9px;" })</td>
+                                            <td style="text-align: -webkit-center;">@Html.TextBoxFor(x => x.Items[i].InvolvementEditDays1, String.Format("{0:0.0}", Model.Items[i].InvolvementEditDays1), new { @maxlength = "4", @type = "number", @step = "any", @class = "form-control editable1", @readonly = "readonly", style = "width: 85px; background-color: darkgray;border-radius: 9px;" })</td>
+                                        }
+                                    }
+
+                                    @if (Model.Items[i].IsEdit2)
+                                    {
+                                        <td style="text-align: -webkit-center;">@Html.TextBoxFor(x => x.Items[i].InvolvementDays2, String.Format("{0:0.0}", Model.Items[i].InvolvementDays2), new { @maxlength = "4", @type = "number", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: #f6f6f6;border-radius: 9px;", @title = Model.Items[i].InvolvementDays2 })</td>
+                                        <td style="text-align: -webkit-center;">@Html.TextBoxFor(x => x.Items[i].InvolvementEditDays2, String.Format("{0:0.0}", Model.Items[i].InvolvementEditDays2), new { @maxlength = "4", @type = "number", @step = "any", @class = "form-control editable2", style = "width: 85px; border-radius: 9px;", @min = "0", @max = "22", @title = Model.Items[i].OldInvolvementEditDays2 })</td>
+                                    }
+                                    else
+                                    {
+                                        if (Model.Items[i].InvolvementEditDays2 == 0 && !Model.Items[i].IsSubmitted2)
+                                        {
+                                            <td style="text-align: -webkit-center;">
+                                                @Html.HiddenFor(x => x.Items[i].InvolvementDays2)
+                                                @Html.TextBox("InvolvementDays2", "", new { @maxlength = "4", @type = "number", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: #f6f6f6;border-radius: 9px;" })
+                                            </td>
+                                            <td style="text-align: -webkit-center;">
+                                                @Html.HiddenFor(x => x.Items[i].InvolvementEditDays2)
+                                                @Html.TextBox("InvolvementEditDays2", "", new { @maxlength = "4", @type = "number", @step = "any", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: #f6f6f6;border-radius: 9px;" })
+                                            </td>
+
+                                        }
+                                        else
+                                        {
+                                            <td style="text-align: -webkit-center;">@Html.TextBoxFor(x => x.Items[i].InvolvementDays2, String.Format("{0:0.0}", Model.Items[i].InvolvementDays2), new { @maxlength = "4", @type = "number", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: #f6f6f6;border-radius: 9px;" })</td>
+                                            <td style="text-align: -webkit-center;">@Html.TextBoxFor(x => x.Items[i].InvolvementEditDays2, String.Format("{0:0.0}", Model.Items[i].InvolvementEditDays2), new { @maxlength = "4", @type = "number", @step = "any", @class = "form-control editable2", @readonly = "readonly", style = "width: 85px; background-color: darkgray;border-radius: 9px;" })</td>
+                                        }
+                                    }
+
+                                    @if (Model.Items[i].IsEdit3)
+                                    {
+                                        <td style="text-align: -webkit-center;">@Html.TextBoxFor(x => x.Items[i].InvolvementDays3, String.Format("{0:0.0}", Model.Items[i].InvolvementDays3), new { @maxlength = "4", @type = "number", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: #f6f6f6;border-radius: 9px;", @title = Model.Items[i].InvolvementDays3 })</td>
+                                        <td style="text-align: -webkit-center;">@Html.TextBoxFor(x => x.Items[i].InvolvementEditDays3, String.Format("{0:0.0}", Model.Items[i].InvolvementEditDays3), new { @maxlength = "4", @type = "number", @step = "any", @class = "form-control editable3", style = "width: 85px; border-radius: 9px;", @min = "0", @max = "22", @title = Model.Items[i].OldInvolvementEditDays3 })</td>
+                                    }
+                                    else
+                                    {
+                                        if (Model.Items[i].InvolvementEditDays3 == 0 && !Model.Items[i].IsSubmitted3)
+                                        {
+                                            <td style="text-align: -webkit-center;">
+                                                @Html.HiddenFor(x => x.Items[i].InvolvementDays3)
+                                                @Html.TextBox("InvolvementDays3", "", new { @maxlength = "4", @type = "number", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: #f6f6f6;border-radius: 9px;" })
+                                            </td>
+                                            <td style="text-align: -webkit-center;">
+                                                @Html.HiddenFor(x => x.Items[i].InvolvementEditDays3)
+                                                @Html.TextBox("InvolvementEditDays3", "", new { @maxlength = "4", @type = "number", @step = "any", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: #f6f6f6;border-radius: 9px;" })
+                                            </td>
+
+                                        }
+                                        else
+                                        {
+                                            <td style="text-align: -webkit-center;">@Html.TextBoxFor(x => x.Items[i].InvolvementDays3, String.Format("{0:0.0}", Model.Items[i].InvolvementDays3), new { @maxlength = "4", @type = "number", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: #f6f6f6;border-radius: 9px;" })</td>
+                                            <td style="text-align: -webkit-center;">@Html.TextBoxFor(x => x.Items[i].InvolvementEditDays3, String.Format("{0:0.0}", Model.Items[i].InvolvementEditDays3), new { @maxlength = "4", @type = "number", @step = "any", @class = "form-control editable3", @readonly = "readonly", style = "width: 85px; background-color: darkgray;border-radius: 9px;" })</td>
+
+                                        }
+                                    }
+
+
+
+                                </tr>
+
+                            }
+                            <tr>
+                                <td colspan="3"><b>Total</b></td>
+
+                                @if (Model.Count1 > 0)
+                                {
+                                    <td style="text-align: -webkit-center;">@Html.TextBoxFor(x => x.Items[Model.Items.Count - 1].InvolvementDays1, String.Format("{0:0.0}", Model.Items[Model.Items.Count - 1].InvolvementDays1), new { @type = "number", @maxlength = "4", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: #f6f6f6;border-radius: 9px;", @title = Model.Items[Model.Items.Count - 1].InvolvementDays1 })</td>
+                                    if (Model.Items.Any(x => x.IsEdit1))
+                                    {
+                                        <td style="text-align: -webkit-center;">@Html.TextBoxFor(x => x.Items[Model.Items.Count - 1].InvolvementEditDays1, String.Format("{0:0.0}", Model.Items[Model.Items.Count - 1].InvolvementEditDays1), new { @type = "number", @maxlength = "4", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: #f6f6f6;border-radius: 9px;", @id = "txtTotal1", @title = Model.TotalDaysEditCount1 })</td>
+
+                                    }
+                                    else
+                                    {
+                                        <td style="text-align: -webkit-center;">@Html.TextBoxFor(x => x.Items[Model.Items.Count - 1].InvolvementEditDays1, String.Format("{0:0.0}", Model.Items[Model.Items.Count - 1].InvolvementEditDays1), new { @type = "number", @maxlength = "4", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: darkgray;border-radius: 9px;", @title = Model.TotalDaysEditCount1 })</td>
+
+                                    }
+
+                                }
+                                else
+                                {
+                                    <td style="text-align: -webkit-center;">
+                                        @Html.HiddenFor(x => x.Items[Model.Items.Count - 1].InvolvementDays1)
+                                        @Html.TextBox("TotalInvolvementDays1", "", new { @type = "number", @maxlength = "4", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: #f6f6f6;border-radius: 9px;" })
+                                    </td>
+                                    <td style="text-align: -webkit-center;">
+                                        @Html.HiddenFor(x => x.Items[Model.Items.Count - 1].InvolvementEditDays1)
+                                        @Html.TextBox("TotalInvolvementEditDays1", "", new { @type = "number", @maxlength = "4", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: #f6f6f6;border-radius: 9px;" })
+                                    </td>
+                                }
+                                @if (Model.Count2 > 0)
+                                {
+                                    <td style="text-align: -webkit-center;">@Html.TextBoxFor(x => x.Items[Model.Items.Count - 1].InvolvementDays2, String.Format("{0:0.0}", Model.Items[Model.Items.Count - 1].InvolvementDays2), new { @type = "number", @maxlength = "4", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: #f6f6f6;border-radius: 9px;", @title = Model.Items[Model.Items.Count - 1].InvolvementDays2 })</td>
+
+                                    if (Model.Items.Any(x => x.IsEdit2))
+                                    {
+                                        <td style="text-align: -webkit-center;">@Html.TextBoxFor(x => x.Items[Model.Items.Count - 1].InvolvementEditDays2, String.Format("{0:0.0}", Model.Items[Model.Items.Count - 1].InvolvementEditDays2), new { @type = "number", @maxlength = "4", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: #f6f6f6;border-radius: 9px;", @id = "txtTotal2", @title = Model.TotalDaysEditCount2 })</td>
+
+                                    }
+                                    else
+                                    {
+                                        <td style="text-align: -webkit-center;">@Html.TextBoxFor(x => x.Items[Model.Items.Count - 1].InvolvementEditDays2, String.Format("{0:0.0}", Model.Items[Model.Items.Count - 1].InvolvementEditDays2), new { @type = "number", @maxlength = "4", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: darkgray;border-radius: 9px;", @title = Model.TotalDaysEditCount2 })</td>
+                                    }
+
+
+                                }
+                                else
+                                {
+                                    <td style="text-align: -webkit-center;">
+                                        @Html.HiddenFor(x => x.Items[Model.Items.Count - 1].InvolvementDays2)
+                                        @Html.TextBox("TotalInvolvementDays2", "", new { @type = "number", @maxlength = "4", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: #f6f6f6;border-radius: 9px;" })
+                                    </td>
+                                    <td style="text-align: -webkit-center;">
+                                        @Html.HiddenFor(x => x.Items[Model.Items.Count - 1].InvolvementEditDays2)
+                                        @Html.TextBox("TotalInvolvementEditDays2", "", new { @type = "number", @maxlength = "4", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: #f6f6f6;border-radius: 9px;" })
+                                    </td>
+                                }
+                                @if (Model.Count3 > 0)
+                                {
+                                    <td style="text-align: -webkit-center;">@Html.TextBoxFor(x => x.Items[Model.Items.Count - 1].InvolvementDays3, String.Format("{0:0.0}", Model.Items[Model.Items.Count - 1].InvolvementDays3), new { @type = "number", @maxlength = "4", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: #f6f6f6;border-radius: 9px;", @title = Model.Items[Model.Items.Count - 1].InvolvementDays3 })</td>
+
+                                    if (Model.Items.Any(x => x.IsEdit3))
+                                    {
+                                        <td style="text-align: -webkit-center;">@Html.TextBoxFor(x => x.Items[Model.Items.Count - 1].InvolvementEditDays3, String.Format("{0:0.0}", Model.Items[Model.Items.Count - 1].InvolvementEditDays3), new { @type = "number", @maxlength = "4", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: #f6f6f6;border-radius: 9px;", @id = "txtTotal3", @title = Model.TotalDaysEditCount3 })</td>
+
+                                    }
+                                    else
+                                    {
+                                        <td style="text-align: -webkit-center;">@Html.TextBoxFor(x => x.Items[Model.Items.Count - 1].InvolvementEditDays3, String.Format("{0:0.0}", Model.Items[Model.Items.Count - 1].InvolvementEditDays3), new { @type = "number", @maxlength = "4", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: darkgray;border-radius: 9px;", @title = Model.TotalDaysEditCount3 })</td>
+
+                                    }
+                                }
+                                else
+                                {
+
+                                    <td style="text-align: -webkit-center;">
+                                        @Html.HiddenFor(x => x.Items[Model.Items.Count - 1].InvolvementDays3)
+                                        @Html.TextBox("TotalInvolvementDays3", "", new { @type = "number", @maxlength = "4", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: #f6f6f6;border-radius: 9px;" })
+                                    </td>
+                                    <td style="text-align: -webkit-center;">
+                                        @Html.HiddenFor(x => x.Items[Model.Items.Count - 1].InvolvementEditDays3)
+                                        @Html.TextBox("TotalInvolvementEditDays3", "", new { @type = "number", @maxlength = "4", @class = "form-control ", @readonly = "readonly", style = "width: 85px; background-color: #f6f6f6;border-radius: 9px;" })
+                                    </td>
+                                }
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+            <p style="font-size: 20px; color: #646464;padding-left: 18px;">
+                Submitted Timesheet will be automatically corrected if leave/MC is submitted after timesheet approval.<br />
+                System Calculation (Sys Calc) refers to no of working days per month (deducted of MC, PH and leave) and multiply with % project involvement.
+                <br />
+                Total System Calculation refers to number of working days per month after deduction of MC, PH and leave
+            </p>
+
+            </p>
+            @*<div class="row" style="padding:10px 25px;">*@
+            <div class="button" style="float:right;margin-top:-50px;">
+                @*<button type="submit" class="btn btn-success" id="Save" value="Save" style="background-color: rgb(78, 78, 78); border-color: none;" name="action:SaveAsDraft">Save as Draft</button>*@
+                <button type="submit" class="btn btn-primary" id="Submit" value="Submit" style="background-color: rgb(0,108,83) ;border-color: none; float:right" name="action:Submit">Submit</button>
+                <button class="btn btn-secondary" disabled id="disabledButton" value="Submit" style="border-color: none; float:right" name="action:Submit">Submit</button>
+            </div>
+            @*</div>*@
+
+        </div>
+    }
+    <br />
+    <div class="card-body" style="background-color: #fff;border-radius:10px;padding:20px;">
+        @*<div class="row">
+                <div class="col-md-12">
+                    <h3 >Submitted Timesheet</h3>
+                </div>
+            </div>*@
+        <h3>Submitted Timesheet</h3>
+        @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.NewEntryList>()
+                                                                                                                                       .Name("TimeSheetGrid")
+                                                                                                                                       .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                                                                                                       .DataSource(dataSource => dataSource
+                                                                                                                                           .Ajax()
+                                                                                                                                           .Batch(true)
+                                                                                                                                           .PageSize(20)
+                                                                                                                                           .ServerOperation(true)
+
+                                                                                                                                           .Read(read => read
+                                                                                                                                               .Action("Read", "NewEntry")
+
+                                                                                                                                           )
+                                                                                                                                       )
+
+                                                                                                                                       .Columns(columns =>
+                                                                                                                                       {
+                                                                                                                                           columns.Bound(product => product.ItemNo).Title("S.No");
+                                                                                                                                           columns.Bound(p => p.RefNo).Title("Ref.No");
+                                                                                                                                           columns.Bound(product => product.ProjectName).Title("Project");
+                                                                                                                                           columns.Bound(product => product.InvolveMonth).Title("Period");
+                                                                                                                                           columns.Bound(product => product.InvolvePercent).Title("% of Involvement");
+                                                                                                                               // columns.Bound(product => product.Quard).Title("Submission");
+                                                                                                                               columns.Template(product => "").Title("Submission").ClientTemplate("#= getSubmissionString(data) #").Width(60);
+                                                                                                                                           columns.Bound(product => product.CreatedOn).Title("Submitted On").Format("{0:dd MMM yyyy}");
+
+                                                                                                                                           columns.Template(product => "").Title("Status").ClientTemplate("#= getStatusDesc(StatusDesc) #");
+                                                                                                                               //columns.Bound(product => product.StatusDesc).Title("Status");
+                                                                                                                               columns.Bound(product => product.Actioner).Title("Actioner");
+                                                                                                                                           columns.Bound(product => product.ActionedOn).Title("Actioned On");
+                                                                                                                                           columns.Bound(product => product.SubmittedOnBehalf).Title("Submitted On Behalf");
+                                                                                                                                           columns.Bound(product => product.ApproveRejectComments).Title("Remarks");
+
+                                                                                                                                       })
+
+                                                                                                                                   .Pageable()
+                                                                                                                                   //.ToolBar(toolbar => toolbar.Template("<h4>Submitted Timesheet</h4>")).HtmlAttributes(new { @style= "background-color:#fff" })
+                                                                                                                                   .Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+
+        )
+    </div>
+
+    <script>
+            function round(value, precision) {
+                if (!isNaN(value)) {
+                    var multiplier = Math.pow(10, precision || 0);
+                    return Math.round(value * multiplier) / multiplier;
+                }
+                else {
+                    return value;
+                }
+            }
+            function getSubmissionString(row) {
+                var subtableHtml = "<table class='table-bordered'>";
+                //for (var i = 0; i < data.projects.length; i++) {
+                if (row.Quard == "Q1") {
+                    subtableHtml += "<tr style='background-color: #e4e4e4;'><th>Jan</th><th>Feb</th><th>Mar</th></tr>";
+
+                }
+                else if (row.Quard == "Q2") {
+                    subtableHtml += "<tr style='background-color: #e4e4e4;'><th>Apr</th><th>May</th><th>Jun</th></tr>";
+
+                }
+                else if (row.Quard == "Q3") {
+                    subtableHtml += "<tr style='background-color: #e4e4e4;'><th>Jul</th><th>Aug</th><th>Sep</th></tr>";
+
+                }
+                else if (row.Quard == "Q4") {
+                    subtableHtml += "<tr style='background-color: #e4e4e4;'><th>Oct</th><th>Nov</th><th>Dec</th></tr>";
+
+                };
+                subtableHtml += "<tr>";
+                subtableHtml += "<td>" + (row.InvolvementDays1 == 0 ? (row.IsEdit1 == false ? "-" : this.round(row.InvolvementDays1, 1)) : this.round(row.InvolvementDays1, 1)) + "/" + ((row.InvolvementEditDays1 == 0 && row.IsEdit1 == false) ? "-" : this.round(row.InvolvementEditDays1, 1)) + "</td>";
+                subtableHtml += "<td>" + (row.InvolvementDays2 == 0 ? (row.IsEdit2 == false ? "-" : this.round(row.InvolvementDays2, 1)) : this.round(row.InvolvementDays2, 1)) + "/" + ((row.InvolvementEditDays2 == 0 && row.IsEdit2 == false) ? "-" : this.round(row.InvolvementEditDays2, 1)) + "</td>";
+                subtableHtml += "<td>" + (row.InvolvementDays3 == 0 ? (row.IsEdit3 == false ? "-" : this.round(row.InvolvementDays3, 1)) : this.round(row.InvolvementDays3, 1)) + "/" + ((row.InvolvementEditDays3 == 0 && row.IsEdit2 == false) ? "-" : this.round(row.InvolvementEditDays3, 1)) + "</td>";
+                subtableHtml += "</tr>";
+                subtableHtml += "</table>";
+                return subtableHtml;
+            }
+            function getStatusDesc(data) {
+                if (data == "Draft") {
+                    return '<a class="label label-primary" href="/NewEntry/Edit/' + row.TsID + '">' + data + '</a>';
+                    //return '<span class="label label-primary">' + data + '</span>';
+                }
+                if (data == "Rejected") {
+                    return '<span class="red">' + data + '</span>';
+                }
+                if (data == "Pending for Approval") {
+                    return '<span class="yellow">' + data + '</span>';
+                }
+                if (data == "Approved") {
+                    return '<span class="green">' + data + '</span>';
+                }
+
+            }
+        function change() {
+            var quarter = $("#Quarter").val();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ChangeQuarter", "NewEntry")',
+                data :{ quarter: quarter }, success: function (result) {
+                    $("body").html(result);
+                }
+            });
+        }
+
+    $('.select2').select2();
+
+    $('.monthpicker').monthpicker();
+
+
+
+        //document.forms["Form1"].submit();
+
+
+
+        $(document).ready(function () {
+            //$('#newentry-logo').attr('src', '../../Contents/assets/Login/images/new.png');
+             function round(value, precision) {
+        if (!isNaN(value)) {
+            var multiplier = Math.pow(10, precision || 0);
+            return Math.round(value * multiplier) / multiplier;
+        }
+        else {
+            return value;
+        }
+    }
+            $('.editable1').change(function () {
+                var total = 0;
+                $(".editable1").each(function () {
+                    total = round(total + parseFloat($(this).val()), 1);
+                });
+                $("#txtTotal1").val(total);
+            });
+
+            $('.editable2').change(function () {
+                var total = 0;
+                $(".editable2").each(function () {
+
+                    total = round(total + parseFloat($(this).val()), 1);
+                });
+                $("#txtTotal2").val(total);
+            });
+
+            $('.editable3').change(function () {
+                var total = 0;
+                $(".editable3").each(function () {
+                    total = round(total + parseFloat($(this).val()), 1);
+                });
+                $("#txtTotal3").val(total);
+            });
+            $('#newentry').css('color', 'black');
+
+            var ErrorMessage = '@ViewBag.ErrorMessage';
+            if (ErrorMessage != '') {
+                alert(ErrorMessage);
+
+            }
+            var EmailNotificationErrors = '@ViewBag.EmailNotificationErrors';
+            if (EmailNotificationErrors != '') {
+                pattern = "line";
+                EmailNotificationErrors = EmailNotificationErrors.replace(new RegExp(pattern, "g"), '\n')
+                alert(EmailNotificationErrors);
+
+            }
+
+            var isEdit = '@ViewBag.IsEditable';
+            debugger;
+            if (isEdit == "False") {
+                $("#Submit").hide();
+                $("#disabledButton").show();
+
+                //$("#Submit").prop('disabled', true);
+        }
+        else {
+                //$("#Submit").prop('disabled', false);
+                $("#Submit").show();
+                $("#disabledButton").hide();
+            }
+
+
+        $('.groupdecimal').keypress(function (event) {
+            return isNumber(event, this)
+            });
+
+
+
+        // THE SCRIPT THAT CHECKS IF THE KEY PRESSED IS A NUMERIC OR DECIMAL VALUE.
+        function isNumber(evt, element) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+
+            if ((charCode < 48 || charCode > 57))
+                return false;
+
+            return true;
+            }
+            if ('@Model.ShowWarning' == "True") {
+                $('#dialog').data("kendoDialog").open();
+            }
+        });
+
+    </script>
+
+}
+

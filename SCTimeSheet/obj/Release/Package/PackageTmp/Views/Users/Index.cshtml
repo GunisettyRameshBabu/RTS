@@ -1,0 +1,96 @@
+﻿
+
+@{
+    ViewBag.Title = "Users";
+}
+<script>
+    function onEdit(e) {
+        if (e.model.UserID == 0) {
+            $('[name="EmployeeCode"]').attr("readonly", false);
+        }
+        else {
+            $('[name="EmployeeCode"]').attr("readonly", true);
+        }
+    }
+
+    function onRequestEnd(e) {
+        var popupNotification = $("#popupNotification").data("kendoNotification");
+        if (e.type == "update" && !e.response.Errors) {
+            //alert('User Updated Successfully');
+            popupNotification.show('User Updated Successfully', "success");
+        }
+
+        if (e.type == "create" && !e.response.Errors) {
+            // Create record is successfull, show your desired message
+            //alert('User created successfully');
+            popupNotification.show('User created successfully', "success");
+        }
+    }
+</script>
+<div class="card-body" style="background-color: #fff;border-radius:10px;">
+    @(Html.Kendo().Notification()
+                    .Name("popupNotification")
+                    .Position(x => x.Top(100))
+                    .Height("50")
+                    .Width("20%")
+                    .HideOnClick(true)
+    )
+    <div id="appendto" class="demo-section k-content"></div>
+    @(Html.Kendo().Grid<SCTimeSheet.Models.User>
+                                ()
+                                .Name("grid")
+                                .Columns(columns =>
+                                {
+                                    columns.Bound(c => c.EmployeeCode).Filterable(true).Width(150);
+                                    columns.Bound(c => c.Email).Filterable(true).Width(250);
+                                    columns.Bound(c => c.Name).Filterable(true).Width(250);
+
+                                    columns.Bound(c => c.RoleName).Filterable(true).Width(150);
+                                    columns.Bound(c => c.IsActive).Filterable(true).Width(50).ClientTemplate("<input type='checkbox' #=IsActive ? 'checked= checked' : '' # disabled='disabled'></input>");
+                                    columns.Command(command => { command.Edit(); }).Width(100);
+                                })
+
+
+                                .Sortable()
+                                .Pageable(pageable => pageable
+                                .Refresh(true)
+                                .PageSizes(true)
+                                .ButtonCount(5))
+                                .DataSource(dataSource => dataSource
+                                .Ajax()
+                                .Read(read => read.Action("Users_Read", "Users"))
+                                .Update("Users_Update", "Users")
+                                .Destroy("Users_Destroy", "Users")
+                                .Create("Users_Create", "Users")
+                                .Events(events => events.RequestEnd("onRequestEnd"))
+                                .PageSize(20)
+                                .Model(model =>
+                                {
+                                    model.Id(p => p.UserID);
+                                    model.Field(p => p.RoleID).Editable(true);
+                                    model.Field(p => p.RoleName);
+                                })
+                                ).ToolBar(toolbar => toolbar.Create().Text("Add New User"))
+                                .Editable(ed =>
+                                {
+                                    ed.Mode(GridEditMode.PopUp).TemplateName("Edit").Window(w => w.Title("Add / Edit User").Width(1200));
+
+                                })
+                            .Filterable()
+                            .Events(e => e.Edit("onEdit"))
+    )
+</div>
+
+<style>
+    .k-widget
+    .k-window {
+        padding: 5px !important;
+        width: 100% !important;
+    }
+
+    .k-edit-form-container {
+        padding: 5px !important;
+        width: 99% !important;
+    }
+</style>
+

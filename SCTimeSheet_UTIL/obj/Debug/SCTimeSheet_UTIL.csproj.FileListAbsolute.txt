@@ -1,0 +1,45 @@
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet_UTIL\bin\Debug\SCTimeSheet_UTIL.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet_UTIL\bin\Debug\SCTimeSheet_UTIL.pdb
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.csprojAssemblyReference.cache
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.csproj.CoreCompileInputs.cache
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.pdb
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.Resource.ResourceDisplay.resources
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.csproj.GenerateResource.cache
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.Resource.ResourceMessage.resources
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\bin\Debug\SCTimeSheet_UTIL.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\bin\Debug\SCTimeSheet_UTIL.pdb
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.Resource.ResourceDisplay.resources
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.Resource.ResourceMessage.resources
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.csproj.GenerateResource.cache
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.csproj.CoreCompileInputs.cache
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.pdb
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.csprojAssemblyReference.cache
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\bin\Debug\SCTimeSheet_UTIL.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\bin\Debug\SCTimeSheet_UTIL.pdb
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.csprojAssemblyReference.cache
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.Resource.ResourceDisplay.resources
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.Resource.ResourceMessage.resources
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.csproj.GenerateResource.cache
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.csproj.CoreCompileInputs.cache
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.pdb
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\bin\Debug\SCTimeSheet_UTIL.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\bin\Debug\SCTimeSheet_UTIL.pdb
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.Resource.ResourceDisplay.resources
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.Resource.ResourceMessage.resources
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.csproj.GenerateResource.cache
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.csproj.CoreCompileInputs.cache
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.pdb
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.csprojAssemblyReference.cache
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet_UTIL\bin\Debug\SCTimeSheet_UTIL.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet_UTIL\bin\Debug\SCTimeSheet_UTIL.pdb
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.csprojAssemblyReference.cache
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.Resource.ResourceDisplay.resources
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.Resource.ResourceMessage.resources
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.csproj.GenerateResource.cache
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.csproj.CoreCompileInputs.cache
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.pdb

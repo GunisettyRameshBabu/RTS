@@ -1,0 +1,358 @@
+﻿@model SCTimeSheet.Models.EmailModel
+@{
+    ViewBag.Title = "Notification";
+}
+
+@using (Html.BeginForm("Email", "SendEmail", FormMethod.Post))
+{
+    <div class="card-body" id="print" style="background-color: #fff;border-radius:10px; margin-top:20px;">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="to">To :</label>
+
+                @(Html.Kendo().MultiSelect()
+                                                                                                             .Name("selectProject")
+                                                                                                             .DataTextField("ProjectName")
+                                                                                                             .DataValueField("ProjectID")
+                                                                                                             .Placeholder("Start Typing project name")
+                                                                                                             .AutoBind(true)
+
+                                                                                                             .DataSource(source =>
+                                                                                                             {
+                                                                                                                 source.Read(read =>
+                                                                                                                 {
+                                                                                                                     read.Action("GetProjects", "SendEmail");
+                                                                                                                 })
+                                                                                                                 .ServerFiltering(true);
+                                                                                                             })
+                                                                                                             .Events(e =>
+                                                                                                             {
+                                                                                                                 e.Select("onChange").Deselect("onProjectDeselect");
+                                                                                                             })
+                )
+                <br />
+
+                @(Html.Kendo().MultiSelectFor(x => x.To)
+                                                                                                            .Name("selectGrandType")
+                                                                                                            .DataTextField("MstCode")
+                                                                                                            .DataValueField("MstID")
+                                                                                                            .Placeholder("Start Typing grant type")
+                                                                                                            .AutoBind(false)
+
+                                                                                                            .DataSource(source =>
+                                                                                                            {
+                                                                                                                source.Read(read =>
+                                                                                                                {
+                                                                                                                    read.Action("GetGrantType", "SendEmail");
+                                                                                                                })
+                                                                                                                .ServerFiltering(true);
+                                                                                                            })
+                                                                                .Events(e =>
+                                                                                {
+                                                                                    e.Select("onGrantTypeChange").Deselect("onGrantDeselect");
+                                                                                })
+                )
+
+
+                <br />
+
+                @(Html.Kendo().MultiSelect()
+                                                                                                                      .Name("To")
+                                                                                                                      .Placeholder("Project members email")
+                                                                                                                      .HtmlAttributes(new { style = "width: 100%" })
+                                                                                                                      .Events(e =>
+                                                                                                                      {
+                                                                                                                          e.Deselect("onDeselect");
+                                                                                                                      })
+
+                )
+
+                @Html.ValidationMessageFor(x => x.To, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+        <div class="row gutter-top">
+            <div class="col-md-6">
+                <label for="AdditionalEmails">Additional Emails :</label>
+                @Html.Kendo().TextBoxFor(x => x.AdditionalEmails).HtmlAttributes(new { style = "width: 100%", @class = "form-control" })
+
+                @Html.ValidationMessageFor(x => x.AdditionalEmails, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row gutter-top">
+            <div class="col-md-6">
+                <label for="from">From :</label>
+
+                @(Html.Kendo().DropDownListFor(x => x.From)
+                                                                                                     .Name("From")
+                                                                                                     .DataTextField("Email")
+                                                                                                     .DataValueField("Email")
+                                                                                                     .OptionLabel("--Select From Email--")
+                                                                                                    .DataSource(source =>
+                                                                                                    {
+                                                                                                        source.Read(read =>
+                                                                                                        {
+                                                                                                            read.Action("GetUsers", "SendEmail");
+                                                                                                        })
+                                                                                                        .ServerFiltering(true);
+                                                                                                    })
+                                                                                                    .Filter("contains")
+                                                                                                     .HtmlAttributes(new { style = "width: 100%" })
+                )
+
+                @Html.ValidationMessageFor(x => x.From, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row gutter-top">
+            <div class="col-md-6">
+                <label for="subject">Subject :</label> @*<input type="text" name="subject" class="form-control" />*@
+                @Html.Kendo().TextBoxFor(x => x.Subject).HtmlAttributes(new { style = "width: 100%", @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Subject, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row gutter-top">
+            <div class="col-md-6">
+                <label for="subject">Attachment :</label> @*<input type="text" name="subject" class="form-control" />*@
+                @(Html.Kendo().Upload()
+                                                               .Name("files")
+                                                               .HtmlAttributes(new { aria_label = "files" })
+                )
+            </div>
+        </div>
+
+        <div class="row gutter-top">
+            <div class="col-md-12">
+                <label for="to">Message :</label>
+                @(Html.Kendo().EditorFor(x => x.Message)
+                                                                                              .Name("Message")
+                                                                                              .HtmlAttributes(new { style = "height:440px", aria_label = "editor" })
+                                                                                              .Resizable(resizable => resizable.Content(true).Toolbar(true))
+                                                                                              .Tools(x => x.FontColor().BackColor().FontName())
+                                                                                             .ImageBrowser(imageBrowser => imageBrowser
+                                                                                          .Image("~/Content/UserFiles/Images/{0}")
+                                                                                          .Read("Read", "ImageBrowser")
+                                                                                          .Create("Create", "ImageBrowser")
+                                                                                          .Destroy("Destroy", "ImageBrowser")
+                                                                                          .Upload("Upload", "ImageBrowser")
+                                                                                          .Thumbnail("Thumbnail", "ImageBrowser")
+                                                                                      )
+                                                                                              .Value("")
+                                                                                              .Encode(false)
+                )
+
+                @Html.ValidationMessageFor(x => x.Message, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+        <div class="row gutter-top">
+            <div class="col-md-3">
+                <br />
+                <button type="submit" value="Send" class="btn btn-primary" style="background-color:rgb(0,108,83);">Send</button>
+            </div>
+        </div>
+    </div>
+}
+<script>
+
+        function onProjectDeselect(e) {
+            var dataItem = e.dataItem;
+            var projects = $("#selectProject").data("kendoMultiSelect");
+            var selectedProjects = projects.value();
+             $.ajax({
+                 type: "POST",
+                 data: { projectId: dataItem.ProjectID, selectedProjects: selectedProjects },
+            url: '@Url.Action("RemoveProjectEmails", "SendEmail")',
+                 success: function (data) {
+                     var multiselect = $("#To").data("kendoMultiSelect");
+                     var selectedEmails = multiselect.value();
+                     for (var i = 0; i < data.length; i++) {
+                         selectedEmails = selectedEmails.filter(x => x != data[i].Email);
+                     }
+
+                var dataSource = new kendo.data.DataSource({
+                    data: selectedEmails
+                });
+
+                     multiselect.setDataSource(dataSource);
+                     multiselect.value(selectedEmails);
+            }
+        });
+    }
+
+
+        function onGrantDeselect(e) {
+            var dataItem = e.dataItem;
+            var projects = $("#selectProject").data("kendoMultiSelect");
+            var selectedProjects = projects.value();
+             $.ajax({
+                 type: "POST",
+                 data: { mstID: dataItem.MstID, selectedProjects : selectedProjects },
+            url: '@Url.Action("RemoveGrantType", "SendEmail")',
+                 success: function (data) {
+                     var multiselect = $("#To").data("kendoMultiSelect");
+                     var projectDataSource = projects.dataSource._data;
+                     var selectedEmails = multiselect.value();
+                     //var uniqueProjects = $.distinctObj(data, 'ProjectID');
+                     for (var i = 0; i < data.projects.length; i++) {
+                         projectDataSource = projectDataSource.filter(x => x.ProjectID != data.projects[i].ProjectID);
+                         selectedProjects = selectedProjects.filter(x => x != data.projects[i]);
+                     }
+                     for (var i = 0; i < data.data.length; i++) {
+                         selectedEmails = selectedEmails.filter(x => x != data.data[i].Email);
+                     }
+
+                     var dataSource = new kendo.data.DataSource({
+                         data: selectedEmails
+                     });
+
+                     multiselect.setDataSource(dataSource);
+
+                     multiselect.value(selectedEmails);
+
+                     dataSource = new kendo.data.DataSource({
+                         data: projectDataSource
+                     });
+
+                     projects.setDataSource(dataSource);
+
+                     projects.value(selectedProjects);
+                 }
+
+        });
+    }
+
+    $.extend({
+        distinctObj: function (obj, propertyName) {
+            var result = [];
+            $.each(obj, function (i, v) {
+                var prop = eval("v." + propertyName);
+                if ($.inArray(prop, result) == -1) result.push(prop);
+            });
+            return result;
+        }
+    });
+
+      function onGrantTypeChange(e){
+           var dataItem = e.dataItem;
+             $.ajax({
+                 type: "POST",
+                 data: { mstID: dataItem.MstID },
+            url: '@Url.Action("GetEmailsByGrantType", "SendEmail")',
+                 success: function (data) {
+                     var multiselect = $("#To").data("kendoMultiSelect");
+                     var projects = $("#selectProject").data("kendoMultiSelect");
+                     var selectedProjects = projects.value();
+                     var projectDataSource = projects.dataSource._data;
+                     var selectedEmails = multiselect.value();
+                     for (var i = 0; i < data.length; i++) {
+                         if (selectedEmails.filter(x => x == data[i].Email).length == 0) {
+                             selectedEmails.push(data[i].Email);
+                         }
+                         if (selectedProjects.filter(x => x == data[i].ProjectID).length == 0) {
+                             selectedProjects.push(data[i].ProjectID);
+                         }
+                         if (projectDataSource.filter(x => x.ProjectID == data[i].ProjectID).length == 0) {
+                             projectDataSource.push({ ProjectID: data[i].ProjectID, ProjectName: data[i].ProjectName });
+                         }
+                     }
+
+
+
+                var dataSource = new kendo.data.DataSource({
+                    data: selectedEmails
+                });
+
+                multiselect.setDataSource(dataSource);
+
+                     multiselect.value(selectedEmails);
+
+                     dataSource = new kendo.data.DataSource({
+                         data: projectDataSource
+                     });
+
+                     projects.setDataSource(dataSource);
+
+                     projects.value(selectedProjects);
+            }
+        });
+        }
+        function onChange(e) {
+
+            var dataItem = e.dataItem;
+             $.ajax({
+                 type: "POST",
+                 data: { projectId: dataItem.ProjectID },
+            url: '@Url.Action("GetEmails", "SendEmail")',
+                 success: function (data) {
+                     debugger;
+                     var multiselect = $("#To").data("kendoMultiSelect");
+                     var selectedEmails = multiselect.value();
+                     for (var i = 0; i < data.length; i++) {
+                         if (selectedEmails.filter(x => x == data[i]).length == 0) {
+                             selectedEmails.push(data[i]);
+                         }
+                     }
+
+                var dataSource = new kendo.data.DataSource({
+                    data: selectedEmails
+                });
+
+                multiselect.setDataSource(dataSource);
+
+                     multiselect.value(selectedEmails);
+            }
+        });
+        }
+        function onDeselect(e) {
+            debugger;
+            var dataItem = e.dataItem;
+            var multiselect = $("#To").data("kendoMultiSelect");
+            var selectedEmails = multiselect.value();
+            selectedEmails = selectedEmails.filter(x => x != dataItem);
+
+            //var dataSource = new kendo.data.DataSource({
+            //    data: selectedEmails
+            //});
+
+            //multiselect.setDataSource(dataSource);
+
+            //multiselect.value(selectedEmails);
+
+        }
+        $(document).ready(function () {
+            //$('#notify-logo').attr('src', '../../Contents/assets/Images/alarm1.png');
+            $('#notify').css('color', 'black');
+
+            //$('#admin-logo').attr('src', '../../Contents/assets/Images/utility.png');
+            $('#admin').css('color', 'black');
+
+             var mes = '@ViewBag.Message';
+        if (mes != "" && mes != null && mes != undefined) {
+            pattern = "line";
+            mes = mes.replace(new RegExp(pattern, "g"), '\n')
+            alert(mes);
+        }
+
+        });
+
+        function onAdditionalData() {
+            return {
+                text: $("#to").val()
+            };
+        }
+
+        function onAdditionalFromData() {
+            return {
+                text: $("#from").val()
+            };
+        }
+</script>
+<style>
+    .gutter-top {
+        padding-top: 10px;
+    }
+</style>
+
+
+

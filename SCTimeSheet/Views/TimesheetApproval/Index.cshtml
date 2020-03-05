@@ -1,0 +1,750 @@
+﻿@model SCTimeSheet_DAL.Models.PendingListforApproval
+@{
+    ViewBag.Title = "Timesheet Approval";
+}
+<style>
+    #DescModal {
+        padding-right: 681px !important;
+    }
+    .subtabletable {
+        display: table;
+    }
+
+    .subtable .row {
+        display: table-row;
+    }
+
+    .subtable .header {
+        font-weight: bold;
+    }
+
+    .subtable .cell {
+        display: table-cell;
+        padding: 5px;
+    }
+    .dataTables_wrapper .pagination {
+        float: right !important;
+    }
+
+    .tooltip-inner {
+        min-width: 100px !important;
+        max-width: 100% !important;
+    }
+    .actionButton {
+        background-color: #00664E;
+        border-color: #00664E;
+        text-align: center;
+    }
+</style>
+
+
+<div class="card-body" style="background-color: #fff;border-radius:10px;  padding: 10px; padding-bottom:60px;">
+    @*<h5 style="font-size: 26px; color: #646464;">Timesheet Pending Approval</h5>*@
+        <div>
+          
+            @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.PendingListforApproval>()
+                                                                                                                            .Name("PendingTimeSheet")
+                                                                                                                            .DataSource(dataSource => dataSource
+                                                                                                                                .Ajax()
+                                                                                                                                .Batch(true)
+                                                                                                                                .PageSize(20)
+                                                                                                                                .ServerOperation(true)
+
+                                                                                                                                .Read(read => read
+                                                                                                                                    .Action("PendingTimesheetList", "TimeSheetApproval")
+
+                                                                                                                                )
+                                                                                                                            )
+
+                                                                                                                            .Columns(columns =>
+                                                                                                                            {
+                                                                                                                                columns.Template(@<text></text>).ClientTemplate("<input type='checkbox' class='checkbox' name='timesheet_approve' tsId='#:TsID#' />").Width(20).HeaderTemplate("<input id='headerCheckBox' style='cursor: pointer;' type='checkbox' onclick='selectAll(this);' />");
+                                                                                                                                columns.Bound(product => product.RefNo).Title("Ref.No");
+
+                                                                                                                                columns.Bound(product => product.ProjectName).Title("Project Name");
+                                                                                                                                columns.Bound(product => product.SubmittedBy).Title("Submitted By");
+                                                                                                                                columns.Bound(product => product.Period).Title("Period");
+
+                                                                                                                                columns.Template(product => "").Title("Submission").ClientTemplate("#= getSubmissionString(data) #").Width(60);
+                                                                                                                                columns.Bound(product => product.SubmittedOn).Title("Submitted On");
+                                                                                                                                //columns.Template(@<text></text>).ClientTemplate("<input type ='button'  id='btn-popup' class='btn btn-primary actionButton' onclick='detailviewpopup(#:TsID#,#:SequenceNo#)'  value='Action'/>").Title("Action");
+                                                                                                                                columns.Command(command => command.Custom("Action").Click("showDetails"));
+
+
+                                                                                                                            })
+
+                                                                                                                            .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                                                                                        .Pageable()
+                                                                                                                        .Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+
+            )
+        </div>
+
+    <div  style="float: right;padding-top:5px;">
+        <button type="button" class="btn btn-primary" id="btnApprove" style="background-color:rgb(0,108,83); border-color: rgb(0,108,83);">Approve Selected</button>
+
+    </div>
+</div>
+
+
+<div id="MyActionConfirmationModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <i></i>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h4><i class="fa fa-exclamation-triangle fa-2x" style="color:red;margin-right: 8px;"></i><label class="lbl-Confirm">  </label></h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="modal-yes" class="btn btn-success" data-dismiss="modal"><i class="fa fa-check"></i> Yes</button>
+                <button type="button" id="modal-no" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> No</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("SingleApprove", "TimesheetApproval"))
+{
+    <div id="DescModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 1245px;">
+                <div class="modal-header">
+                    <h3 class="modal-title" style="color: #646464;">Timesheet Action</h3>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">X</button>
+                </div>
+                <div class="modal-body">
+                    <table class="customers" id="timesheetPopup">
+                        <thead>
+                            <tr>
+
+                                <th>Ref.No</th>
+                                <th>Project Name</th>
+                                <th>Submitted By</th>
+                                <th>Period</th>
+                                <th>Submissions</th>
+                                <th>Submitted On</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+
+                                <td>
+                                    @Html.HiddenFor(model => model.SequenceNo, new { @id = "seq-no", @class = "form-control", @readonly = "readonly" })
+                                    @Html.HiddenFor(model => model.TsID, new { @id = "ts-id", @class = "form-control", @readonly = "readonly" })
+                                    @Html.TextBoxFor(model => model.RefNo, new { @id = "ref-no", @class = "form-control", @readonly = "readonly" })
+                                </td>
+                                <td>@Html.TextBoxFor(model => model.ProjectName, new { @id = "project-name", @class = "form-control", @readonly = "readonly" })</td>
+                                <td>@Html.TextBoxFor(model => model.SubmittedBy, new { @id = "submitted-by", @class = "form-control", @readonly = "readonly" })</td>
+                                <td>@Html.TextBoxFor(model => model.Period, new { @id = "period", @class = "form-control", @readonly = "readonly" })</td>
+                                <td>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th><span id="month1"></span></th>
+                                                <th><span id="month2"></span></th>
+                                                <th><span id="month3"></span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><p>Sys Calc : @Html.TextBoxFor(model => model.InvolvementDays1, new { @id = "day-one", @class = "form-control", style = "width:70px;", @readonly = "readonly" }) TS Entry : @Html.TextBoxFor(model => model.InvolvementEditDays1, new { @id = "edit-day-one", @class = "form-control", style = "width:70px;", @readonly = "readonly" })</p></td>
+                                                <td><p>Sys Calc :@Html.TextBoxFor(model => model.InvolvementDays2, new { @id = "day-two", @class = "form-control", style = "width:70px;", @readonly = "readonly" }) TS Entry : @Html.TextBoxFor(model => model.InvolvementEditDays2, new { @id = "edit-day-two", @class = "form-control", style = "width:70px;", @readonly = "readonly" })</p></td>
+                                                <td><p>Sys Calc : @Html.TextBoxFor(model => model.InvolvementDays3, new { @id = "day-three", @class = "form-control", style = "width:70px;", @readonly = "readonly" }) TS Entry : @Html.TextBoxFor(model => model.InvolvementEditDays3, new { @id = "edit-day-three", @class = "form-control", style = "width:70px;", @readonly = "readonly" })</p></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td>@Html.TextBoxFor(model => model.SubmittedOn, new { @id = "submitted-on", @class = "form-control", @readonly = "readonly" })</td>
+                            </tr>
+                        </tbody>
+                    </table> <br />
+                    <div class="form-group">
+                        <div class="row dataTable">
+                            <div class="col-md-2">
+                                <label class="control-label" style="color: #646464;">Remarks </label>
+                            </div>
+                            <div class="col-md-10">
+                                @Html.TextAreaFor(model => model.ApproveRejectComments, new { @id = "approveRejComm", @class = "form-control" })
+
+                                @Html.ValidationMessageFor(model => model.ApproveRejectComments, "", new { @class = "text-danger" })
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                    @*<button type="submit" class="btn btn-success " name="action:SingleApprove">Approve</button>*@
+                    <input type="submit" value="Approve" id="singleApprove" class="btn btn-success " name="Approve" />
+                    <input type="submit" value="Reject" id="singleReject" class="btn btn-danger " name="Reject" />
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+}
+<br/>
+@*<r style="font-size: 48px;padding-left: 0px; color: #989292 ">My Actioned Timesheet</r>*@
+<div class="card-body" style="background-color: #fff;border-radius:10px;  padding: 10px;">
+    @*<h5 style="font-size: 26px; color: #646464;">Actioned Timesheet</h5>*@
+    <h3>My Actioned Timesheet</h3>
+        <div>
+           
+            @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.ApprovedTimesheet>()
+                                                                                                             .Name("ActionedTimeSheet")
+                                                                                                             .DataSource(dataSource => dataSource
+                                                                                                                 .Ajax()
+                                                                                                                 .Batch(true)
+                                                                                                                 .PageSize(20)
+                                                                                                                 .ServerOperation(true)
+
+                                                                                                                 .Read(read => read
+                                                                                                                     .Action("ActionedTimesheetList", "TimeSheetApproval")
+
+                                                                                                                 )
+                                                                                                             )
+                                                                                                             .Events(x => x.DataBound("onDataBound"))
+                                                                                                             .Columns(columns =>
+                                                                                                             {
+                                                                                                                 columns.Bound(product => product.ProjectName).Title("Project Name");
+                                                                                                                 columns.Bound(product => product.EmpName).Title("Employee");
+                                                                                                             // columns.Bound(product => product.SubmittedBy).Title("Submitted By");
+                                                                                                             columns.Bound(product => product.Period).Title("Period");
+                                                                                                             //columns.Bound(product => product.Quart);
+                                                                                                             columns.Template(product => "").Title("Submission").ClientTemplate("#= getSubmissionString(data) #").Width(60);
+                                                                                                                 columns.Bound(product => product.SubmittedOn).Title("Submitted On");
+                                                                                                             //columns.Bound(product => product.StatusDesc).Title("Status");
+                                                                                                             columns.Template(product => "").Title("Status").ClientTemplate("#= getStatusDesc(StatusDesc) #");
+                                                                                                                 columns.Bound(product => product.ActionedDate).Title("Actioned On");
+                                                                                                                 columns.Template(product => "").Title("Remarks").ClientTemplate("#= getCommentString(data) #");
+                                                                                                             //columns.Bound(product => product.ApproveRejectComments).Title("Remarks");
+                                                                                                             columns.Bound(product => product.SubmittedOnBehalf).Title("Submitted On Behalf");
+
+                                                                                                             })
+
+                                                                                                             .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                                                                         .Pageable()
+                                                                                                          .Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+
+            )
+        </div>
+</div>
+
+<script>
+    function showDetails(e) {
+        e.preventDefault();
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        detailviewpopup(dataItem.TsID, dataItem.SequenceNo);
+    }
+    function selectAll(val) {
+        $(".checkbox").each(function () {
+            this.checked = val.checked;
+        })
+    }
+    function getStatusDesc(data) {
+        if (data == "Draft") {
+            return '<a class="label label-primary" href="/NewEntry/Edit/' + row.TsID + '">' + data + '</a>';
+            //return '<span class="label label-primary">' + data + '</span>';
+        }
+        if (data == "Rejected") {
+            return '<span class="red">' + data + '</span>';
+        }
+        if (data == "Pending for Approval") {
+            return '<span class="yellow">' + data + '</span>';
+        }
+        if (data == "Approved") {
+            return '<span class="green">' + data + '</span>';
+        }
+
+    }
+    function getCommentString(row) {
+        var remark = row.ApproveRejectComments;
+        var remarkString = remark != null && remark != undefined && remark != '' ? remark.substring(0, 5) : '';
+        if (remark != '') {
+            return '<span data-toggle="tooltip" title=" ' + row.ApproveRejectComments + ' "><i>' + remarkString + '</i> </span>';
+        }
+        else {
+            return '<span> </span>';
+        }
+
+    }
+    function onDataBound() {
+       
+        $('[data-toggle="tooltip"]').tooltip({ container: ".wrapper", boundary: 'window', placement: 'top' });
+    }
+    function round(value, precision) {
+        if (!isNaN(value)) {
+            var multiplier = Math.pow(10, precision || 0);
+            return Math.round(value * multiplier) / multiplier;
+        }
+        else {
+            return value;
+        }
+    }
+    function getSubmissionString(row) {
+        var subtableHtml = "<table class='table-bordered'>";
+        //for (var i = 0; i < data.projects.length; i++) {
+        if (row.Quart == "Q1") {
+            subtableHtml += "<tr style='background-color: #e4e4e4;'><th>Jan</th><th>Feb</th><th>Mar</th></tr>";
+
+        }
+        else if (row.Quart == "Q2") {
+            subtableHtml += "<tr style='background-color: #e4e4e4;'><th>Apr</th><th>May</th><th>Jun</th></tr>";
+
+        }
+        else if (row.Quart == "Q3") {
+            subtableHtml += "<tr style='background-color: #e4e4e4;'><th>Jul</th><th>Aug</th><th>Sep</th></tr>";
+
+        }
+        else if (row.Quart == "Q4") {
+            subtableHtml += "<tr style='background-color: #e4e4e4;'><th>Oct</th><th>Nov</th><th>Dec</th></tr>";
+
+        };
+        subtableHtml += "<tr>";
+        subtableHtml += "<td>" + (row.InvolvementDays1 == 0 ? (row.IsEdit1 == false ? "-" : this.round(row.InvolvementDays1, 1)) : this.round(row.InvolvementDays1, 1)) + "/" + ((row.InvolvementEditDays1 == 0 && row.IsEdit1 == false) ? "-" : this.round(row.InvolvementEditDays1, 1)) + "</td>";
+        subtableHtml += "<td>" + (row.InvolvementDays2 == 0 ? (row.IsEdit2 == false ? "-" : this.round(row.InvolvementDays2, 1)) : this.round(row.InvolvementDays2, 1)) + "/" + ((row.InvolvementEditDays2 == 0 && row.IsEdit2 == false) ? "-" : this.round(row.InvolvementEditDays2, 1)) + "</td>";
+        subtableHtml += "<td>" + (row.InvolvementDays3 == 0 ? (row.IsEdit3 == false ? "-" : this.round(row.InvolvementDays3, 1)) : this.round(row.InvolvementDays3, 1)) + "/" + ((row.InvolvementEditDays3 == 0 && row.IsEdit2 == false) ? "-" : this.round(row.InvolvementEditDays3, 1)) + "</td>";
+        subtableHtml += "</tr>";
+        subtableHtml += "</table>";
+        return subtableHtml;
+    }
+    $(document).ready(function () {
+
+        //$('#timesheetapproval').attr('src', '../../Contents/assets/Images/aproval.png');
+        $('#timesheetapproval').css('color', 'black');
+
+        $("#checkedAll").change(function () {
+            if (this.checked) {
+                $(".checkSingle").each(function () {
+                    this.checked = true;
+                })
+            } else {
+                $(".checkSingle").each(function () {
+                    this.checked = false;
+                })
+            }
+        });
+
+        $(".checkSingle").click(function () {
+            if ($(this).is(":checked")) {
+                var isAllChecked = 0;
+                $(".checkSingle").each(function () {
+                    if (!this.checked)
+                        isAllChecked = 1;
+                })
+                if (isAllChecked == 0) { $("#checkedAll").prop("checked", true); }
+            } else {
+                $("#checkedAll").prop("checked", false);
+            }
+        });
+
+        GetPendingList();
+        GetMyActionedList();
+    });
+
+    $(document).on("click", "#singleReject", function () {
+        var nametxt = document.getElementById("approveRejComm").value;
+       
+        if (nametxt == "" || nametxt == undefined || nametxt == null) {
+           alert( "* Remarks field is required.");
+            return false
+        } 
+        //checkReqFields();
+    });
+    $(document).on("click", "#btnApprove", function () {
+        ActionName = "";
+        var count = [];
+        $.each($("input[name='timesheet_approve']:checked"), function () {
+            var tsid = $(this).attr("tsId");
+            count.push("{'tsId':'" + tsid + "'}");
+        });
+        if (count.length > 0) {
+            // alert("checked");
+            $('.lbl-Confirm').empty();
+            $('.lbl-Confirm').append(" Are you sure do you want to approve?");
+            $('#MyActionConfirmationModal').modal('show');
+            ActionName = "Approve";
+        }
+        else {
+            $.notify("Please check atleast one item. ", "warn");
+        }
+
+        $("#checkedAll").prop('checked', false);
+    });
+
+    $(document).on("click", "#modal-yes", function () {
+        TimesheetApprove();
+    });
+
+    $(document).on("click", "#modal-no", function () {
+        $('#MyActionConfirmationModal').modal('hide');
+    });
+
+    function GetPendingList() {
+        $('#timesheetApp').css("width", "100%");
+        var dt = $("#timesheetApp").DataTable({
+            "ajax": {
+                "url": '@Url.Action("PendingTimesheetList")',
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs": [{ targets: [0], "visible": false }, { targets: [7], "className": "text-center" }],
+            "columns": [
+                { "data": "SequenceNo", "name": "SequenceNo", "autoWidth": true },
+                {
+                    data: "TsID",
+                    render: function (data, type, val, meta) {
+                        if (val.Status == 2) {
+                            return "<input type='checkbox' name='timesheet_approve' class='checkSingle' id='chktimesheet'  tsId='" + val.TsID + "'/>"
+                        } else {
+                            return "<input type='checkbox' name='timesheet_approve' class='checkSingle' disabled id='chktimesheet' tsId='" + val.TsID + "'/>"
+                        }
+                    },
+                    className: "dt-body-center"
+                },
+                { "data": "RefNo", "name": "RefNo", "autoWidth": true },
+                {
+                    "data": "ProjectName",
+                    "render": function (data, type, row, meta) {
+                        return '<a class="label label-primary" style="color:#118467;" href="javascript:void(0);" onclick="GetTestvalues(' + row.ProjectID + ');">' + data + '</a>';
+                    }
+                },
+                { "data": "SubmittedBy", "name": "SubmittedBy", "autoWidth": true },
+                { "data": "Period", "name": "Period", "autoWidth": true },
+                {
+                    //"data": "Quart",
+                    //"render": function (data, type, row, val, meta) {
+                    "data": "Quart",
+                        "render": function (data, type, row, meta) {
+                            var subtableHtml = "<div class='subtable'>";
+                            //for (var i = 0; i < data.projects.length; i++) {
+                            if (data == "Q1") {
+                                subtableHtml += "<div class='row header'><span class='cell'>Jan</span><span class='cell'>Feb</span><span class='cell'>Mar</span></div>";
+                                subtableHtml += "<div class='row'>";
+                                subtableHtml += "<span class='cell'>" + round(row.InvolvementDays1, 1) + "/" + round(row.InvolvementEditDays1, 1) + ",</span>";
+                                subtableHtml += "<span class='cell'>" + round(row.InvolvementDays2, 1) + "/" + round(row.InvolvementEditDays2, 1) + ",</span>";
+                                subtableHtml += "<span class='cell'>" + round(row.InvolvementDays3, 1) + "/" + round(row.InvolvementEditDays3, 1) + "</span>";
+                                subtableHtml += "</div>";
+                            }
+                            else if (data == "Q2") {
+                                subtableHtml += "<div class='row header'><span class='cell'>Apr</span><span class='cell'>May</span><span class='cell'>Jun</span></div>";
+                                subtableHtml += "<div class='row'>";
+                                subtableHtml += "<span class='cell'>" + round(row.InvolvementDays1, 1) + "/" + round(row.InvolvementEditDays1, 1) + ",</span>";
+                                subtableHtml += "<span class='cell'>" + round(row.InvolvementDays2, 1) + "/" + round(row.InvolvementEditDays2, 1) + ",</span>";
+                                subtableHtml += "<span class='cell'>" + round(row.InvolvementDays3, 1) + "/" + round(row.InvolvementEditDays3, 1) + "</span>";
+                                subtableHtml += "</div>";
+                            }
+                            else if (data == "Q3") {
+                                subtableHtml += "<div class='row header'><span class='cell'>Jul</span><span class='cell'>Aug</span><span class='cell'>Sep</span></div>";
+                                subtableHtml += "<div class='row'>";
+                                subtableHtml += "<span class='cell'>" + round(row.InvolvementDays1, 1) + "/" + round(row.InvolvementEditDays1, 1) + ",</span>";
+                                subtableHtml += "<span class='cell'>" + round(row.InvolvementDays2, 1) + "/" + round(row.InvolvementEditDays2, 1) + ",</span>";
+                                subtableHtml += "<span class='cell'>" + round(row.InvolvementDays3, 1) + "/" + round(row.InvolvementEditDays3, 1) + "</span>";
+                                subtableHtml += "</div>";
+                            }
+                            else if (data == "Q4") {
+                                subtableHtml += "<div class='row header'><span class='cell'>Oct</span><span class='cell'>Nov</span><span class='cell'>Dec</span></div>";
+                                subtableHtml += "<div class='row'>";
+                                subtableHtml += "<span class='cell'>" + round(row.InvolvementDays1, 1) + "/" + round(row.InvolvementEditDays1, 1) + ",</span>";
+                                subtableHtml += "<span class='cell'>" + round(row.InvolvementDays2, 1) + "/" + round(row.InvolvementEditDays2, 1) + ",</span>";
+                                subtableHtml += "<span class='cell'>" + round(row.InvolvementDays3, 1) + "/" + round(row.InvolvementEditDays3, 1) + "</span>";
+                                subtableHtml += "</div>";
+                            };
+                            subtableHtml += "</div>";
+                            return subtableHtml;
+                        }
+                },
+                { "data": "SubmittedOn", "name": "SubmittedOn", "autoWidth": true },
+                {
+                    "render": function (data, type, val, meta) {
+                        return '<button type = "button"  id="btn-popup" class="btn btn-primary" btnId="' + val.TsID + '" btnVal="' + val.SequenceNo+'" data-dismiss="modal" style="background-color: #00664E; border-color:  #00664E; text-align:center;"> Action</button >';
+                    }
+                }
+            ],
+            "searching": false,
+            "lengthChange": false,
+            destroy: true
+        });
+    }
+
+    $('#timesheetApp').on('draw.dt', function () {
+        $('[data-toggle="tooltip"]').tooltip({ container: ".wrapper", boundary: 'window', placement: 'top' });
+    });
+  
+    $(document).on("click", "#btn-popup", function () {
+
+        var id = $(this).attr("btnId");
+        var val = $(this).attr("btnVal");
+        detailviewpopup(id,val);
+        //$('#DescModal').modal("show");
+    });
+
+    function TimesheetApprove() {
+        if (ActionName == "Approve") {
+            console.log(ActionName);
+            var DATA = [];
+            $.each($("input[name='timesheet_approve']:checked"), function () {
+                var tsid = $(this).attr("tsId");
+                DATA.push("{'tsId':'" + tsid + "'}");
+            });
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("TimesheetApprove", "TimesheetApproval")',
+                data: JSON.stringify({ 'DATA': DATA }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (data = "true") {
+                       // GettimesheetList();
+                        GetPendingList();
+                        $.notify("Data Approved", "success");
+                      //  GetMyActionedList();
+                        $("#ActionedTimeSheet").data().kendoGrid.dataSource.read();
+                        $("#PendingTimeSheet").data().kendoGrid.dataSource.read();
+                    }
+                },
+            });
+        }
+        else if (ActionName == "Reject") {
+            console.log(ActionName);
+            var DATA = [];
+            $.each($("input[name='timesheet_approve']:checked"), function () {
+                var tsid = $(this).attr("tsId");
+                DATA.push("{'tsId':'" + tsid + "'}");
+            });
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("TimesheetReject", "ManagerDashboard")',
+                data: JSON.stringify({ 'DATA': DATA }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (data = "true") {
+                       // GettimesheetList();
+                        GetSearchResults(0, 0, "", 2);
+                        $.notify("Data Rejected", "success");
+                    }
+                },
+            });
+        }
+    }
+
+    function checkReqFields() {
+        var returnValue;
+        var name = document.getElementById("approveRejComm").value;
+
+        returnValue = true;
+        if (name.trim() == "") {
+            document.getElementById("approveRejComm").innerHTML = "* Name is required.";
+            returnValue = false;
+        }
+        return returnValue;
+    }
+    function detailviewpopup(id, val) {
+        $.ajax({
+            url: '@Url.Action("DetailPopup", "TimesheetApproval")' ,
+            type: "POST",
+            dataType: "JSON",
+            data: { Id: id, SeqNo: val },
+            success: function (result) {
+                //console.log(result);
+                if (result != null && result != '') {
+                    
+                    $('#seq-no').val(result.data[0].SequenceNo);
+                    $('#ts-id').val(result.data[0].TsID);
+                    $('#ref-no').val(result.data[0].RefNo);
+                    $('#submitted-by').val(result.data[0].SubmittedBy);
+                    $('#period').val(result.data[0].Period);
+                    $('#project-name').val(result.data[0].ProjectName);
+                    $('#submitted-on').val(result.data[0].SubmittedOn);
+                    $('#day-one').val(result.data[0].InvolvementDays1);
+                    $('#day-two').val(result.data[0].InvolvementDays2);
+                    $('#day-three').val(result.data[0].InvolvementDays3);
+                    $('#edit-day-one').val(result.data[0].InvolvementEditDays1);
+                    $('#edit-day-two').val(result.data[0].InvolvementEditDays2);
+                    $('#edit-day-three').val(result.data[0].InvolvementEditDays3);
+                    $('#month1').text(result.data[0].Month1);
+                    $('#month2').text(result.data[0].Month2);
+                    $('#month3').text(result.data[0].Month3);
+                    $('#approveRejComm').val("");
+                   
+                }
+                $('#DescModal').modal('show');
+            }
+
+        });
+    }
+
+    function round(value, precision) {
+        if (!isNaN(value)) {
+            var multiplier = Math.pow(10, precision || 0);
+            return Math.round(value * multiplier) / multiplier;
+        }
+        else {
+            return value;
+        }
+       
+    }
+
+    function GetMyActionedList()
+    {
+        $('#actionedTimesheet').css("width", "100%");
+        var dt = $("#actionedTimesheet").DataTable({
+            "ajax": {
+                "url": '@Url.Action("ActionedTimesheetList")',
+                "type": "POST",
+                "datatype": "json"
+            },
+           
+            "columns": [
+
+                { "data": "ProjectName", "name": "ProjectName", "autoWidth": true },
+                { "data": "SubmittedBy", "name": "SubmittedBy", "autoWidth": true },
+                { "data": "Period", "name": "Period", "autoWidth": true },
+                {
+                    "data": "Quart",
+                    "render": function (data, type, row, meta) {
+                        var subtableHtml = "<div class='subtable'>";
+                        //for (var i = 0; i < data.projects.length; i++) {
+                        if (data == "Q1") {
+                            subtableHtml += "<div class='row header'><span class='cell'>Jan</span><span class='cell'>Feb</span><span class='cell'>Mar</span></div>";
+                            subtableHtml += "<div class='row'>";
+                            if (row.InvolvementEditDays1 != 0) {
+                                subtableHtml += "<span class='cell'>" + round( row.InvolvementDays1,1) + "/" + round( row.InvolvementEditDays1,1) + "</span>";
+                            }
+                            else {
+                                subtableHtml += "<span class='cell'>-</span>";
+                            }
+                            if (row.InvolvementEditDays2 != 0) {
+                                subtableHtml += "<span class='cell'>" + round( row.InvolvementDays2,1) + "/" + round( row.InvolvementEditDays2 , 1) + "</span>";
+                            }
+                            else {
+                                subtableHtml += "<span class='cell'>-</span>";
+                            } if (row.InvolvementEditDays3 != 0) {
+                                subtableHtml += "<span class='cell'>" + round( row.InvolvementDays3 , 1) + "/" + round( row.InvolvementEditDays3 , 1) + "</span>";
+                            }
+                            else {
+                                subtableHtml += "<span class='cell'>-</span>";
+                            }
+                            //subtableHtml += "<span class='cell'>" + row.InvolvementDays1 + "/" + row.InvolvementEditDays1 + "</span>";
+                            //subtableHtml += "<span class='cell'>" + row.InvolvementDays2 + "/" + row.InvolvementEditDays2 + "</span>";
+                            //subtableHtml += "<span class='cell'>" + row.InvolvementDays3 + "/" + row.InvolvementEditDays3 + "</span>";
+                            subtableHtml += "</div>";
+                        }
+                        else if (data == "Q2") {
+                            subtableHtml += "<div class='row header'><span class='cell'>Apr</span><span class='cell'>May</span><span class='cell'>Jun</span></div>";
+                            subtableHtml += "<div class='row'>";
+                            if (row.InvolvementEditDays1 != 0) {
+                                subtableHtml += "<span class='cell'>" + round( row.InvolvementDays1,1) + "/" + round( row.InvolvementEditDays1,1) + "</span>";
+                            }
+                            else {
+                                subtableHtml += "<span class='cell'>-</span>";
+                            }
+                            if (row.InvolvementEditDays2 != 0) {
+                                subtableHtml += "<span class='cell'>" + round( row.InvolvementDays2 , 1) + "/" + round( row.InvolvementEditDays2 , 1) + "</span>";
+                            }
+                            else {
+                                subtableHtml += "<span class='cell'>-</span>";
+                            } if (row.InvolvementEditDays3 != 0) {
+                                subtableHtml += "<span class='cell'>" + round( row.InvolvementDays3 , 1) + "/" + round( row.InvolvementEditDays3 , 1) + "</span>";
+                            }
+                            else {
+                                subtableHtml += "<span class='cell'>-</span>";
+                            }
+                            //subtableHtml += "<span class='cell'>" + row.InvolvementDays1 + "/" + row.InvolvementEditDays1 + "</span>";
+                            //subtableHtml += "<span class='cell'>" + row.InvolvementDays2 + "/" + row.InvolvementEditDays2 + "</span>";
+                            //subtableHtml += "<span class='cell'>" + row.InvolvementDays3 + "/" + row.InvolvementEditDays3 + "</span>";
+                            subtableHtml += "</div>";
+                        }
+                        else if (data == "Q3") {
+                            subtableHtml += "<div class='row header'><span class='cell'>Jul</span><span class='cell'>Aug</span><span class='cell'>Sep</span></div>";
+                            subtableHtml += "<div class='row'>";
+                            if (row.InvolvementEditDays1 != 0) {
+                                subtableHtml += "<span class='cell'>" + round( row.InvolvementDays1 , 1) + "/" + round( row.InvolvementEditDays1 , 1) + "</span>";
+                            }
+                            else {
+                                subtableHtml += "<span class='cell'>-</span>";
+                            }
+                            if (row.InvolvementEditDays2 != 0) {
+                                subtableHtml += "<span class='cell'>" + round( row.InvolvementDays2 , 1) + "/" + round( row.InvolvementEditDays2 , 1) + "</span>";
+                            }
+                            else {
+                                subtableHtml += "<span class='cell'>-</span>";
+                            } if (row.InvolvementEditDays3 != 0) {
+                                subtableHtml += "<span class='cell'>" + round( row.InvolvementDays3 , 1) + "/" + round( row.InvolvementEditDays3 , 1) + "</span>";
+                            }
+                            else {
+                                subtableHtml += "<span class='cell'>-</span>";
+                            }
+                            //subtableHtml += "<span class='cell'>" + row.InvolvementDays1 + "/" + row.InvolvementEditDays1 + "</span>";
+                            //subtableHtml += "<span class='cell'>" + row.InvolvementDays2 + "/" + row.InvolvementEditDays2 + "</span>";
+                            //subtableHtml += "<span class='cell'>" + row.InvolvementDays3 + "/" + row.InvolvementEditDays3 + "</span>";
+                            subtableHtml += "</div>";
+                        }
+                        else if (data == "Q4") {
+                            subtableHtml += "<div class='row header'><span class='cell'>Oct</span><span class='cell'>Nov</span><span class='cell'>Dec</span></div>";
+                            subtableHtml += "<div class='row'>";
+                            if (row.InvolvementEditDays1 != 0) {
+                                subtableHtml += "<span class='cell'>" + round( row.InvolvementDays1 , 1) + "/" + round( row.InvolvementEditDays1 , 1) + "</span>";
+                            }
+                            else {
+                                subtableHtml += "<span class='cell'>-</span>";
+                            }
+                            if (row.InvolvementEditDays2 != 0) {
+                                subtableHtml += "<span class='cell'>" + round( row.InvolvementDays2 , 1) + "/" + round( row.InvolvementEditDays2 , 1) + "</span>";
+                            }
+                            else {
+                                subtableHtml += "<span class='cell'>-</span>";
+                            } if (row.InvolvementEditDays3 != 0) {
+                                subtableHtml += "<span class='cell'>" + round( row.InvolvementDays3 , 1) + "/" + round( row.InvolvementEditDays3 , 1) + "</span>";
+                            }
+                            else {
+                                subtableHtml += "<span class='cell'>-</span>";
+                            }
+                            //subtableHtml += "<span class='cell'>" + row.InvolvementDays1 + "/" + row.InvolvementEditDays1 + "</span>";
+                            //subtableHtml += "<span class='cell'>" + row.InvolvementDays2 + "/" + row.InvolvementEditDays2 + "</span>";
+                            //subtableHtml += "<span class='cell'>" + row.InvolvementDays3 + "/" + row.InvolvementEditDays3 + "</span>";
+                            subtableHtml += "</div>";
+                        };
+                        subtableHtml += "</div>";
+                        return subtableHtml;
+                    }
+                },
+                { "data": "SubmittedOn", "name": "SubmittedOn", "autoWidth": true },
+                { "data": "StatusDesc", "name": "StatusDesc", "autoWidth": true },
+                //{ "data": "Actioner", "name": "Actioner", "autoWidth": true },
+                { "data": "ActionedDate", "name": "ActionedDate", "autoWidth": true },
+                //{ "data": "ApproveRejectComments", "name": "ApproveRejectComments", "autoWidth": true },
+                {
+                    "data": "ApproveRejectComments",
+                    "render": function (data, type, row, meta) {
+                        var remark = row.ApproveRejectComments;
+                        var remarkString = remark != null && remark != undefined && remark != '' ? remark.substring(0, 5) : '';
+                        if (data != '') {
+                            return '<span data-toggle="tooltip" title=" ' + row.ApproveRejectComments + ' "><i>' + remarkString +'</i> </span>';
+                        }
+                        else {
+                            return '<span> </span>';
+                        }
+                    }
+                },
+                { "data": "SubmittedOnBehalf", "name": "SubmittedOnBehalf", "autoWidth": true }
+            ],
+            "searching": false,
+            "lengthChange": false,
+            destroy: true
+        });
+
+        dt.on('draw', function () {
+            $('[data-toggle="tooltip"]').tooltip({ container: ".wrapper", boundary: 'window', placement: 'top' });
+        });
+
+       
+    }
+</script>

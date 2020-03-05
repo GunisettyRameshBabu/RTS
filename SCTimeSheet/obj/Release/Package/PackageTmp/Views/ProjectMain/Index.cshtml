@@ -1,0 +1,190 @@
+﻿
+@using SCTimeSheet_UTIL
+@{
+    ViewBag.Title = "Project Master";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .dataTables_wrapper .pagination {
+        float: right !important;
+    }
+</style>
+<div class="card-body" style="background-color: #fff;border-radius:10px; ">
+    @if ((Int64)Session[Constants.SessionRoleID] == Convert.ToInt64(ReadConfig.GetValue("RoleAdmin")))
+    {
+        @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.ProjectMasterList>()
+                                                                                                   .Name("projectMemberList")
+                                                                                                   //.HtmlAttributes(new { @style = "height:650px" })
+                                                                                                   .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                                                                   .Columns(columns =>
+                                                                                                   {
+
+
+                                                                                                       columns.Bound(p => p.ItemNo).Filterable(false).Width(50);
+                                                                                                       columns.Bound(p => p.ProjectCode).Filterable(true);
+                                                                                                       columns.Bound(p => p.ProjectName).Filterable(true).ClientTemplate("<a class='label label-primary'   href='" + Url.Action("ProjectEdit", "ProjectMaster") + "/#= ProjectID#'>#=ProjectName#</a>")
+                                                                                                        .HtmlAttributes(new { @style = "color:blue" });
+                                                                                                       columns.Bound(p => p.StartDate).Filterable(false).Format("{0:dd MMM yyyy}");
+                                                                                                       columns.Bound(p => p.EndDate).Filterable(false).Format("{0:dd MMM yyyy}");
+                                                                                                       columns.Bound(p => p.ProjectGrant).Filterable(true);
+                                                                                                       columns.Bound(p => p.Theme).Filterable(true);
+                                                                                                       columns.Bound(p => p.ResearchArea).Filterable(false);
+                                                                                                       columns.Bound(p => p.TypeofResearch).Filterable(false);
+                                                                                                       columns.Bound(p => p.InternalOrder).Filterable(false);
+                                                                                                       columns.Bound(p => p.CostCentre).Filterable(false);
+
+                                                                                                   })
+                                                                                  .Pageable()
+                                                                                   .Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+                                                                                  //.Scrollable()
+                                                                                  .Filterable()
+                               .ToolBar(toolbar =>
+                               {
+
+                                   toolbar.Custom().Text("Add Project").Action("Index", "ProjectMaster").HtmlAttributes(new { @style = "background-color: #00664E;border-color: #00664E;color:#fff" });
+                               })
+
+                                                                                  .DataSource(dataSource => dataSource
+                                                                                      .Ajax()
+                                                                                      .PageSize(50)
+
+                                                                                      .Read(read => read.Action("Read", "ProjectMain"))
+
+                                                                                   )
+        )
+
+    }
+    else
+    {
+        @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.ProjectMasterList>()
+                                                                                           .Name("projectMemberList")
+                                                                                           //.HtmlAttributes(new { @style = "height:650px" })
+                                                                                           .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                                                           .Columns(columns =>
+                                                                                           {
+
+
+                                                                                               columns.Bound(p => p.ItemNo).Filterable(false).Width(50);
+                                                                                               columns.Bound(p => p.ProjectCode).Filterable(true);
+                                                                                               columns.Bound(p => p.ProjectName).Filterable(true).ClientTemplate("<a class='label label-primary'   href='" + Url.Action("ProjectEdit", "ProjectMaster") + "/#= ProjectID#'>#=ProjectName#</a>")
+                                                                                               .HtmlAttributes(new { @style = "color:blue" });
+                                                                                               columns.Bound(p => p.StartDate).Filterable(false).Format("{0:dd MMM yyyy}");
+                                                                                               columns.Bound(p => p.EndDate).Filterable(false).Format("{0:dd MMM yyyy}");
+                                                                                               columns.Bound(p => p.ProjectGrant).Filterable(true);
+                                                                                               columns.Bound(p => p.ResearchArea).Filterable(false);
+                                                                                               columns.Bound(p => p.TypeofResearch).Filterable(false);
+                                                                                               columns.Bound(p => p.InternalOrder).Filterable(false);
+                                                                                               columns.Bound(p => p.CostCentre).Filterable(false);
+
+                                                                                           })
+                                                                          .Pageable()
+                                                                           .Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+                                                                          //.Scrollable()
+                                                                          .Filterable()
+                      
+
+                                                                          .DataSource(dataSource => dataSource
+                                                                              .Ajax()
+                                                                              .PageSize(50)
+
+                                                                              .Read(read => read.Action("Read", "ProjectMain"))
+
+                                                                           )
+        )
+    }
+
+    <div>
+
+
+    </div>
+
+</div>
+
+<script>
+    $('.select2').select2();
+
+
+    function redirectclick() {
+        location.href = '@Url.Action("Index","ProjectMaster")';
+    }
+
+
+    $(document).ready(function () {
+        var mes = '@ViewBag.Message';
+
+        if (mes != "" && mes != null && mes != undefined) {
+            alert(mes);
+        }
+
+        //$('#promaster-logo').attr('src', '../../Contents/assets/Login/images/pro.png');
+        $('#promaster').css('color', 'black');
+
+        //$('#admin-logo').attr('src', '../../Contents/assets/Images/utility.png');
+        $('#admin').css('color', 'black');
+     @*$("#timesheetListNOB").DataTable({
+                             "ajax": {
+                                 "url": '@Url.Action("Read")',
+                    "type": "POST",
+                    "datatype": "json"
+                                 },
+                "columnDefs":
+                    [{
+                        "targets": [0],
+                        "visible": false,
+                        "searchable": false
+
+                    },
+                        {
+                            "targets": [4, 5],
+                            "width": "125px"
+                        }
+                    ],
+
+                "columns": [
+
+                    { "data": "ProjectID", "name": "ProjectID", "autoWidth": true },
+                    { "data": "ItemNo", "name": "ItemNo", "autoWidth": true },
+                    { "data": "ProjectCode", "name": "ProjectCode", "autoWidth": true },
+                    //{ "data": "ProjectName", "name": "ProjectName", "autoWidth": true },
+                    {
+
+                        "data": "ProjectName",
+
+                        "render": function (data, type, row, meta) {
+
+
+
+                 return '<a class="label label-primary" style="color:#118467;" href="javascript:void(0);" onclick="GetProjectEdit(' + row.ProjectID + ');">' + data + '</a>';
+
+             }
+                    },
+                    { "data": "StartDate", "name": "StartDate", "autoWidth": true },
+                    { "data": "EndDate", "name": "EndDate", "autoWidth": true },
+                    { "data": "ProjectGrant", "name": "ProjectGrant", "autoWidth": true },
+                    { "data": "ResearchArea", "name": "ResearchArea", "autoWidth": true },
+                    { "data": "TypeofResearch", "name": "TypeofResearch", "autoWidth": true },
+                    { "data": "InternalOrder", "name": "InternalOrder", "autoWidth": true },
+                    { "data": "CostCentre", "name": "CostCentre", "autoWidth": true },
+                    //{ "data": "ProjectDesc", "name": "ProjectDesc", "autoWidth": true },
+
+
+                ],
+                "searching": false,
+                "lengthChange": false
+            });*@
+        });
+
+    function GetProjectEdit(projectid) {
+        $.ajax({
+            type: "POST",
+            data: { projectid: projectid },
+            url: '@Url.Action("GetRedirect", "ProjectMaster")',
+            success: function (data) {
+                window.location.href = '@Url.Action("ProjectEdit", "ProjectMaster")';
+            }
+        });
+        }
+
+</script>
+

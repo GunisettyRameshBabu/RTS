@@ -1,0 +1,543 @@
+﻿@model SCTimeSheet_DAL.Models.ProjectInvolvementPercentageModel
+@{
+    ViewBag.Title = "Total Project Involvement %";
+}
+
+<style>
+    .k-grid th {
+        /*font-size: 17px !important;*/
+        /*padding-top: 12px;
+        padding-bottom: 12px;*/
+        text-align: center;
+        background-color: transparent;
+        color: grey !important;
+        /*height: 75px;*/
+        border: 1px solid #ddd !important;
+        /*border-left: transparent;
+                border-right: transparent;
+                border-bottom: 1px solid black;
+                border-top: 1px solid black;*/
+        font-size: small !important;
+        font-weight: bold !important;
+    }
+</style>
+
+<div class="card-body" style="background-color: #fff;border-radius:10px; margin-top: 5px; padding: 10px; padding-bottom: 5px;padding-left: 10px;">
+    <h5 style="font-size: 26px; color: #646464;"></h5>
+
+        <div class="row">
+
+            <div class="col-md-1-5" style="padding-left:10px;">
+                <label style="color: #646464;">Employee Name</label>
+            </div>
+            <div class="col-md-3">
+                @*@Html.DropDownListFor(model => model.EmployeeID, new SelectList(ViewBag.EmployeeList, "EmployeeID", "EmpName"), "--Select Any--", new { @class = "form-control select2", @id = "empDropDown", style = "width: 100%; background-color: #f6f6f6;border-radius: 9px;" })
+            @Html.ValidationMessageFor(model => model.EmployeeID, "", new { @class = "text-danger" })*@
+
+                @(Html.Kendo().DropDownList()
+                                                                                           .Name("empDropDown")
+                                                                                           .DataTextField("EmpName")
+                                                                                           .DataValueField("EmployeeID")
+                                                                                            .OptionLabel("--Select Any--")
+                                                                                           .DataSource(source =>
+                                                                           {
+                                                                               source.Read(read =>
+                                                                               {
+                                                                                   read.Action("GetEmps", "MasterListOfInvolvement");
+                                                                               });
+                                                                           })
+                                                                           .Filter("contains")
+                                                                           .Events(e =>
+                                                                           {
+                                                                               e.Change("loadData");
+                                                                           })
+                                                                                           .HtmlAttributes(new { style = "width: 100%; background-color: #f6f6f6;border-radius: 9px;" })
+
+                )
+            </div>
+
+            @*<div class="col-md-1" >
+            <button type="submit" class="btn btn-primary" id="btnShowFullList" style="background-color:rgb(0,108,83); border-color: rgb(0,108,83);">Show Full List</button>
+        </div>*@
+
+
+            <div class="col-md-5 col-sm-6" id="btnlimit">
+                <div class="row">
+                    <div class="col-md-2 col-sm-6">
+                        <label style="color: #646464; float:right;">Limit </label>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <input type="number" min="0" max="100" class="form-control" id="empLimit" placeholder="Involvement % Limit" style=" background-color: #f6f6f6;border-radius: 9px;" onchange="updateLimit()" />
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <button type="submit" class="btn btn-primary" id="btnDistribute" style="background-color:rgb(0,108,83); border-color: rgb(0,108,83);">Equally Distribute</button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-1 col-sm-12" id="btnlimit1">
+                <br/>
+                @(Html.Kendo().CheckBox().Name("Auto").HtmlAttributes(new { id = "chkAuto", @name = "Auto", onchange = "updateAuto();" }).Label("Auto"))
+            </div>
+        </div>
+
+        <div style=" margin-top:10px;" id="empProjectList">
+            @*overflow-x:scroll;*@
+            @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.ProjectInvolvementPercentageModel>()
+                                                                                                .Name("EmpProjectGrid")
+                                                                                                .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                                                                .DataSource(dataSource => dataSource
+                                                                                                    .Ajax()
+                                                                                                     .Aggregates(aggregates =>
+                                                                                                     {
+                                                                                                         aggregates.Add(p => p.InvolvePercent).Sum();
+
+                                                                                                     })
+                                                                                                    .Batch(true)
+                                                                                                    .PageSize(50)
+                                                                                                    .ServerOperation(false)
+                                                                                                    .Model(model =>
+                                                                                                    {
+                                                                                                        model.Id(p => p.ProjectId);
+                                                                                                        model.Field(p => p.ProjectId).Editable(false);
+                                                                                                        model.Field(p => p.ItemNo).Editable(false);
+                                                                                                        model.Field(p => p.ProjectName).Editable(false);
+                                                                                                        model.Field(p => p.StartDate);
+                                                                                                        model.Field(p => p.EndDate);
+                                                                                                        model.Field(p => p.InvolvePercent);
+                                                                                                        model.Field(p => p.ProjectStartDate).Editable(false);
+                                                                                                        model.Field(p => p.ProjectEndDate).Editable(false);
+                                                                                                        model.Field(p => p.OriginalEndDate).Editable(false);
+                                                                                                        model.Field(p => p.OriginalStartDate).Editable(false);
+                                                                                                    })
+                                                                                                    .Read(read => read
+                                                                                                        .Action("GetProjectDetails", "MasterListOfInvolvement")
+                                                                                                        .Data("GetEmpId")
+                                                                                                    )
+                                                                                                    .Update(update => update
+                                                                                                        .Action("EditEmpDetails", "MasterListOfInvolvement")
+                                                                                                    )
+                                                                                                )
+                                                                                                //.Events(x => x.DataBound("onDataBound"))
+                                                                                                .Columns(columns =>
+                                                                                                {
+                                                                                                    columns.Bound(product => product.ItemNo).Title("No");
+                                                                                                    columns.Bound(product => product.ProjectName).Title("Projects");
+                                                                                                    columns.Bound(product => product.ProjectStartDate).Format("{0:dd MMM yyyy}");
+                                                                                                    columns.Bound(product => product.ProjectEndDate).Format("{0:dd MMM yyyy}");
+                                                                                                    columns.Group(group => group
+                                                                                                        .Title("Period")
+                                                                                                        .Columns(info =>
+                                                                                                        {
+                                                                                                            info.Bound(x => x.StartDate).Title("From").Format("{0:dd MMM yyyy}").ClientTemplate("<div data-toggle='tooltip' data-html='true' title='#= getValue(OriginalStartDate) #'>#= getValue(StartDate) #</div>").Sortable(false);
+
+                                                                                                            info.Bound(x => x.EndDate).Title("To").Format("{0:dd MMM yyyy}").ClientTemplate("<div data-toggle='tooltip' data-html='true' title='#= getValue(OriginalEndDate) #'>#= getValue(EndDate) #</div>").Sortable(false);
+                                                                                                        })
+                                                                                                    );
+                                                                                                    columns.Bound(product => product.InvolvePercent).Title("% of Project Involvement").ClientTemplate("<div data-toggle='tooltip' data-html='true' title='#= getPercentageValue(OldInvolvePercent) #'>#= getPercentageValue(InvolvePercent) #</div>").Format("{0:#####.##}").ClientFooterTemplate("Total: <span id='txtSum'> #= getPercentageValue(sum) # </span>");
+                                                                                                //columns.Command(command => { command.Edit(); });
+                                                                                            })
+                                                                                                //.ToolBar(toolbar => toolbar.Save())
+                                                                                                .AutoBind(false)
+                                                                                                .Editable(editable => editable.Mode(GridEditMode.InCell))
+                                                                                                .Pageable()
+                                                                                                .Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+                                                                                                .Events(ev => ev.DataBound("db"))
+            )
+
+            <div class="button" style="float: right; margin-top:10px;">
+                <button type="button" class="btn btn-primary" id="update" style="background-color:rgb(0,108,83); border-color: rgb(0,108,83);">Save</button>
+            </div>
+
+
+        </div>
+    <br/>
+    <br />
+       
+        <div class="row" id="grdHistory" >
+            <h5 style="font-size: 26px; color: #646464;" class="col-md-12">
+                History (* showing outdated records)
+            </h5>
+            <div class="col-md-12">
+                @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.ProjectInvolvementPercentageModel>()
+                                                                                                                      .Name("EmpProjectHistoryGrid")
+                                                                                                                      .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                                                                                      .DataSource(dataSource => dataSource
+                                                                                                                          .Ajax()
+                                                                                                                          .Aggregates(aggregates =>
+                                                                                                                            {
+                                                                                                                                aggregates.Add(p => p.InvolvePercent).Sum();
+
+                                                                                                                            })
+                                                                                                                          .Batch(true)
+                                                                                                                          .PageSize(50)
+                                                                                                                          .ServerOperation(false)
+
+                                                                                                                          .Read(read => read
+                                                                                                                              .Action("GetProjectHistoryDetails", "MasterListOfInvolvement")
+                                                                                                                              .Data("GetEmpId")
+                                                                                                                          )
+
+                                                                                                                      )
+
+                                                                                                                      .Columns(columns =>
+                                                                                                                      {
+                                                                                                                          columns.Bound(product => product.ItemNo).Title("No");
+                                                                                                                          columns.Bound(product => product.ProjectName).Title("Projects");
+                                                                                                                          columns.Group(group => group
+                                                                                                                              .Title("Period")
+                                                                                                                              .Columns(info =>
+                                                                                                                              {
+                                                                                                                                  info.Bound(x => x.StartDate).Title("From").Format("{0:dd MMM yyyy}");
+
+                                                                                                                                  info.Bound(x => x.EndDate).Title("To").Format("{0:dd MMM yyyy}");
+                                                                                                                              })
+                                                                                                                          );
+                                                                                                                          columns.Bound(product => product.InvolvePercent).Title("% of Project Involvement").Format("{0:#####.##}");
+                                                                                                                          columns.Bound(product => product.AuditDate).Format("{0:dd MMM yyyy}");
+                                                                                                                          //columns.Command(command => { command.Edit(); });
+                                                                                                                      })
+                                                                                                                      //.ToolBar(toolbar => toolbar.Save())
+                                                                                                                      .AutoBind(false)
+
+                                                                                                                      .Pageable()
+                                                                                                                      .Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+                )
+            </div>
+
+        </div>
+
+
+
+</div>
+
+<script id="starttemplate" type="text/kendo-tmpl">
+    @(Html.Kendo().DatePicker()
+                    .Name("StartDate_#=ProjectId#")
+                    .Format("{0:dd MMM yyyy}")
+                    .Value("#=StartDate#")
+                    .HtmlAttributes(new { data_bind = "value:StartDate" })
+                    .ToClientTemplate()
+    )
+</script>
+
+<script>
+
+    function percentageChange(e) {
+        debugger;
+        var grid = e.sender.element.closest(".k-grid").data("kendoGrid");
+        var row = e.sender.element.closest("tr");
+        var dataItem = grid.dataItem(row);
+        //dataItem.set("InvolvePercent", this.value())
+        //var grid1 = $("#EmpProjectGrid").data("kendoGrid");
+        var items = grid.dataSource.data();
+        var sum = 0;
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].ItemNo == dataItem.ItemNo) {
+                items[i].set("InvolvePercent", this.value())
+            }
+
+            sum = sum + items[i].InvolvePercent;
+        }
+
+        $("#txtSum").text(getPercentageValue(sum));
+    }
+
+    function updateLimit() {
+         var invPercent = $('#empLimit').val();
+        if (invPercent == "" || invPercent == null || invPercent == undefined) {
+            alert('Please enter the involvement percentage');
+        }
+       else if (isNaN(invPercent)) {
+            alert('Total Involvement percentage should be a number');
+        }
+       else if (invPercent > 100) {
+            alert('Total Involvement percentage can not be more than 100');
+        }
+        else {
+             var empid = $("#empDropDown").val();
+        var data = { involvePercent: invPercent, empId: empid };
+        //alert("1");
+        $.ajax({
+            type: "POST",
+            //url: 'MasterListOfInvolvement/UpdateInvolvementLimit',
+            url: '@Url.Action("UpdateInvolvementLimit", "MasterListOfInvolvement")',
+            dataType: "json",
+            //data: { involvePercent: invPercent, empId: empid },
+            data: '{involvePercent: ' + JSON.stringify(invPercent) + ',EmdId: ' + JSON.stringify(empid) + '}',
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                $.notify("Total Percentage Updated Successfully", "success");
+                var entityGrid = $("#EmpProjectGrid").data("kendoGrid");
+                var data = entityGrid.dataSource.data();
+                var totalNumber = data.length;
+                var total = 0;
+                for (var i = 0; i < totalNumber; i++) {
+                    var currentDataItem = data[i];
+                    total = total + currentDataItem.InvolvePercent;
+                }
+
+                if (total > invPercent) {
+                    $.notify("Current total exceeded the total involvement percentage , please correct ", "error");
+                }
+            },
+        })
+        }
+    }
+    function EndDateChange(e) {
+        var grid = e.sender.element.closest(".k-grid").data("kendoGrid");
+        var row = e.sender.element.closest("tr");
+        var dataItem = grid.dataItem(row);
+        if (dataItem.StartDate != '' && dataItem.EndDate != '') {
+            var startDate = kendo.parseDate(dataItem.StartDate);
+            var endDate = kendo.parseDate(dataItem.EndDate);
+
+            if (endDate < startDate) {
+                var datepicker = $("#EndDate").data("kendoDatePicker");
+
+                datepicker.min(startDate);
+                datepicker.value(startDate);
+                alert("The Start Date can not be more than the End Date, End Date will be changed to Start Date automatically");
+            }
+        }
+
+    }
+
+    function StartDateChange(e) {
+        var grid = e.sender.element.closest(".k-grid").data("kendoGrid");
+        var row = e.sender.element.closest("tr");
+        var dataItem = grid.dataItem(row);
+        debugger;
+        if (dataItem.StartDate != '' && dataItem.EndDate != '') {
+            var startDate = kendo.parseDate(dataItem.StartDate);
+            var endDate = kendo.parseDate(dataItem.EndDate);
+
+            if (endDate < startDate) {
+                dataItem.set("EndDate", startDate);
+                alert("The Start Date can not be more than the End Date, End Date will be changed to Start Date automatically");
+            }
+        }
+
+    }
+
+    function EndDateOpen(e) {
+        var grid = e.sender.element.closest(".k-grid").data("kendoGrid");
+        var row = e.sender.element.closest("tr");
+        var dataItem = grid.dataItem(row);
+
+        if (dataItem.StartDate != '') {
+            var datepicker = $("#EndDate").data("kendoDatePicker");
+
+            datepicker.min(dataItem.StartDate);
+
+        }
+    }
+
+    (function ($, kendo) {
+        $.extend(true, kendo.ui.validator, {
+            rules: { // custom rules
+                startdatetvalidation: function (input, params) {
+                    if ($(input).val() && $(input).attr('id') == "StartDate") {
+                        if ($('#EndDate').val() && $(input).getKendoDateTimePicker().value() > $('#EndDate').getKendoDateTimePicker().value()) {
+                            return false;
+                        }
+                    }
+                    return true;
+                },
+                endatevalidation: function (input, params) {
+                    if ($(input).val() && $(input).attr('id') == "EndDate") {
+                        if ($('#StartDate').val() && $(input).getKendoDateTimePicker().value() < $('#StartDate').getKendoDateTimePicker().value()) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            },
+            messages: {
+                startdatevalidation: function (input) {
+                    return "Start Date can't be greater than End Date.";
+                },
+                endatevalidation: function (input) {
+                    return "End Date can't be smaller than Start Date.";
+                }
+            }
+        });
+    })(jQuery, kendo);
+
+    function updateAuto() {
+        var empid = $("#empDropDown").val();
+
+
+             $.ajax({
+               url: '@Url.Action("AutoAdjustPercentage","MasterListOfInvolvement")',
+               type: "POST",
+               dataType: "JSON",
+                 data: { isAuto: $("#chkAuto").is(':checked') , empId : empid },
+                 success: function (result) {
+
+                     alert($("#chkAuto").is(':checked') == true ? "Auto correction of involvement is enable successfully" : "Auto correction of involvement is disabled successfully");
+
+
+                },
+            });
+
+    }
+    function getValue(Date) {
+        return kendo.toString(Date, 'dd MMM yyyy');
+    }
+    function getPercentageValue(value) {
+        return kendo.toString(value, '#####.##');
+    }
+    function onDataBound() {
+        $('[data-toggle="tooltip"]').tooltip({ container: ".wrapper", boundary: 'window', placement: 'top' });
+    }
+    function getTotal(data) {
+        var total = 0;
+        for (var i = 0; i < data.length; i++) {
+            total = total + data[i].InvolvePercent;
+        }
+        return total == 0 ? "" : total;
+    }
+    function db(e) {
+        var grid = this;
+        $(".templateCell").each(function () {
+            eval($(this).children("script").last().html());
+            var tr = $(this).closest('tr');
+            var item = grid.dataItem(tr);
+            kendo.bind($(this), item);
+        });
+
+        //$('[data-toggle="tooltip"]').tooltip();
+    }
+    $('.select2').select2();
+
+    $(document).ready(function () {
+        //$('#proInvPercentage-logo').attr('src', '../../Contents/assets/Images/percent2.png');
+        $('#proInvPercentage').css('color', 'black');
+
+        //$('#admin-logo').attr('src', '../../Contents/assets/Images/utility.png');
+        $('#admin').css('color', 'black');
+
+        $("#empProjectList").hide();
+        $("#grdHistory").hide();
+        $("#btnlimit").hide();
+        $("#btnlimit1").hide();
+    });
+
+    $("#btnShowFullList").click(function () {
+        loadData(e);
+    });
+
+    function loadData(e) {
+         var empid = $("#empDropDown").val();
+        if (empid == "" || empid == undefined || empid == null) {
+            $("#empProjectList").hide();
+            $("#grdHistory").hide();
+            $("#btnlimit").hide();
+            $("#btnlimit1").hide();
+            //alert("Please select the employee from the list to show the project details");
+        }
+        else {
+            $("#empProjectList").show();
+            $("#grdHistory").show();
+
+            $("#btnlimit").show();
+            $("#btnlimit1").show();
+
+            //Limit textbox data
+
+            $.ajax({
+                url: '@Url.Action("GetTotalInvolvement","MasterListOfInvolvement")',
+                type: "POST",
+                dataType: "JSON",
+                data: { empId: empid },
+                success: function (result) {
+                    $('#empLimit').val(result.TotalInvolvement);
+                    $("#chkAuto").prop('checked', result.IsAutoActive);
+                },
+            });
+
+            $("#EmpProjectGrid").data().kendoGrid.dataSource.read();
+            $("#EmpProjectGrid").css("display", "block");
+
+            $("#EmpProjectHistoryGrid").data().kendoGrid.dataSource.read();
+            $("#EmpProjectHistoryGrid").css("display", "block");
+        }
+    }
+
+    $("#btnDistribute").click(function () {
+        var invPercent = $('#empLimit').val();
+        if (invPercent == "" || invPercent == null || invPercent == undefined) {
+            alert('Please enter the involvement percentage');
+        }
+       else if (isNaN(invPercent)) {
+            alert('Total Involvement percentage should be a number');
+        }
+       else if (invPercent > 100) {
+            alert('Total Involvement percentage can not be more than 100');
+        }
+        else {
+             var empid = $("#empDropDown").val();
+        var data = { involvePercent: invPercent, empId: empid };
+        //alert("1");
+        $.ajax({
+            type: "POST",
+            //url: 'MasterListOfInvolvement/UpdateInvolvementLimit',
+            url: '@Url.Action("UpdateInvolvementLimit", "MasterListOfInvolvement")',
+            dataType: "json",
+            //data: { involvePercent: invPercent, empId: empid },
+            data: '{involvePercent: ' + JSON.stringify(invPercent) + ',EmdId: ' + JSON.stringify(empid) + '}',
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                var grid = $("#EmpProjectGrid").data("kendoGrid");
+                var items = grid.dataSource.data();
+                var count = items.length;
+                var newInvPercent = invPercent / count;
+                for (var i = 0; i < items.length; i++) {
+                    items[i].set("InvolvePercent", newInvPercent);
+                }
+            },
+        })
+        }
+
+    });
+
+    $("#update").bind("click", function () {
+        //$("#EmpProjectGrid").data("kendoGrid").saveChanges();
+        var griddata = $("#EmpProjectGrid").data("kendoGrid");
+        //use ajax request to send the data of the selected items
+        var objList = griddata.dataSource.view();
+        var total = 0;
+        for (var i = 0; i < objList.length; i++) {
+            total = total + objList[i].InvolvePercent;
+        }
+        var limit = $("#empLimit").val();
+        debugger;
+        if (parseInt(limit, 10) >= total) {
+            var data = JSON.stringify(griddata.dataSource.view());
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("EditEmpDetails", "MasterListOfInvolvement")',
+                dataType: "json",
+                data: data,
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+                    //$('#empLimit').val(result);
+                    $("#EmpProjectGrid").data().kendoGrid.dataSource.read();
+                    $("#EmpProjectHistoryGrid").data().kendoGrid.dataSource.read();
+                },
+            })
+        }
+        else {
+            alert('The input for total percentage involvement has exceeded limt. Pls change % of project involvement for each project or change the limit of % of total project involvement');
+        }
+
+    });
+
+    function GetEmpId() {
+        var empId = $("#empDropDown").val();
+        return {
+            employeeId: empId
+        }
+    }
+</script>

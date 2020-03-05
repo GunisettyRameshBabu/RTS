@@ -1,0 +1,97 @@
+﻿@using SCTimeSheet_UTIL
+@{
+    ViewBag.Title = "Contact Us";
+}
+<div class="card-body" id="print" style="background-color: #fff;border-radius:10px;padding:10px;">
+    @if ((Int64)Session[Constants.SessionRoleID] != Convert.ToInt64(ReadConfig.GetValue("RoleAdmin")))
+    {
+        @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.ContactUsModel>()
+                                                                         .Name("contactUsGrid")
+                                                                          //.ToolBar(toolbar => toolbar.Create())
+                                                                          //.Editable(editable => editable.Mode(GridEditMode.InLine)).
+                                                                          .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                                          .DataSource(dataSource => dataSource
+                                                                           .Ajax()
+                                                                           .Batch(true)
+                                                                           .PageSize(20)
+                                                                           .ServerOperation(true)
+                                                                           .Model(model =>
+                                                                           {
+                                                                               model.Id(p => p.Id);
+
+                                                                           })
+                                                                            .Read(read => read
+                                                                            .Action("GetContactDetails", "ContactUs")
+                                                                            )
+                                                                            //.Update("Update", "ContactUs")
+                                                                            // .Create("Create", "ContactUs")
+                                                                            // .Destroy("Destroy", "ContactUs")
+                                                                            )
+                                                                            .Columns(columns =>
+                                                                            {
+                                                                                columns.Bound(product => product.Name);
+                                                                                columns.Bound(product => product.Title);
+                                                                                columns.Bound(product => product.Email).HtmlAttributes(new { @required = true, @type = "email", @data_email_msg = "Email format is not valid" });
+                                                                                columns.Bound(product => product.Contact);
+                                                                //columns.Command(command => { command.Edit(); command.Destroy(); }).Width(250);
+
+                                                            })
+
+                                                                       .Pageable()
+                                                                        .Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+        )
+    }
+    <br />
+
+    @if ((Int64)Session[Constants.SessionRoleID] == Convert.ToInt64(ReadConfig.GetValue("RoleAdmin")))
+    {
+        
+
+                @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.ContactUsModel>()
+                                                                                 .Name("contactUsEditGrid")
+                                                                                 .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                                                  .ToolBar(toolbar => toolbar.Create())
+                                                                                  .Editable(editable => editable.Mode(GridEditMode.InLine))
+
+
+                                                                                  .DataSource(dataSource => dataSource
+                                                                                   .Ajax()
+                                                                                   .Batch(true)
+                                                                                   .PageSize(20)
+                                                                                   .ServerOperation(true)
+                                                                                   .Model(model =>
+                                                                                   {
+                                                                                       model.Id(p => p.Id);
+
+                                                                                   })
+                                                                                    .Read(read => read
+                                                                                    .Action("GetContactDetails", "ContactUs")
+                                                                                    )
+                                                                                    .Update("Edit", "ContactUs")
+                                                                                    .Create("Create", "ContactUs")
+                                                                                    .Destroy("Delete", "ContactUs")
+                                                                                    )
+                                                                                    .Columns(columns =>
+                                                                                    {
+                                                                                        columns.Bound(product => product.Name);
+                                                                                        columns.Bound(product => product.Title);
+                                                                                        columns.Bound(product => product.Email).HtmlAttributes(new { @required = true, @type = "email", @data_email_msg = "Email format is not valid" }); ;
+                                                                                        columns.Bound(product => product.Contact);
+                                                                                        columns.Command(command => { command.Edit(); command.Destroy(); }).Width(250);
+
+                                                                                    })
+
+                                                                               .Pageable()
+                                                                                .Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+                )
+          
+    }
+</div>
+<script>
+    $(document).ready(function () {
+        //$('#contact-logo').attr('src', '../../Contents/assets/Images/phone-book2.png');
+        $('#contact').css('color', 'black');
+    });
+</script>
+
+

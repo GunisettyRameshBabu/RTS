@@ -1,0 +1,13 @@
+﻿@(Html.Kendo().DropDownList()
+              .Name("EmpRole")
+              .DataTextField("RoleName")
+              .DataValueField("RoleID")
+              .DataSource(source =>
+              {
+                  source.Read(read =>
+                  {
+                      read.Action("GetEmpRoleList", "ProjectMaster");
+                  });
+              })
+              .HtmlAttributes(new { style = "width: 100%" })
+)

@@ -1,0 +1,935 @@
+﻿@model SCTimeSheet_DAL.Models.NewEntryByProjectSelection
+@{
+    ViewBag.Title = "New Entry on Behalf";
+}
+<style>
+    html {
+        font-size: 14px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .k-grid th {
+        /*font-size: 17px !important;*/
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: center;
+        background-color: transparent;
+        color: grey !important;
+        /*height: 75px;*/
+        border: 1px solid #ddd !important;
+        /*border-left: transparent;
+                border-right: transparent;
+                border-bottom: 1px solid black;
+                border-top: 1px solid black;*/
+        font-size: small !important;
+        font-weight: bold !important;
+    }
+
+    .subtabletable {
+        display: table;
+    }
+
+    .subtable .row {
+        display: table-row;
+    }
+
+    .subtable .header {
+        font-weight: bold;
+    }
+
+    .subtable .cell {
+        display: table-cell;
+        padding: 5px;
+    }
+
+    .gray {
+        background-color: #f6f6f6;
+        color: black;
+    }
+
+    .white {
+        background-color: white;
+        color: black;
+    }
+
+    .darkgray {
+        background-color: darkgray;
+        color: black;
+    }
+</style>
+
+@(Html.Kendo().Dialog()
+                .Name("dialog")
+                .Title("Warning")
+                .Visible(false)
+                .Content("<p class='redColor'>Warning: One or more member start date does not start on first of the month or member end date does not end on the last day of the month.<p>" +
+                "<p>Please ensure to enter actual working days between member start date to member end date (exclude public holidays, all leave types, non-working days). </p> <p>Example: </p><p>TS Entry January 2020</p>" +
+    "<p>Public Holiday: 1, 24, 27 Jan 2020</p> <p> Leaves: 28 Jan 2020 </p>" +
+    "<table class='table table-bordered'><tr><th>Member Start Date</th><th>Member End Date</th><th>No of working days from member start date and member end date</th><th>Maximum Working Days in TS Entry</th></tr>" +
+    "<tr><td>3 Jan 2020</td><td>31 Mar 2020</td><td>21</td><td>=21-3<br/>=18</td></tr>" +
+    "<tr><td>3 Jan 2020</td><td>31 Mar 2020</td><td>21</td><td>=21-3<br/>=18</td></tr>" +
+    "<tr><td>3 Jan 2020</td><td>20 Jan 2020</td><td>12</td><td>=12-0<br/>=12</td></tr>" +
+    "<tr><td>3 Jan 2020</td><td>20 Jan 2020</td><td>12</td><td>=12-0<br/>=12</td></tr>" +
+    "</table>")
+                .Modal(true)
+
+                .Actions(actions =>
+                {
+                    actions.Add().Text("OK").Primary(true);
+                })
+)
+<div class="card-body" style="background-color: #fff;border-radius:10px; padding: 10px;padding-bottom:50px;">
+    <h5 style="font-size: 26px; color: #646464;"></h5>
+    @Html.HiddenFor(x => x.Month1)
+    @Html.HiddenFor(x => x.Month2)
+    @Html.HiddenFor(x => x.Month3)
+
+    <div class="row">
+        <div class="col-md-3">
+            <label style="color: #646464;">Project Selection</label>
+            @*@Html.DropDownListFor(model => model.ProjectID, new SelectList(ViewBag.ProjectList, "ProjectID", "ProjectName"), "--Select Any--", new { @class = "form-control select2", @id = "projectDropDown", style = "width: 100%; background-color: #f6f6f6;border-radius: 9px;" })*@
+            @(Html.Kendo().DropDownListFor(x => x.ProjectID)
+                                                       .Name("projectDropDown")
+                                                       .DataTextField("ProjectName")
+                                                       .DataValueField("ProjectID")
+                                                      .OptionLabel("--Select Any--")
+                                                       //.BindTo(ViewBag.ProjectList)
+                                                       .DataSource(source =>
+                                                       {
+                                                           source.Read(read =>
+                                                           {
+                                                               read.Action("GetProjects", "NewEntryOnBehalfOne");
+                                                           });
+                                                       })
+                                                       .Events(e =>
+                                                       {
+                                                           e.Change("onProjectChange");
+                                                       })
+                                                       .Filter("contains")
+
+                                                       .HtmlAttributes(new { style = "width: 100%; background-color: #f6f6f6;border-radius: 9px;" })
+
+
+            )
+            @Html.ValidationMessageFor(model => model.ProjectID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-1" style="text-align: center;">
+            <label style="color: #646464;">OR</label>
+        </div>
+        <div class="col-md-3">
+            <label style="color: #646464;">Team Member Selection</label>
+            @*@Html.DropDownListFor(model => model.EmployeeID, new SelectList(ViewBag.EmployeeList, "EmployeeID", "EmpName"), "--Select Any--", new { @class = "form-control select2", @id = "empDropDown", style = "width: 100%; background-color: #f6f6f6;border-radius: 9px;" })*@
+            @(Html.Kendo().DropDownListFor(x => x.EmployeeID)
+                                                               .Name("empDropDown")
+                                                               .DataTextField("EmpName")
+                                                               .DataValueField("EmployeeID")
+                                                               .OptionLabel("--Select Any--")
+                                                               .DataSource(source =>
+                                                       {
+                                                           source.Read(read =>
+                                                           {
+                                                               read.Action("GetMembers", "NewEntryOnBehalfOne");
+                                                           });
+                                                       })
+                                                       .Events(e =>
+                                                       {
+                                                           e.Change("onEmpChange");
+                                                       })
+                                                                .Filter("contains")
+                                                               .HtmlAttributes(new { style = "width: 100%; background-color: #f6f6f6;border-radius: 9px;" })
+            )
+            @Html.ValidationMessageFor(model => model.EmployeeID, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-3">
+            <label style="color: #646464;">Select Quarter</label>
+            @*@Html.DropDownListFor(model => model.Quarter, new SelectList(ViewBag.QuarterList, "Value", "Text"), "--Select Quarter--", new { @class = "form-control select2", @id = "quarterDropDown", style = "width: 100%; background-color: #f6f6f6;border-radius: 9px;" })*@
+            @(Html.Kendo().DropDownListFor(x => x.Quarter)
+                                                                       .Name("quarterDropDown")
+                                                                       .DataTextField("Text")
+                                                                       .DataValueField("Value")
+                                                                       // .OptionLabel("--Select Quarter--")
+                                                                       .DataSource(source =>
+                                                       {
+                                                           source.Read(read =>
+                                                           {
+                                                               read.Action("GetQuarters", "NewEntryOnBehalfOne");
+                                                           });
+                                                       })
+                                                       .Events(e =>
+                                                       {
+                                                           e.Change("onChangeQuarter");
+                                                       })
+                                                                       .HtmlAttributes(new { style = "width: 100%; background-color: #f6f6f6;border-radius: 9px;" })
+
+            )
+        </div>
+        @*<div class="col-md-2" >
+                <br/>
+                <button type="submit" class="btn btn-primary" id="btnShowDataGrid" style="background-color:rgb(0,108,83); border-color: rgb(0,108,83);">Show Data</button>
+            </div>*@
+    </div>
+    <div id="example" style="margin-top:10px;">
+        <div>
+            @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.NewEntryByProjectSelection>()
+                                                .Name("grid")
+                                                .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                .DataSource(dataSource => dataSource
+                                                    .Ajax()
+                                                    .Batch(true)
+                                                    .PageSize(20)
+                                                    .ServerOperation(false)
+                                                    .Model(model =>
+                                                    {
+                                                        model.Id(p => p.ProjectID);
+                                                        model.Field(p => p.Quarter).Editable(false);
+                                                        model.Field(p => p.ProjectID).Editable(false);
+                                                        model.Field(p => p.StartDate).Editable(false);
+                                                        model.Field(p => p.EndDate).Editable(false);
+                                                        model.Field(p => p.EmployeeID).Editable(false);
+                                                        model.Field(p => p.emp_name).Editable(false);
+                                                        model.Field(p => p.InvolvementDays1).Editable(false);
+                                                        model.Field(p => p.InvolvementDays2).Editable(false);
+                                                        model.Field(p => p.InvolvementDays3).Editable(false);
+
+                                                    })
+                                                    .Read(read => read
+                                                        .Action("GetProjectList", "NewEntryOnBehalfOne") //Set the action method which will return the data in JSON format.
+                                                        .Data("SortByProjectId") //Specify the JavaScript function which will return the data.
+                                                    )
+                                                )
+                                                .Columns(columns =>
+                                                {
+                                                columns.Template(@<text></text>).ClientTemplate("#if (data.IsEdit1 || data.IsEdit2 || data.IsEdit3) " +
+                                                       "{# <input type='checkbox' class='checkbox' /> #}" +
+                                                       "else {# <input type='checkbox' class='checkbox1' disabled /> #}#").Width(20).HeaderTemplate("<input id='headerCheckBox' style='cursor: pointer;' type='checkbox' onclick='selectAllItems(this);' />");
+                                                    columns.Bound(product => product.emp_name).Width(250);
+                                                    columns.Bound(product => product.StartDate).Format("{0:dd MMM yyyy}").Width(75);
+                                                    columns.Bound(product => product.EndDate).Format("{0:dd MMM yyyy}").Width(75);
+                                                    columns.Group(group => group
+                                                .Title(Model.Month1)
+                                                 .HeaderHtmlAttributes(new { @id = "grpMonth1" })
+                                                .Columns(info =>
+                                                {
+                                                    info.Bound(x => x.InvolvementDays1).Width(20).ClientTemplate("<div align='center' style = 'width:100%;background-color:lightgray;'># if(data.InvolvementDays1 == 0 && !data.IsEdit1) " +
+                                                           "{# #}" +
+                                                           "else {# #=round(InvolvementDays1,1)# #}#</div>");
+                                                    info.Bound(x => x.InvolvementEditDays1).Editable("involvementDays1Editable").Width(20).ClientTemplate("<div data-toggle='tooltip' data-html='true' title='#= OldInvolvementEditDays1 #' align='center' style='width:100%' class=' #: getStatus(data,1) #'># if(data.InvolvementDays1 == 0 && data.InvolvementEditDays1 == 0 && !data.IsEdit1) " +
+                                                           "{# #}" +
+                                                           "else {# #=round(InvolvementEditDays1,1)# #}#</div>");
+                                                })
+                                            );
+                                                    columns.Group(group => group
+                                                        .Title(Model.Month2)
+                                                         .HeaderHtmlAttributes(new { @id = "grpMonth2" })
+                                                        .Columns(info =>
+                                                        {
+                                                            info.Bound(x => x.InvolvementDays2).Format("{0:##:#}").Width(20).ClientTemplate("<div align='center' style = 'width:100%;background-color:lightgray;'># if(data.InvolvementDays2 == 0 && !data.IsEdit2) " +
+                                                                   "{# #}" +
+                                                                   "else {# #= kendo.toString(round(InvolvementDays2,1), \"n2\") # #}#</div>");
+                                                            info.Bound(x => x.InvolvementEditDays2).Editable("involvementDays2Editable").Width(20).ClientTemplate("<div data-toggle='tooltip' data-html='true' title='#= OldInvolvementEditDays2 #' align='center' style = 'width:100%' class=' #: getStatus(data,2) #'># if(data.InvolvementDays2 == 0 && data.InvolvementEditDays2 == 0 && !data.IsEdit2) " +
+                                                                       "{# #}" +
+                                                                       "else {# #= kendo.toString(round(InvolvementEditDays2,1), \"n2\") # #}#</div>");
+                                                        })
+                                                        );
+                                                    columns.Group(group => group
+                                                        .Title(Model.Month3)
+                                                         .HeaderHtmlAttributes(new { @id = "grpMonth3" })
+                                                        .Columns(info =>
+                                                        {
+                                                            info.Bound(x => x.InvolvementDays3).Width(20).ClientTemplate("<div align='center' style = 'width:100%;background-color:lightgray;'># if(data.InvolvementDays3 == 0 && !data.IsEdit3) " +
+                                                                   "{# #}" +
+                                                                   "else {# #=round(InvolvementDays3,1)# #}#</div>");
+                                                            info.Bound(x => x.InvolvementEditDays3).Editable("involvementDays3Editable").Width(20).ClientTemplate("<div data-toggle='tooltip' data-html='true' title='#= OldInvolvementEditDays3 #' align='center' style = 'width:100%' class=' #: getStatus(data,3) #'># if(data.InvolvementDays3 == 0 && data.InvolvementEditDays3 == 0 && !data.IsEdit3) " +
+                                                                   "{# #}" +
+                                                                   "else {# #=round(InvolvementEditDays3,1)# #}#</div>");
+                                                        })
+                                                    );
+                                                })
+                                    .HtmlAttributes(new { @id = "grid" })
+                                .AutoBind(false)
+                                .Editable(editable => editable.Mode(GridEditMode.InCell))
+                                .Pageable()
+                                 .Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+                                 .Events(ev => ev.DataBound("db"))
+            )
+
+            @* <a href="#" class="k-button" id="update" >Submit</a>*@
+            <div class="button" style="float: right; margin-top:10px;">
+                @*<a href="#" class="k-button btn btn-primary" id="update" style="background-color:rgb(0,108,83); border-color: rgb(0,108,83);">Submit</a>*@
+
+                <button type="button" class="btn btn-primary" id="update" style="background-color:rgb(0,108,83); border-color: rgb(0,108,83);">Submit</button>
+                <button class="btn btn-secondary" disabled id="updateButton" value="Submit" style="border-color: none; float:right" name="action:Submit">Submit</button>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="empDiv" style="margin-top:10px;">
+        <div>
+            @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.NewEntryByProjectSelection>()
+                                                .Name("empGrid")
+                                                .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                .DataSource(dataSource => dataSource
+                                                    .Ajax()
+                                                    .Batch(true)
+                                                    .PageSize(20)
+                                                    .ServerOperation(false)
+                                                    .Model(model =>
+                                                    {
+                                                        model.Id(p => p.ProjectID);
+                                                        model.Field(p => p.ProjectID).Editable(false);
+                                                        model.Field(p => p.StartDate).Editable(false);
+                                                        model.Field(p => p.EndDate).Editable(false);
+                                                        model.Field(p => p.ProjectName).Editable(false);
+                                                        model.Field(p => p.EmployeeID).Editable(false);
+                                                        model.Field(p => p.emp_name).Editable(false);
+                                                        model.Field(p => p.InvolvementDays1).Editable(false);
+                                                        model.Field(p => p.InvolvementDays2).Editable(false);
+                                                        model.Field(p => p.InvolvementDays3).Editable(false);
+                                                    })
+                                                    .Read(read => read
+                                                        .Action("GetEmpList", "NewEntryOnBehalfOne") //Set the action method which will return the data in JSON format.
+                                                        .Data("SortByEmpId") //Specify the JavaScript function which will return the data.
+                                                    )
+                                                )
+                                                .Columns(columns =>
+                                                {
+                                                columns.Template(@<text></text>).ClientTemplate(
+                                                "#if (data.IsEdit1 || data.IsEdit2 || data.IsEdit3) " +
+                                                       "{# <input type='checkbox' class='checkbox' /> #}" +
+                                                       "else {# <input type='checkbox' class='checkbox1' disabled /> #}#").Width(20).HeaderTemplate("<input id='headerCheckBox' style='cursor: pointer;' type='checkbox' onclick='selectAllEmpItems(this);' />");
+                                                    columns.Bound(product => product.ProjectName).Width(250);
+                                                    columns.Bound(product => product.StartDate).Format("{0:dd MMM yyyy}").Width(75);
+                                                    columns.Bound(product => product.EndDate).Format("{0:dd MMM yyyy}").Width(75);
+                                                    columns.Group(group => group
+                                                    .Title(Model.Month1)
+                                                     .HeaderHtmlAttributes(new { @id = "grpMonth1" })
+                                                    .Columns(info =>
+                                                    {
+                                                        info.Bound(x => x.InvolvementDays1).Width(20).ClientTemplate("<div align='center' style = 'width:100%;background-color:lightgray;'># if(data.InvolvementDays1 == 0 && !data.IsEdit1) " +
+                                                               "{# #}" +
+                                                               "else {# #=round(InvolvementDays1,1)# #}#</div>");
+                                                        info.Bound(x => x.InvolvementEditDays1).Editable("involvementDays1Editable").Width(20).ClientTemplate("<div data-toggle='tooltip' data-html='true' title='#= OldInvolvementEditDays1 #' align='center' style='width:100%' class=' #: getStatus(data,1) #'># if(data.InvolvementDays1 == 0 && data.InvolvementEditDays1 == 0 && !data.IsEdit1) " +
+                                                               "{# #}" +
+                                                               "else {# #=round(InvolvementEditDays1,1)# #}#</div>");
+                                                    })
+                                                );
+                                                    columns.Group(group => group
+                                                        .Title(Model.Month2)
+                                                         .HeaderHtmlAttributes(new { @id = "grpMonth2" })
+                                                        .Columns(info =>
+                                                        {
+                                                            info.Bound(x => x.InvolvementDays2).Width(20).ClientTemplate("<div align='center' style = 'width:100%;background-color:lightgray;'># if(data.InvolvementDays2 == 0 && !data.IsEdit2) " +
+                                                                   "{# #}" +
+                                                                   "else {# #=round(InvolvementDays2,1)# #}#</div>");
+                                                            info.Bound(x => x.InvolvementEditDays2).Editable("involvementDays2Editable").Width(20).ClientTemplate("<div data-toggle='tooltip' data-html='true' title='#= OldInvolvementEditDays2 #' align='center' style = 'width:100%' class=' #: getStatus(data,2) #'># if(data.InvolvementDays2 == 0 && data.InvolvementEditDays2 == 0 && !data.IsEdit2) " +
+                                                                       "{# #}" +
+                                                                       "else {# #=round(InvolvementEditDays2,1)# #}#</div>");
+                                                        })
+                                                        );
+                                                    columns.Group(group => group
+                                                        .Title(Model.Month3)
+                                                         .HeaderHtmlAttributes(new { @id = "grpMonth3" })
+                                                        .Columns(info =>
+                                                        {
+                                                            info.Bound(x => x.InvolvementDays3).Width(20).ClientTemplate("<div align='center' style = 'width:100%;background-color:lightgray;'># if(data.InvolvementDays3 == 0 && !data.IsEdit3) " +
+                                                                   "{# #}" +
+                                                                   "else {# #=round(InvolvementDays3,1)# #}#</div>");
+                                                            info.Bound(x => x.InvolvementEditDays3).Editable("involvementDays3Editable").Width(20).ClientTemplate("<div data-toggle='tooltip' data-html='true' title='#= OldInvolvementEditDays3 #' align='center' style = 'width:100%' class=' #: getStatus(data,3) #'># if(data.InvolvementDays3 == 0 && data.InvolvementEditDays3 == 0 && !data.IsEdit3) " +
+                                                                   "{# #}" +
+                                                                   "else {# #=round(InvolvementEditDays3,1)# #}#</div>");
+                                                        })
+                                                    );
+                                                })
+                                .HtmlAttributes(new { @id = "empGrid" })
+                                .AutoBind(false)
+                                .Editable(editable => editable.Mode(GridEditMode.InCell))
+                                .Pageable()
+                                .Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+                                .Events(ev => ev.DataBound("db"))
+            )
+
+            @* <a href="#" class="k-button" id="update" >Submit</a>*@
+            <div class="button" style="float: right; margin-top:10px;">
+                @*<a href="#" class="k-button btn btn-primary" id="update" style="background-color:rgb(0,108,83); border-color: rgb(0,108,83);">Submit</a>*@
+                <button type="button" class="btn btn-primary" id="empupdate" style="background-color:rgb(0,108,83); border-color: rgb(0,108,83);">Submit</button>
+                <button type="button" class="btn btn-secondary" disabled id="disabledButton" value="Submit" style="border-color: none; float:right">Submit</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<br />
+<div class="card-body" style="background-color: #fff;border-radius:10px; padding: 10px;">
+    <h3>Submitted Timesheet</h3>
+
+    @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.NewEntryList>()
+                                                                                                                                     .Name("TimeSheetGrid")
+                                                                                                                                     .DataSource(dataSource => dataSource
+                                                                                                                                         .Ajax()
+                                                                                                                                         .Batch(true)
+                                                                                                                                         .PageSize(20)
+                                                                                                                                         .ServerOperation(true)
+
+                                                                                                                                         .Read(read => read
+                                                                                                                                             .Action("Read", "NewEntryOnBehalfOne")
+
+                                                                                                                                         )
+                                                                                                                                     )
+
+                                                                                                                                     .Columns(columns =>
+                                                                                                                                     {
+                                                                                                                                         columns.Bound(product => product.ItemNo).Title("S.No");
+                                                                                                                                         columns.Bound(p => p.RefNo).Title("Ref.No");
+                                                                                                                                         columns.Bound(product => product.ProjectName).Title("Project");
+                                                                                                                                         columns.Bound(product => product.Employee).Title("Employee");
+                                                                                                                                         columns.Bound(product => product.SubmittedBy).Title("Submitted By");
+                                                                                                                                         columns.Bound(product => product.InvolveMonth).Title("Period");
+                                                                                                                                         columns.Bound(product => product.InvolvePercent).Title("% of Involvement");
+                                                                                                                             // columns.Bound(product => product.Quard).Title("Submission");
+                                                                                                                             columns.Template(product => "").Title("Submission").ClientTemplate("#= getSubmissionString(data) #").Width(60);
+                                                                                                                                         columns.Bound(product => product.CreatedOn).Title("Date of Submission").Format("{0:dd MMM yyyy}");
+
+                                                                                                                                         columns.Template(product => "").Title("Status").ClientTemplate("#= getStatusDesc(StatusDesc) #");
+
+
+                                                                                                                                     })
+                                                                                                                                     .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                                                                                                 .Pageable()
+                                                                                                                                 .Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+
+    )
+</div>
+<script>
+    //function onEdit(e) {
+    //    //your custom logic
+    //    $('#grid').data("kendoGrid").closeCell();
+    //}
+
+    function db(e) {
+        $('[data-toggle="tooltip"]').tooltip({ container: ".wrapper", boundary: 'window', placement: 'top' });
+        if (e.sender._data.filter(x => x.ShowWarning == true).length > 0) {
+            $('#dialog').data("kendoDialog").open();
+        }
+    }
+
+    function round(value, precision) {
+        if (!isNaN(value)) {
+            var multiplier = Math.pow(10, precision || 0);
+            return Math.round(value * multiplier) / multiplier;
+        }
+        else {
+            return value;
+        }
+    }
+    function getSubmissionString(row) {
+        var subtableHtml = "<table >";
+        //for (var i = 0; i < data.projects.length; i++) {
+        if (row.Quard == "Q1") {
+            subtableHtml += "<tr style='background-color: #e4e4e4;'><th>Jan</th><th>Feb</th><th>Mar</th></tr>";
+
+        }
+        else if (row.Quard == "Q2") {
+            subtableHtml += "<tr style='background-color: #e4e4e4;'><th>Apr</th><th>May</th><th>Jun</th></tr>";
+
+        }
+        else if (row.Quard == "Q3") {
+            subtableHtml += "<tr style='background-color: #e4e4e4;'><th>Jul</th><th>Aug</th><th>Sep</th></tr>";
+
+        }
+        else if (row.Quard == "Q4") {
+            subtableHtml += "<tr style='background-color: #e4e4e4;'><th>Oct</th><th>Nov</th><th>Dec</th></tr>";
+
+        };
+        subtableHtml += "<tr>";
+        subtableHtml += "<td>" + (row.InvolvementDays1 == 0 ? (row.IsEdit1 == false ? "-" : this.round(row.InvolvementDays1, 1)) : this.round(row.InvolvementDays1, 1)) + "/" + ((row.InvolvementEditDays1 == 0 && row.IsEdit1 == false) ? "-" : this.round(row.InvolvementEditDays1, 1)) + "</td>";
+        subtableHtml += "<td>" + (row.InvolvementDays2 == 0 ? (row.IsEdit2 == false ? "-" : this.round(row.InvolvementDays2, 1)) : this.round(row.InvolvementDays2, 1)) + "/" + ((row.InvolvementEditDays2 == 0 && row.IsEdit2 == false) ? "-" : this.round(row.InvolvementEditDays2, 1)) + "</td>";
+        subtableHtml += "<td>" + (row.InvolvementDays3 == 0 ? (row.IsEdit3 == false ? "-" : this.round(row.InvolvementDays3, 1)) : this.round(row.InvolvementDays3, 1)) + "/" + ((row.InvolvementEditDays3 == 0 && row.IsEdit2 == false) ? "-" : this.round(row.InvolvementEditDays3, 1)) + "</td>";
+        subtableHtml += "</tr>";
+        subtableHtml += "</table>";
+        return subtableHtml;
+    }
+    function getStatusDesc(data) {
+        if (data == "Draft") {
+            return '<a class="label label-primary" href="/NewEntry/Edit/' + row.TsID + '">' + data + '</a>';
+            //return '<span class="label label-primary">' + data + '</span>';
+        }
+        if (data == "Rejected") {
+            return '<span class="red">' + data + '</span>';
+        }
+        if (data == "Pending for Approval") {
+            return '<span class="yellow">' + data + '</span>';
+        }
+        if (data == "Approved") {
+            return '<span class="green">' + data + '</span>';
+        }
+
+    }
+
+    function onEdit1Change(e) {
+        debugger;
+        var grid = e.sender.element.closest(".k-grid").data("kendoGrid");
+        var row = e.sender.element.closest("tr");
+        var dataItem = grid.dataItem(row);
+
+        if (dataItem.InvolvementEditDays1 > dataItem.Month1MaxLimit) {
+            alert('Exceeded the max limit ' + dataItem.Month1MaxLimit);
+            dataItem.InvolvementEditDays1 = dataItem.Month1MaxLimit;
+        }
+        var checkbox = $(row).find(".checkbox");
+        checkbox.attr('checked', true);
+        if (checkedItems.filter(x => x.Id == dataItem.Id).length == 0) {
+            checkedIds[dataItem.Id] = true;
+            checkedItems.push(dataItem);
+        }
+
+
+
+    }
+
+    function onEdit2Change(e) {
+        var grid = e.sender.element.closest(".k-grid").data("kendoGrid");
+        var row = e.sender.element.closest("tr");
+        var dataItem = grid.dataItem(row);
+
+        if (dataItem.InvolvementEditDays2 > dataItem.Month2MaxLimit) {
+            alert('Exceeded the max limit ' + dataItem.Month2MaxLimit);
+            dataItem.InvolvementEditDays2 = dataItem.Month2MaxLimit;
+        }
+
+        var checkbox = $(row).find(".checkbox");
+
+        checkbox.attr('checked', true);
+
+        if (checkedItems.filter(x => x.Id == dataItem.Id).length == 0) {
+            checkedIds[dataItem.Id] = true;
+            checkedItems.push(dataItem);
+        }
+    }
+
+    function onEdit3Change(e) {
+        var grid = e.sender.element.closest(".k-grid").data("kendoGrid");
+        var row = e.sender.element.closest("tr");
+        var dataItem = grid.dataItem(row);
+
+        if (dataItem.InvolvementEditDays3 > dataItem.Month3MaxLimit) {
+            alert('Exceeded the max limit ' + dataItem.Month3MaxLimit);
+            dataItem.InvolvementEditDays3 = dataItem.Month3MaxLimit;
+        }
+        var checkbox = $(row).find(".checkbox");
+
+        checkbox.attr('checked', true);
+
+        if (checkedItems.filter(x => x.Id == dataItem.Id).length == 0) {
+            checkedIds[dataItem.Id] = true;
+            checkedItems.push(dataItem);
+        }
+
+    }
+
+   function getStatus(data, type){
+       var res = "white";
+        switch (type) {
+
+            case 1:
+
+                res = data.IsEdit1 == true ? "white" : data.InvolvementEditDays1 == 0 ? "gray" : "darkgray" ;
+
+                break;
+
+            case 2:
+
+                res = data.IsEdit2 == true ? "white" : data.InvolvementEditDays2 == 0 ? "gray" : "darkgray";
+
+                break;
+            case 3:
+
+                res = data.IsEdit3 == true ? "white" : data.InvolvementEditDays3 == 0 ? "gray" : "darkgray";
+
+                break;
+
+            default:
+       }
+
+       return res;
+    }
+
+    var checkedIds = [];
+    var checkedItems = [];
+
+    function involvementDays1Editable(dataItem) {
+        // do not allow editing for item with InvolvementDays1=0
+
+        return dataItem.InvolvementDays1 != 0 && (dataItem.Status1 != 3 || dataItem.Status1 != 4) && dataItem.IsEdit1;
+    }
+    function involvementDays2Editable(dataItem) {
+        return dataItem.InvolvementDays2 != 0 && (dataItem.Status2 != 3 || dataItem.Status2 != 4) && dataItem.IsEdit2;
+    }
+    function involvementDays3Editable(dataItem) {
+        return dataItem.InvolvementDays3 != 0 && (dataItem.Status3 != 3 || dataItem.Status3 != 4) && dataItem.IsEdit3;
+    }
+    $('.select2').select2();
+    $('.monthpicker').monthpicker();
+    $(document).ready(function () {
+
+
+        //$('#newentrybehalf-logo').attr('src', '../../Contents/assets/Images/beha1.png');
+        $('#newentrybehalf').css('color', 'black');
+
+        $("#example").hide();
+        $("#empDiv").hide();
+      //  readSubmittedData();
+
+    });
+
+    function round(value, precision) {
+        if (!isNaN(value)) {
+            var multiplier = Math.pow(10, precision || 0);
+            return Math.round(value * multiplier) / multiplier;
+        }
+        else {
+            return value;
+        }
+    }
+
+   function showDetails(e) {
+        var quarter = $("#quarterDropDown").val();
+
+
+        $("#Month1").val(quarter == "Q1" ? "Jan" : quarter == "Q2" ? "Apr" : quarter == "Q3" ? "Jul" : "Oct");
+        $("#Month2").val(quarter == "Q1" ? "Feb" : quarter == "Q2" ? "May" : quarter == "Q3" ? "Aug" : "Nov");
+        $("#Month3").val(quarter == "Q1" ? "Mar" : quarter == "Q2" ? "Jun" : quarter == "Q3" ? "Sep" : "Dec");
+
+        var currentQuarter = "";
+
+        switch (new Date().getMonth() + 1) {
+
+            case 1:
+            case 2:
+            case 3:
+                currentQuarter = "Q1";
+                break;
+
+            case 4:
+            case 5:
+            case 6:
+                currentQuarter = "Q2";
+                break;
+
+            case 7:
+            case 8:
+            case 9:
+                currentQuarter = "Q3";
+                break;
+
+            case 10:
+            case 11:
+            case 12:
+                currentQuarter = "Q4";
+                break;
+        }
+
+        var year = (currentQuarter != quarter && quarter == "Q4") ? new Date().getFullYear() - 1 : new Date().getFullYear();
+
+        $('#grpMonth1 span').text($("#Month1").val() + " " +  year);
+        $('#grpMonth2 span').text($("#Month2").val() + " " + year);
+        $('#grpMonth3 span').text($("#Month3").val() + " " + year);
+
+
+
+    };
+
+    function SortByProjectId() {
+        var pId = $("#projectDropDown").val();
+        var quarter = $("#quarterDropDown").val();
+        $("#projectDropDown")[0].selectedIndex = 0;
+        return {
+            projectId: pId,
+            quarter : quarter
+        }
+    }
+    function SortByEmpId() {
+        var eId = $("#empDropDown").val();
+        var quarter = $("#quarterDropDown").val();
+        $("#empDropDown")[0].selectedIndex = 0;
+        return {
+            empId: eId,
+            quarter: quarter
+        }
+    }
+    $("#update").bind("click", function () {
+
+        var quarter = $("#quarterDropDown").val();
+        //use ajax request to send the data of the selected items
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Editing_Update")',
+            data: JSON.stringify(checkedItems)
+            ,
+            dataType: "json",
+            contentType: 'application/json; charset=utf-8'
+        })
+            .done(function (data) {
+                //do something with the response if necessary
+                if (data.emailStatus.length > 0) {
+                    let projects = data.emailStatus.map(x => x.Key).toString();
+                    projects = projects.replace(new RegExp(",", "g"), '\n')
+                    alert("Unable to send notification email for the below Employees \n" + projects );
+                }
+                $.notify("Timesheet updated successfully", "success");
+                $("#grid").data().kendoGrid.dataSource.read();
+                $("#update").hide();
+                $("#updateButton").show();
+                $("#TimeSheetGrid").data().kendoGrid.dataSource.read();
+            });
+    });
+
+    $("#empupdate").bind("click", function () {
+        //use ajax request to send the data of the selected items
+        var quarter = $("#quarterDropDown").val();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Editing_Update")',
+            data: JSON.stringify(checkedItems) ,
+            dataType: "json",
+            contentType: 'application/json; charset=utf-8'
+        })
+            .done(function (data) {
+                if (data.emailStatus.length > 0) {
+                    let projects = data.emailStatus.map(x => x.Value).toString();
+                    projects = projects.replace(new RegExp(",", "g"), '\n')
+                    alert("Unable to send notification email for the below projects \n" + projects);
+                }
+                $.notify("Timesheet updated successfully", "success");
+                $("#empGrid").data().kendoGrid.dataSource.read();
+                $("#empupdate").hide();
+                $("#disabledButton").show();
+                $("#TimeSheetGrid").data().kendoGrid.dataSource.read();
+            });
+    });
+
+    //on click of the checkbox:
+    function selectRow() {
+        row = $(this).closest("tr");
+        grid = $("#grid").data("kendoGrid");
+        dataItem = grid.dataItem(row);
+        checkedIds[dataItem.id] = this.checked;
+        if (this.checked) {
+            if (checkedItems.filter(x => x.id == dataItem.id).length == 0) {
+                checkedItems.push(dataItem);
+            }
+        }
+        else {
+            if (checkedItems.filter(x => x.id == dataItem.id).length > 0) {
+                checkedItems.pop(dataItem);
+            }
+        }
+    }
+    function selectEmpRow() {
+          row = $(this).closest("tr");
+        grid = $("#empGrid").data("kendoGrid");
+            dataItem = grid.dataItem(row);
+        checkedIds[dataItem.id] = this.checked;
+        if (this.checked) {
+            if (checkedItems.filter(x => x.id == dataItem.id).length == 0) {
+                checkedItems.push(dataItem);
+            }
+        }
+        else {
+            if (checkedItems.filter(x => x.id == dataItem.id).length > 0) {
+                checkedItems.pop(dataItem);
+            }
+        }
+
+    }
+
+    function onDataBound(e) {
+        var view = this.dataSource.view();
+        var editable = false;
+        for (var i = 0; i < view.length; i++) {
+            if ((view[i].IsEdit1 || view[i].IsEdit2 || view[i].IsEdit3) && editable == false) {
+                editable = true;
+            }
+            if (checkedIds[view[i]]) {
+
+                this.tbody.find("tr[data-uid='" + view[i] + "']").addClass("k-state-selected").find(".checkbox").attr("checked", "checked");
+            }
+        }
+        debugger;
+        if (!editable) {
+            $("#update").hide();
+            $("#updateButton").show();
+
+            //$("#Submit").prop('disabled', true);
+        }
+        else {
+            //$("#Submit").prop('disabled', false);
+            $("#update").show();
+            $("#updateButton").hide();
+        }
+
+        var headerCheckBox = $("#headerCheckBox")[0];
+        headerCheckBox.checked = allChecked(e.sender.items());
+        //$("#grid tr.k-alt").removeClass("k-alt");
+    }
+
+    function onEmpDataBound(e) {
+        checkedIds = [];
+        var view = this.dataSource.view();
+        var editable = false;
+        for (var i = 0; i < view.length; i++) {
+            if ((view[i].IsEdit1 || view[i].IsEdit2 || view[i].IsEdit3) && editable == false) {
+                editable = true;
+            }
+            if (checkedIds[view[i]]) {
+                this.tbody.find("tr[data-uid='" + view[i] + "']").find(".checkbox").attr("checked", "checked");
+            }
+        }
+        debugger;
+        if (!editable) {
+            $("#empupdate").hide();
+            $("#disabledButton").show();
+
+            //$("#Submit").prop('disabled', true);
+        }
+        else {
+            //$("#Submit").prop('disabled', false);
+            $("#empupdate").show();
+            $("#disabledButton").hide();
+        }
+
+        var headerCheckBox = $("#headerCheckBox")[0];
+        headerCheckBox.checked = allChecked(e.sender.items());
+        //$("#empGrid tr.k-alt").removeClass("k-alt");
+    }
+
+    function selectAllItems(headerCheckBox) {
+        var grid = $("#grid").data("kendoGrid");
+        var items = grid.dataSource.view();
+        var items = grid.dataSource.view();
+        for (var i = 0; i < items.length; i++) {
+
+            dataItem = items[i];
+
+
+            if (headerCheckBox.checked) {
+                checkedIds[dataItem.id] = true;
+                checkedItems.push(dataItem);
+
+            }
+            else {
+                delete checkedIds[dataItem.id];
+
+                //Clear the array
+                checkedItems = [];
+
+            }
+        }
+        $(".checkbox").each(function () {
+            this.checked = headerCheckBox.checked;
+        })
+    }
+
+    function selectAllEmpItems(headerCheckBox) {
+
+        var grid = $("#empGrid").data("kendoGrid");
+        var items = grid.dataSource.view();
+        for (var i = 0; i < items.length; i++) {
+
+            dataItem = items[i];
+
+
+            if (headerCheckBox.checked) {
+                checkedIds[dataItem.id] = true;
+                checkedItems.push(dataItem);
+
+            }
+            else {
+                delete checkedIds[dataItem.id];
+
+                //Clear the array
+                checkedItems = [];
+
+            }
+        }
+        $(".checkbox").each(function () {
+            this.checked = headerCheckBox.checked;
+        })
+    }
+
+    function allChecked(rows) {
+        for (var i = 0; i < rows.length; i++) {
+            var row = $(rows[i]);
+            if (!$(rows[i]).hasClass("k-state-selected")) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function onProjectChange(e) {
+        showDetails(e);
+        var value = $("#projectDropDown").val();
+        if (value != "" && value != null && value != undefined) {
+            $("#empDropDown").val("");
+            $("#empDropDown").data("kendoDropDownList").enable(false);
+            checkedItems = [];
+            $("#empDiv").hide();
+            $("#example").show();
+            $("#grid").data().kendoGrid.dataSource.read();
+            $("#grid").css("display", "block");
+            $("#grid").data().kendoGrid.bind("dataBound", onDataBound);
+            $("#grid").data().kendoGrid.table.on("click", ".checkbox", selectRow);
+        }
+        else {
+            $("#empDropDown").val("");
+            $("#empDropDown").data("kendoDropDownList").enable(true);
+            $("#empDiv").hide();
+            $("#example").hide();
+        }
+
+
+    }
+
+    function onEmpChange(e) {
+        showDetails(e);
+        var value = $("#empDropDown").val();
+        if (value != "" && value != null && value != undefined) {
+            $("#projectDropDown").val("");
+            $("#projectDropDown").data("kendoDropDownList").enable(false);
+            checkedItems = [];
+            $("#example").hide();
+            $("#empDiv").show();
+            $("#empGrid").data().kendoGrid.dataSource.read();
+            $("#empGrid").css("display", "block");
+            $("#empGrid").data().kendoGrid.bind("dataBound", onEmpDataBound);
+            $("#empGrid").data().kendoGrid.table.on("click", ".checkbox", selectEmpRow);
+        }
+        else {
+            $("#projectDropDown").val("");
+            $("#projectDropDown").data("kendoDropDownList").enable(true);
+            $("#example").hide();
+            $("#empDiv").hide();
+        }
+
+    }
+
+    function onChangeQuarter(e) {
+
+        var value = $("#empDropDown").val();
+        var drpProject = $("#projectDropDown").val();
+        if (value != "" && value != null && value != undefined) {
+            onEmpChange(e);
+        }
+        else if (drpProject != "" && drpProject != null && drpProject != undefined) {
+            onProjectChange(e);
+        }
+        else {
+            alert('Please select project or employee');
+        }
+
+    }
+
+</script>

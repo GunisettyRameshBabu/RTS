@@ -1,0 +1,12 @@
+﻿@(Html.Kendo().NumericTextBox<double>
+    ()
+    .Name("InvolvementEditDays2")
+    //.Format("p0")
+    .Min(0)
+    .Decimals(2)
+    .Step(1.00)
+    .Events(e =>
+    e.Change("onEdit2Change").Spin("onEdit2Change"))
+    .HtmlAttributes(new { style = "width: 100%", title = "#=InvolvementEditDays2#", @step = "any" })
+    )
+

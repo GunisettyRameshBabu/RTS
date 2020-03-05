@@ -1,0 +1,18 @@
+﻿@model SCTimeSheet_DAL.Models.ErrorLogModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row" style="padding:25px;">
+    <div class="error-page">
+        <h2 class="headline text-red">@TempData["exceptioncode"]</h2>
+        <div class="error-content">
+            <h3><i class="fa fa-warning text-red"></i> @TempData["headermessage"]! </h3>
+            <p>
+                An error occurred while processing your request. Please contact your System Administrator
+            </p>
+            <div class="col-md-9">Correlation ID : @Html.DisplayFor(model => model.ID)</div>
+            <div class="col-md-9">Datetime : @Html.DisplayFor(model => model.Datetime)</div>
+        </div>
+    </div>
+</div>

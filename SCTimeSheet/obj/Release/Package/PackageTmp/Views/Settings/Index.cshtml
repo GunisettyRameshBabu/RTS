@@ -1,0 +1,151 @@
+﻿@model SCTimeSheet_DAL.Models.SettingsModel
+@{
+    ViewBag.Title = "Settings Page";
+}
+@using (Html.BeginForm())
+{
+    <div class="card-body" style="background-color: #fff;border-radius:10px; margin-top: 45px; padding: 48px; padding-bottom: 81px;">
+        <h5 style="font-size: 26px; color: #646464;"> Settings Page </h5>
+
+        <p>
+            <div class="row">
+                <div class="col-md-6" id="Personal Id">
+
+                    @Html.LabelFor(model => model.SetValue, new { style = "color: #646464;" })
+                    <span class="req">*</span>
+                    @*<label for="usr" style="color: rgb(0,108,83);">Involvement Days</label>*@
+                    @*<input type="text" class="form-control" id="usr" placeholder="Involvement Days">*@
+                    @Html.TextBoxFor(model => model.SetValue, new { @class = "form-control groupdecimal", autocomplete = "off", style = "width: 100%; background-color: #f6f6f6;border-radius: 9px;" })
+                    @Html.ValidationMessageFor(model => model.SetValue, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="col-md-6">
+                    <div style="padding:0px 45px;margin-top:10px">
+                        <button type="submit" class="btn btn-success" id="Save" value="Set" style="background-color: rgb(78, 78, 78); border-color: none;margin-top:25px;" name="action:Set">Set</button>
+                    </div>
+                </div>
+            </div>
+            @*<div class="row" style="overflow-x: auto;padding:0px;">
+                    <div class="col-md-12">
+                        <h4 style="color: rgb(0,108,83); margin-left:10px"><b>Settings List </b></h4><hr />
+                        <table class="table" id="timesheetSettings">
+                            <thead>
+                                <tr>
+                                    <th style="display:none">SetID</th>
+                                    <th>S.No</th>
+                                    <th>Settings Code</th>
+                                    <th>Settings Value</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>*@
+        </p>
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        //$('#settings-logo').attr('src', '../../Contents/assets/Images/utility.png');
+        $('#settings').css('color', 'black');
+    });
+
+        $('.groupdecimal').keypress(function (event) {
+            return isNumber(event, this)
+        });
+
+        // THE SCRIPT THAT CHECKS IF THE KEY PRESSED IS A NUMERIC OR DECIMAL VALUE.
+        function isNumber(evt, element) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+
+            if (
+                (charCode != 45 || $(element).val().indexOf('-') != -1) &&      // “-” CHECK MINUS, AND ONLY ONE.
+                (charCode != 46 || $(element).val().indexOf('.') != -1) &&      // “.” CHECK DOT, AND ONLY ONE.
+                (charCode < 48 || charCode > 57))
+                return false;
+
+            return true;
+        }
+
+
+         @*function DeleteData(Id) {
+            if (confirm("Are you sure you want to delete .?")) {
+                var url = '@Url.Content("~/")' + "Settings/Delete";
+                $.post(url, { id: Id }, function (data) {
+                    console.log(data);
+                    if (data.success) {
+                        //alert("Success");
+                        $.notify(" Data Deleted Successfully", "success");
+                        oTable = $('#timesheetSettings').DataTable();
+                        //oTable.draw();
+                        oTable.ajax.reload();
+
+                    }
+                    else {
+                        alert("Something Went Wrong!");
+                    }
+                });
+            }
+            else {
+                return false;
+            }
+        }*@
+
+        @*$(document).ready(function () {
+
+
+            $("#timesheetSettings").DataTable({
+                "ajax": {
+                    "url": '@Url.Action("Read")',
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs":
+                    [{
+                        "targets": [0],
+                        "visible": false,
+                        "searchable": false
+
+                    }],
+
+                "columns": [
+
+                    { "data": "SetID", "name": "SetID", "autoWidth": true },
+                    { "data": "ItemNo", "name": "ItemNo", "autoWidth": true },
+                    { "data": "SetCode", "name": "SetCode", "autoWidth": true },
+                    { "data": "SetValue", "name": "SetValue", "autoWidth": true },
+
+
+                    {
+
+
+                        "render": function (data, type, val, meta) { return '<a class="btn btn-info btn-sm" href="/Settings/Edit?id=' + val.SetID + '">Edit</a>'; }
+
+
+
+
+                    },
+
+
+                    {
+                        "render": function (data, type, val, meta)
+                        {
+                              //return '<a class="btn btn-danger btn-sm"  href="/ProjectMaster/Delete?id=' + val.ProjectID + '">Delete</a>';
+
+                            return "<a class='btn btn-danger btn-sm' href='#' onclick=DeleteData('" + val.SetID + "'); >Delete</a>";
+
+                        }
+
+
+                    },
+
+
+
+                ],
+                "searching": false,
+                "lengthChange": false
+            });
+        });*@
+</script>

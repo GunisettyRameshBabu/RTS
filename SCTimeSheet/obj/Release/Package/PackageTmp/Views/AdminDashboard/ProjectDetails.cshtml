@@ -1,0 +1,293 @@
+﻿@model bool
+@{
+    ViewBag.Title = "Project Details";
+}
+<style>
+    .k-grid th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: center;
+        background-color: transparent;
+        color: grey !important;
+        /*height: 75px;*/
+        border: 1px solid #ddd !important;
+        /*border-left: transparent;
+                border-right: transparent;
+                border-bottom: 1px solid black;
+                border-top: 1px solid black;*/
+        font-size: small !important;
+        font-weight: bold !important;
+    }
+
+    ul#legend li {
+        display: inline;
+    }
+
+    .input-color {
+        position: relative;
+    }
+
+        .input-color label {
+            padding-left: 20px;
+        }
+
+        .input-color .color-box {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            background-color: #ccc;
+            position: absolute;
+            left: 5px;
+            top: 5px;
+        }
+
+    .tooltip-inner {
+        min-width: 100px !important;
+        max-width: 100% !important;
+    }
+</style>
+
+<div class="card-body" style="background-color: #fff;border-radius:10px;  padding: 10px;">
+    <h5 style="font-size: 26px; color: #646464;"> @ViewBag.projectName</h5>
+
+
+    @if (Model)
+    {
+        <div class="row" style="padding-left:10px">
+            <div class="col-md-2  input-color">
+                <label>Rejected</label>
+                <div class="color-box" style="background-color: red;"></div>
+                <!-- Replace "#FF850A" to change the color -->
+            </div>
+            <div class="col-md-2 input-color">
+                <label>Approved</label>
+                <div class="color-box" style="background-color: green;"></div>
+                <!-- Replace "navy" to change the color -->
+            </div>
+            <div class="col-md-2 input-color">
+                <label>Approval Pending</label>
+                <div class="color-box" style="background-color: orange;"></div>
+                <!-- Replace "navy" to change the color -->
+            </div>
+            <div class="col-md-2 input-color">
+                <label> No Submission</label>
+                <div class="color-box" style="background-color: white;border:1px solid black;align-content:center;text-align:center;">-</div>
+                <!-- Replace "navy" to change the color -->
+            </div>
+        </div>
+        @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.TestClass>()
+                                                                                  .Name("TSGrid")
+                                                                                  .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                                                  .DataSource(dataSource => dataSource
+                                                                                      .Ajax()
+                                                                                      .Batch(true)
+                                                                                      .PageSize(20)
+                                                                                      .ServerOperation(false)
+                                                                                      .Model(model =>
+                                                                                      {
+                                                                                          model.Id(p => p.EmployeeID);
+                                                                                          model.Field(p => p.EmployeeID).Editable(false);
+                                                                                          model.Field(p => p.EmpFirstName).Editable(false);
+                                                                                          model.Field(p => p.IsManager).Editable(false);
+                                                                                          model.Field(p => p.StartDate).Editable(false);
+                                                                                          model.Field(p => p.EndDate).Editable(false);
+                                                                                          model.Field(p => p.InvPercentage).Editable(false);
+                                                                                      })
+                                                                                      .Read(read => read
+                                                                                          .Action("GetSelectedProject", "AdminDashboard")
+                                                                                          .Data("GetProjectId")
+                                                                                      )
+                                                                                  )
+                                                                                  .Columns(columns =>
+                                                                                  {
+                                                                                      columns.Bound(product => product.EmpFirstName);
+                                                                                      columns.Bound(product => product.IsManager);
+                                                                                      columns.Bound(product => product.StartDate);
+                                                                                      columns.Bound(product => product.EndDate);
+                                                                                      columns.Bound(product => product.InvPercentage);
+                                                                                      columns.Template(product => "").Title("Time Sheets").ClientTemplate("#= buildContactsGrid(data) #").Width(200);
+
+                                                                                  })
+                                                                              // .ClientDetailTemplateId("template")
+
+                                                                              .Pageable()
+                                                                              .Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+                                                                              .Events(events => events.DataBound("dataBound"))
+        )
+    }
+    else
+    {
+        @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.TestClass>()
+                                                                                .Name("TSGrid")
+                                                                                .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                                                .DataSource(dataSource => dataSource
+                                                                                    .Ajax()
+                                                                                    .Batch(true)
+                                                                                    .PageSize(20)
+                                                                                    .ServerOperation(false)
+                                                                                    .Model(model =>
+                                                                                    {
+                                                                                        model.Id(p => p.EmployeeID);
+                                                                                        model.Field(p => p.EmployeeID).Editable(false);
+                                                                                        model.Field(p => p.EmpFirstName).Editable(false);
+                                                                                        model.Field(p => p.IsManager).Editable(false);
+                                                                                        model.Field(p => p.StartDate).Editable(false);
+                                                                                        model.Field(p => p.EndDate).Editable(false);
+                                                                                        model.Field(p => p.InvPercentage).Editable(false);
+                                                                                    })
+                                                                                    .Read(read => read
+                                                                                        .Action("GetSelectedProject", "AdminDashboard")
+                                                                                        .Data("GetProjectId")
+                                                                                    )
+                                                                                )
+                                                                                .Columns(columns =>
+                                                                                {
+                                                                                    columns.Bound(product => product.EmpFirstName);
+                                                                                    columns.Bound(product => product.IsManager);
+                                                                                    columns.Bound(product => product.StartDate);
+                                                                                    columns.Bound(product => product.EndDate);
+                                                                                    columns.Bound(product => product.InvPercentage);
+
+                                                                                })
+
+                                                                            .Pageable()
+                                                                            .Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+                                                                            .Events(events => events.DataBound("dataBound"))
+        )
+    }
+
+
+    <div class="button" style="float: right; margin-top:10px;margin-bottom:10px;">
+        <button type="button" id="backBtn" class="btn btn-primary" style="background-color: #00664E; border-color:  #00664E;" onclick='window.location = "@Url.Action("Index", "AdminDashboard")";'>Back</button>
+    </div>
+</div>
+
+<script>
+
+ function buildContactsGrid(client)
+    {
+     var htmlContacts = '';
+     htmlContacts += "<table style='table-layout: fixed;' class='table-bordered'><tr style='background-color:lightgray;font-weight: bold;'><th style='width:50px;'>Year</th><th style='width:40px;'>Jan</th><th style='width:40px;'>Feb</th><th style='width:40px;'>Mar</th><th style='width:40px;'>Apr</th><th style='width:40px;'>May</th><th style='width:40px;'>Jun</th><th style='width:40px;'>Jul</th><th style='width:40px;'>Aug</th><th style='width:40px;'>Sep</th><th style='width:40px;'>Oct</th><th style='width:40px;'>Nov</th><th style='width:40px;'>Dec</th></tr><tr>";
+     $(client.MonthLists).each(function (index, item) {
+         htmlContacts += "<td>" + item.Year + "</td><td data-toggle='tooltip' data-html='true' title='" + getToolTip(item.Jan) + "'  class='" + getStatus(item.Jan) + "'>" + getValue(item.Jan) + "</td><td data-toggle='tooltip' data-html='true' title='" + getToolTip(item.Feb) + "'  class='" + getStatus(item.Feb) + "'>" + getValue(item.Feb) + "</td><td data-toggle='tooltip' data-html='true' title='" + getToolTip(item.Mar) + "'  class='" + getStatus(item.Mar) + "'>" + getValue(item.Mar) + "</td><td data-toggle='tooltip' data-html='true' title='" + getToolTip(item.Apr) + "'  class='" + getStatus(item.Apr) + "'>" + getValue(item.Apr) + "</td><td data-toggle='tooltip' data-html='true' title='" + getToolTip(item.May) + "'  class='" + getStatus(item.May) + "'>" + getValue(item.May) + "</td><td data-toggle='tooltip' data-html='true' title='" + getToolTip(item.Jun) + "'  class='" + getStatus(item.Jun) + "'>" + getValue(item.Jun) + "</td><td data-toggle='tooltip' data-html='true' title='" + getToolTip(item.Jul) + "'  class='" + getStatus(item.Jul) + "'>" + getValue(item.Jul) + "</td><td data-toggle='tooltip' data-html='true' title='" + getToolTip(item.Aug) + "'  class='" + getStatus(item.Aug) + "'>" + getValue(item.Aug) + "</td><td data-toggle='tooltip' data-html='true' title='" + getToolTip(item.Sep) + "'  class='" + getStatus(item.Sep) + "'>" + getValue(item.Sep) + "</td><td data-toggle='tooltip' data-html='true' title='" + getToolTip(item.Oct) + "'  class='" + getStatus(item.Oct) + "'>" + getValue(item.Oct) + "</td><td data-toggle='tooltip' data-html='true' title='" + getToolTip(item.Nov) + "'  class='" + getStatus(item.Nov) + "'>" + getValue(item.Nov) + "</td><td data-toggle='tooltip' data-html='true' title='" + getToolTip(item.Dec) + "'  class='" + getStatus(item.Dec) + "'>" + getValue(item.Dec) + "</td></tr>";
+     });
+     htmlContacts += "</table>";
+     return htmlContacts;
+    }
+    function onDataBound() {
+
+        $('[data-toggle="tooltip"]').tooltip({ container: ".wrapper", boundary: 'window', placement: 'top' });
+    }
+    $(document).ready(function () {
+        //$('#dashboard-logo').attr('src', '../../Contents/assets/Login/images/dash.png');
+        $('#dashboard').css('color', 'black');
+    });
+    function GetProjectId() {
+        var pId =@ViewBag.projectID;
+        return {
+            projectId: pId
+        }
+    }
+            function dataBound() {
+                var allrows = this.tbody.find("tr.k-master-row");
+                for (var i = 0; i < allrows.length; i++) {
+                    this.expandRow(allrows[i]);
+                }
+
+                $('[data-toggle="tooltip"]').tooltip({ container: ".wrapper", boundary: 'window', placement: 'top' });
+        //this.expandRow(this.tbody.find("tr.k-master-row").first());
+    }
+    function getStatus(value) {
+        console.log(value);
+        if (value != undefined && value != '') {
+            var status = value.length == 1 ? "" : value.substring(0, value.indexOf('-'));
+            switch (status) {
+
+                case "3":
+                    return 'green';
+                    break;
+                case "2":
+                    return 'yellow';
+                    break;
+                case "4":
+                    return 'red';
+                    break;
+                default:
+                    return '';
+                    break;
+            }
+        }
+        return '';
+    }
+            function getValue(value) {
+                if (value != undefined && value != '') {
+                    if (value.length == 1) {
+                        return value;
+                    }
+                    else {
+                        var firstIndex = this.nthIndex(value, '-', 1);
+                        var nthIndex = this.nthIndex(value, '-', 2);
+                        return round(value.substring(firstIndex + 1, (nthIndex - firstIndex) + 1),1);
+                    }
+                }
+                return '-';
+    }
+
+    function round(value, precision) {
+        if (!isNaN(value)) {
+            var multiplier = Math.pow(10, precision || 0);
+            return Math.round(value * multiplier) / multiplier;
+        }
+        else {
+            return value;
+        }
+    }
+
+    function getToolTip(value) {
+        if (value != undefined && value != '') {
+            if (value.length == 1) {
+                return 'No Submission';
+            }
+            else {
+
+                var nthIndex = this.nthIndex(value, '-', 2);
+                return value.substring(nthIndex + 1);
+            }
+        }
+        return 'No Submission';
+    }
+
+    function nthIndex(str, pat, n) {
+        var L = str.length, i = -1;
+        while (n-- && i++ < L) {
+            i = str.indexOf(pat, i);
+            if (i < 0) break;
+        }
+        return i;
+    }
+</script>
+<style>
+    .red {
+        background: red;
+        text-align: center;
+        color: white;
+    }
+
+    .green {
+        background: green;
+        text-align: center;
+        color: white;
+    }
+
+    .yellow {
+        background: #f8c300;
+        text-align: center;
+        color: white;
+    }
+
+    .white {
+        background: white;
+        text-align: center;
+    }
+</style>
+

@@ -1,0 +1,9 @@
+﻿@Html.Kendo().TextBox().Name("StartDate").Value("#=StartDate#")
+</br>
+@(Html.Kendo().DatePicker()
+                    .Name("StartDate")
+                    .Value("#=StartDate#")
+                    .HtmlAttributes(new { style = "width: 50%", title = "Select Start Date" })
+                   .Format("dd MMM yyyy")
+)
+

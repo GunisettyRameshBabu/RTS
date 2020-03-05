@@ -1,0 +1,9 @@
+﻿
+@(Html.Kendo().NumericTextBox<decimal>()
+        .Name("InvolvePercent")
+        .Format("#####.##")
+        // .Value("#=InvolvePercent#")
+        .Events(e => e
+        .Change("percentageChange").Spin("percentageChange"))
+        .HtmlAttributes(new { style = "width: 50%", title = "Enter Involvement %",@min=0,@max=100 })
+)

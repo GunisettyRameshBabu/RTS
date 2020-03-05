@@ -1,0 +1,547 @@
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\SCTimeSheet.dll.config
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\SCTimeSheet.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\SCTimeSheet.pdb
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\csc.exe
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\csc.exe.config
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\csc.rsp
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\csi.exe
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\csi.exe.config
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\csi.rsp
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\Microsoft.Managed.Core.targets
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\System.AppContext.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\System.Collections.Immutable.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\System.Console.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\System.IO.Compression.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\System.IO.FileSystem.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\System.IO.Pipes.AccessControl.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\System.IO.Pipes.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\System.Reflection.Metadata.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\System.Security.AccessControl.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\System.Security.Claims.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\System.Security.Principal.Windows.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\System.ValueTuple.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\System.Xml.XmlDocument.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\System.Xml.XPath.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\vbc.exe
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\vbc.exe.config
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\vbc.rsp
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\VBCSCompiler.exe
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\roslyn\VBCSCompiler.exe.config
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\Microsoft.Web.Infrastructure.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\System.Web.Helpers.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\System.Web.Mvc.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\System.Web.Razor.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\System.Web.Webpages.Deployment.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\System.Web.Webpages.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\System.Web.Webpages.Razor.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\System.Web.Razor.xml
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\System.Web.Webpages.xml
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\System.Web.Webpages.Deployment.xml
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\System.Web.Webpages.Razor.xml
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\System.Web.Helpers.xml
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\System.Web.Mvc.xml
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\obj\Debug\SCTimeSheet.csprojAssemblyReference.cache
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\obj\Debug\SCTimeSheet.csproj.CoreCompileInputs.cache
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\obj\Debug\SCTimeSheet.csproj.CopyComplete
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\obj\Debug\SCTimeSheet.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\obj\Debug\SCTimeSheet.pdb
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\EntityFramework.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\EntityFramework.SqlServer.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\EntityFramework.xml
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\EntityFramework.SqlServer.xml
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\SCTimeSheet_DAL.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\SCTimeSheet_HELPER.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\SCTimeSheet_UTIL.dll
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\SCTimeSheet_DAL.pdb
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\SCTimeSheet_DAL.dll.config
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\SCTimeSheet_HELPER.pdb
+D:\Projects\SembCorp\SCTimeSheet\SCTimeSheet\bin\SCTimeSheet_UTIL.pdb
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet.dll.config
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet.pdb
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\csc.exe
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\csc.exe.config
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\csc.rsp
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\csi.exe
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\csi.exe.config
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\csi.rsp
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.AppContext.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Console.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.IO.Compression.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.IO.Pipes.AccessControl.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.IO.Pipes.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Security.AccessControl.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Security.Claims.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Security.Principal.Windows.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.ValueTuple.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Xml.XPath.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\vbc.exe
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\vbc.exe.config
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\vbc.rsp
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\VBCSCompiler.exe
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Antlr3.Runtime.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\EntityFramework.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\EntityFramework.SqlServer.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Kendo.Mvc.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Logging.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Protocol.Extensions.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Protocols.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Tokens.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.Security.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.Security.OpenIdConnect.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Newtonsoft.Json.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Owin.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet_DAL.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet_HELPER.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet_UTIL.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.Helpers.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.Mvc.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.Optimization.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.Razor.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.WebPages.Deployment.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.WebPages.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.WebPages.Razor.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\WebGrease.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet_DAL.pdb
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet_DAL.dll.config
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet_HELPER.pdb
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet_HELPER.dll.config
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet_UTIL.pdb
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Antlr3.Runtime.pdb
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\EntityFramework.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\EntityFramework.SqlServer.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.JsonWebTokens.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Logging.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Protocol.Extensions.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Protocols.pdb
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Protocols.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Protocols.OpenIdConnect.pdb
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Protocols.OpenIdConnect.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Tokens.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.Security.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.Security.OpenIdConnect.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Newtonsoft.Json.pdb
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Newtonsoft.Json.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.IdentityModel.Tokens.Jwt.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.Helpers.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.Mvc.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.Optimization.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.Razor.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.WebPages.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.WebPages.Deployment.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.WebPages.Razor.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\obj\Debug\SCTimeSheet.csprojAssemblyReference.cache
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\obj\Debug\SCTimeSheet.csproj.CoreCompileInputs.cache
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\obj\Debug\SCTimeSheet.csproj.CopyComplete
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\obj\Debug\SCTimeSheet.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP\SCTimeSheet\obj\Debug\SCTimeSheet.pdb
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet.dll.config
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet.pdb
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\csc.exe
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\csc.exe.config
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\csc.rsp
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\csi.exe
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\csi.exe.config
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\csi.rsp
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.Managed.Core.targets
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.AppContext.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Collections.Immutable.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Console.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.IO.Compression.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.IO.FileSystem.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.IO.Pipes.AccessControl.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.IO.Pipes.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Reflection.Metadata.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Security.AccessControl.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Security.Claims.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Security.Principal.Windows.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.ValueTuple.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Xml.XmlDocument.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Xml.XPath.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\vbc.exe
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\vbc.exe.config
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\vbc.rsp
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\VBCSCompiler.exe
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\VBCSCompiler.exe.config
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Antlr3.Runtime.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\EntityFramework.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\EntityFramework.SqlServer.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Logging.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Protocol.Extensions.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Protocols.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Tokens.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.Security.Cookies.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.Security.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.Security.OpenIdConnect.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Web.Infrastructure.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Newtonsoft.Json.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Owin.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet_DAL.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet_HELPER.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet_UTIL.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.IdentityModel.Tokens.Jwt.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.Helpers.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.Mvc.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.Optimization.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.Razor.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.WebPages.Deployment.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.WebPages.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.WebPages.Razor.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\WebGrease.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet_DAL.pdb
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet_DAL.dll.config
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet_HELPER.pdb
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet_HELPER.dll.config
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet_UTIL.pdb
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Antlr3.Runtime.pdb
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\EntityFramework.xml
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\EntityFramework.SqlServer.xml
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.JsonWebTokens.xml
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Logging.xml
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Protocol.Extensions.xml
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Protocols.pdb
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Protocols.xml
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Protocols.OpenIdConnect.pdb
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Protocols.OpenIdConnect.xml
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Tokens.xml
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.xml
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.Security.xml
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.Security.Cookies.xml
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.Security.OpenIdConnect.xml
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Newtonsoft.Json.pdb
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Newtonsoft.Json.xml
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.IdentityModel.Tokens.Jwt.xml
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.Helpers.xml
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.Mvc.xml
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.Optimization.xml
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.Razor.xml
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.WebPages.xml
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.WebPages.Deployment.xml
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.WebPages.Razor.xml
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\obj\Debug\SCTimeSheet.csprojAssemblyReference.cache
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\obj\Debug\SCTimeSheet.csproj.CoreCompileInputs.cache
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\obj\Debug\SCTimeSheet.csproj.CopyComplete
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\obj\Debug\SCTimeSheet.dll
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\obj\Debug\SCTimeSheet.pdb
+C:\SembCorp\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Kendo.Mvc.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet.dll.config
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet.pdb
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\csc.exe
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\csc.exe.config
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\csc.rsp
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\csi.exe
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\csi.exe.config
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\csi.rsp
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.AppContext.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Console.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.IO.Compression.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.IO.Pipes.AccessControl.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.IO.Pipes.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Security.AccessControl.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Security.Claims.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Security.Principal.Windows.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.ValueTuple.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Xml.XPath.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\vbc.exe
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\vbc.exe.config
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\vbc.rsp
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\VBCSCompiler.exe
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Antlr3.Runtime.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\EntityFramework.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\EntityFramework.SqlServer.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Logging.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Protocol.Extensions.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Protocols.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Tokens.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.Security.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.Security.OpenIdConnect.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Newtonsoft.Json.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Owin.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet_DAL.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet_HELPER.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet_UTIL.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.Helpers.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.Mvc.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.Optimization.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.Razor.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.WebPages.Deployment.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.WebPages.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.WebPages.Razor.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\WebGrease.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet_DAL.pdb
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet_DAL.dll.config
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet_HELPER.pdb
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet_HELPER.dll.config
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\SCTimeSheet_UTIL.pdb
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Antlr3.Runtime.pdb
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\EntityFramework.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\EntityFramework.SqlServer.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.JsonWebTokens.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Logging.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Protocol.Extensions.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Protocols.pdb
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Protocols.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Protocols.OpenIdConnect.pdb
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Protocols.OpenIdConnect.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.IdentityModel.Tokens.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.Security.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.Owin.Security.OpenIdConnect.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Newtonsoft.Json.pdb
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Newtonsoft.Json.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.IdentityModel.Tokens.Jwt.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.Helpers.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.Mvc.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.Optimization.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.Razor.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.WebPages.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.WebPages.Deployment.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\System.Web.WebPages.Razor.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\obj\Debug\SCTimeSheet.csprojAssemblyReference.cache
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\obj\Debug\SCTimeSheet.csproj.CoreCompileInputs.cache
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\obj\Debug\SCTimeSheet.csproj.CopyComplete
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\obj\Debug\SCTimeSheet.dll
+C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet\obj\Debug\SCTimeSheet.pdb
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\SCTimeSheet.dll.config
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\SCTimeSheet.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\SCTimeSheet.pdb
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\csc.exe
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\csc.exe.config
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\csc.rsp
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\csi.exe
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\csi.exe.config
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\csi.rsp
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\Microsoft.Managed.Core.targets
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\System.AppContext.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\System.Collections.Immutable.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\System.Console.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\System.IO.Compression.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\System.IO.FileSystem.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\System.IO.Pipes.AccessControl.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\System.IO.Pipes.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\System.Reflection.Metadata.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\System.Security.AccessControl.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\System.Security.Claims.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\System.Security.Principal.Windows.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\System.ValueTuple.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\System.Xml.XmlDocument.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\System.Xml.XPath.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\vbc.exe
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\vbc.exe.config
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\vbc.rsp
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\VBCSCompiler.exe
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\roslyn\VBCSCompiler.exe.config
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Antlr3.Runtime.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\EntityFramework.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\EntityFramework.SqlServer.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Kendo.Mvc.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.IdentityModel.Logging.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.IdentityModel.Protocol.Extensions.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.IdentityModel.Protocols.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.IdentityModel.Tokens.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.Owin.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.Owin.Security.Cookies.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.Owin.Security.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.Owin.Security.OpenIdConnect.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.Web.Infrastructure.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Newtonsoft.Json.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Owin.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\SCTimeSheet_DAL.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\SCTimeSheet_HELPER.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\SCTimeSheet_UTIL.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\System.IdentityModel.Tokens.Jwt.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\System.Web.Helpers.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\System.Web.Mvc.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\System.Web.Optimization.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\System.Web.Razor.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\System.Web.WebPages.Deployment.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\System.Web.WebPages.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\System.Web.WebPages.Razor.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\WebGrease.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\SCTimeSheet_DAL.pdb
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\SCTimeSheet_DAL.dll.config
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\SCTimeSheet_HELPER.pdb
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\SCTimeSheet_HELPER.dll.config
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\SCTimeSheet_UTIL.pdb
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Antlr3.Runtime.pdb
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\EntityFramework.xml
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\EntityFramework.SqlServer.xml
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.IdentityModel.JsonWebTokens.xml
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.IdentityModel.Logging.xml
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.IdentityModel.Protocol.Extensions.xml
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.IdentityModel.Protocols.pdb
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.IdentityModel.Protocols.xml
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.IdentityModel.Protocols.OpenIdConnect.pdb
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.IdentityModel.Protocols.OpenIdConnect.xml
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.IdentityModel.Tokens.xml
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.Owin.xml
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.Owin.Security.xml
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.Owin.Security.Cookies.xml
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.Owin.Security.OpenIdConnect.xml
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Newtonsoft.Json.pdb
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Newtonsoft.Json.xml
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\System.IdentityModel.Tokens.Jwt.xml
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\System.Web.Helpers.xml
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\System.Web.Mvc.xml
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\System.Web.Optimization.xml
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\System.Web.Razor.xml
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\System.Web.WebPages.xml
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\System.Web.WebPages.Deployment.xml
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\System.Web.WebPages.Razor.xml
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\obj\Debug\SCTimeSheet.csprojAssemblyReference.cache
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\obj\Debug\SCTimeSheet.csproj.CoreCompileInputs.cache
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\obj\Debug\SCTimeSheet.csproj.CopyComplete
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\obj\Debug\SCTimeSheet.dll
+C:\RTS\Sembcorp 03-03-2020\SCTimeSheet\obj\Debug\SCTimeSheet.pdb

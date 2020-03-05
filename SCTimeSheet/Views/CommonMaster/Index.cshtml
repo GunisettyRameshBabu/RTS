@@ -1,0 +1,121 @@
+﻿@model SCTimeSheet_DAL.Models.MasterDataModel
+@{
+    ViewBag.Title = "Grant";
+}
+
+<div class="card-body" style="background-color: #fff;border-radius:10px; ">
+    <h5 style="font-size: 26px; color: #646464;">Add Grant Type</h5>
+
+        <div class="row">
+            <div class="col-md-3" id="Personal Id">
+                <label style="color: #646464;">Grant Code</label>
+                @*@Html.LabelFor(model => model.MstName, new { style = "color: #646464;" })*@
+                <span class="req">*</span>
+                @Html.TextBoxFor(model => model.MstCode, new { @class = "form-control groupdecimal", @id = "txtCode", autocomplete = "off", style = "width: 100%; background-color: #f6f6f6;border-radius: 9px;" })
+                @Html.ValidationMessageFor(model => model.MstName, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="col-md-6" id="Personal Id">
+                <label style="color: #646464;">Grant Type</label>
+                @*@Html.LabelFor(model => model.MstName, new { style = "color: #646464;" })*@
+                <span class="req">*</span>
+                @Html.TextBoxFor(model => model.MstName, new { @class = "form-control groupdecimal", @id = "txtGrant", autocomplete = "off", style = "width: 100%; background-color: #f6f6f6;border-radius: 9px;" })
+                @Html.ValidationMessageFor(model => model.MstName, "", new { @class = "text-danger" })
+
+            </div>
+           
+            <div class="col-md-3">
+                <div style="padding:0px 45px;margin-top:10px">
+                    <button type="submit" class="btn btn-success" id="btnSave" value="Set" style=" border-color: none;margin-top:25px;" name="action:Set">Save</button>
+                </div>
+            </div>
+        </div>
+
+</div>
+<div class="card-body" style="background-color: #fff;border-radius:10px; margin-top: 20px;  padding-bottom: 81px;">
+    <h5 style="font-size: 26px; color: #646464;">Grant Types</h5>
+    @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.MasterDataModel>()
+                        .Name("GrantGrid")
+                        .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                        .DataSource(dataSource => dataSource
+                            .Ajax()
+                            .Batch(true)
+                            .PageSize(20)
+                            .ServerOperation(true)
+                            .Model(model =>
+                            {
+                                model.Id(p => p.MstTypeID);
+                                model.Field(p => p.MstCode);
+                                model.Field(p => p.MstName);
+                            })
+                            .Read(read => read
+                                .Action("GetGrantTypes", "CommonMaster")
+                            )
+                            .Update(update => update
+                                .Action("UpdateGrant", "CommonMaster")
+                            )
+                            .Destroy(destroy => destroy
+                                .Action("DestroyGrant", "CommonMaster")
+                            )
+                        )
+                        .Columns(columns =>
+                        {
+                            columns.Template(t => { }).ClientTemplate("#= renderNumber(data) #").Title("S.No").Width(20);
+                            columns.Bound(product => product.MstCode).Title("Grant Code");
+                            columns.Bound(product => product.MstName).Title("Grant Type");
+                            columns.Command(command => { command.Edit(); command.Destroy(); }).Width(200);
+                        })
+                    .Pageable()
+                    .Filterable()
+                    .Events(ev => ev.DataBound("onDataBound"))
+                     //.Editable(editable => editable.Mode(GridEditMode.InLine))
+                     .Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+    )
+    </div>
+    <script>
+        var counter = 1;
+
+        function onDataBound(e) {
+            counter = 1;
+        }
+
+        function renderNumber(data) {
+            return counter++;
+        } 
+    $(document).ready(function () {
+
+        //$('#master-logo').attr('src', '../../Contents/assets/Images/mater.png');
+        $('#master').css('color', 'black');
+
+        //$('#admin-logo').attr('src', '../../Contents/assets/Images/utility.png');
+        $('#admin').css('color', 'black');
+    });
+
+    $(document).on("click", "#btnSave", function () {
+        var grant = $('#txtGrant').val();
+        var code = $('#txtCode').val();
+        if ((grant != "") && (code != "")) {
+        $.ajax({
+            url: '@Url.Action("SaveGrant", "CommonMaster")',
+            type: "POST",
+            dataType: "JSON",
+            data: { grantName: grant, grantCode: code },
+            success: function (res) {
+                if (res.data == true) {
+                    $.notify("Grant Successfully Added", "success");
+                    $("#GrantGrid").data().kendoGrid.dataSource.read();
+                }
+                else if (res.data == false) {
+                    $.notify("Already Existing Grant Type", "warn");
+                }
+                else if (res.data == "Error") {
+                    $.notify("Error While Saving the Grant or While Sending the email", "error");
+                }
+            }
+            });
+        }
+        else {
+            $.notify("Please enter grant type and code. ", "warn");
+        }
+    });
+    </script>

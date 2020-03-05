@@ -1,0 +1,589 @@
+﻿
+<!DOCTYPE html>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10,IE=Edge" />
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>@ViewBag.title</title>
+
+    <link href="~/Contents/assets/css/css.css" rel="stylesheet" />
+    @*<link href="~/Contents/assets/css/style.css" rel="stylesheet" />*@
+    @*<link href="~/Contents/css/bootstrap.min.css" rel="stylesheet" />*@
+    <link href="~/Contents/css/select2.min.css" rel="stylesheet" />
+    <link href="~/Contents/css/datepicker.css" rel="stylesheet" />
+    <link href="~/Contents/css/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Contents/css/buttons.dataTables.min.css" rel="stylesheet" />
+
+
+    @*<script src="~/Contents/assets/js/jquery-3.1.1.min.js"></script>*@
+    <script src="~/Contents/js/jquery.min.js"></script> @*jQuery v3.3.1*@
+    <script src="~/Contents/js/select2.min.js"></script>
+    <script src="~/Contents/js/jquery.mtz.monthpicker.js"></script>
+    @*<script src="~/Contents/assets/js/solid.js"></script>
+        <script src="~/Contents/assets/js/fontawesome.js"></script>*@
+
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- Our Custom CSS -->
+    <link href="~/Contents/assets/css/style.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <style>
+        @@import url('https://fonts.googleapis.com/css?family=Roboto');
+    </style>
+
+    <!-- the styles may also be loaded with webpack -->
+    @*<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.1.112/styles/kendo.common.min.css">
+        <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.1.112/styles/kendo.default.min.css">*@
+    <link href="~/Contents/kendo/kendo.common.min.css" rel="stylesheet" />
+    <link href="~/Contents/kendo/kendo.default.min.css" rel="stylesheet" />
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+    <script src="~/Scripts/kendo/kendo.all.min.js"></script>
+    <script src="~/Scripts/kendo/kendo.aspnetmvc.min.js"></script>
+    <style>
+        body {
+            background-color: #f6f6f6;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .customers {
+            font-family: "Roboto";
+            border-collapse: collapse;
+            width: 100% !important;
+        }
+
+            .customers td, .customers th {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+
+            .customers tbody tr:nth-child(even) {
+                background-color: #ffffff;
+            }
+
+            .customers tr:hover {
+                background-color: #ddd;
+            }
+
+            .customers th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: center;
+                background-color: #e4e4e4;
+                color: #000000;
+                /*height: 75px;*/
+                border: 1px solid #ddd;
+                /*border-left: transparent;
+                border-right: transparent;
+                border-bottom: 1px solid black;
+                border-top: 1px solid black;*/
+                /*font-size: small;*/
+            }
+
+        .customerw {
+            font-family: "Roboto";
+            border-collapse: collapse;
+            width: 100% !important;
+        }
+
+        .customersw th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: center;
+            vertical-align: top;
+            background-color: #e4e4e4;
+            color: #000000;
+            /*height: 75px;*/
+            border: 1px solid #ddd;
+            /*border-left: transparent;
+                border-right: transparent;
+                border-bottom: 1px solid black;
+                border-top: 1px solid black;*/
+            /*font-size: small;*/
+        }
+
+        .customersw tr:nth-child(even) {
+            background-color: #f0f0f0;
+        }
+
+        .customersw tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+
+        .sidebarList {
+            background-color: #fafafa !important;
+            font-size: 14px !important;
+            padding-left: 30px;
+        }
+
+        .k-header .k-link {
+            text-align: center;
+        }
+
+        table, td {
+            border: 1px solid #ddd;
+            text-align: left;
+            border-left: 1px solid #e4e4e4 !important;
+            border-right: 1px solid #e4e4e4 !important;
+            font-size: small;
+        }
+
+        .k-grid table {
+            border-width: 1px !important;
+        }
+
+        /*.k-grid td {
+            border-width:1px;
+        }*/
+
+
+        /*table {
+            border: 1px solid #ddd;
+            /*border-collapse: collapse;
+            width: 100%
+        }*/
+
+        /*th, td {
+            padding: 15px;
+        }*/
+
+        .hero-img {
+            margin-bottom: 20px;
+        }
+
+        @@media only screen and (min-width: 768px) {
+            .hero-img {
+                display: none;
+            }
+        }
+
+        @@media only screen and (max-width: 768px) {
+            .hero-img1 {
+                display: none;
+            }
+        }
+
+        @@media only screen and (max-width: 1086px) {
+            .customers {
+                overflow-x: scroll !important;
+            }
+        }
+
+        .k-loading-mask {
+            display: 'none';
+        }
+
+        .red {
+            background: red;
+            text-align: center;
+            color: white;
+            /*width: 100%;
+            height: 100%;*/
+        }
+
+        .green {
+            background: green;
+            text-align: center;
+            color: white;
+            /*width: 100%;
+            height: 100%;*/
+        }
+
+        .yellow {
+            background: orange;
+            text-align: center;
+            color: white;
+            /*width: 100%;
+            height: 100%;*/
+        }
+
+        .white {
+            background: white;
+            text-align: center;
+            /*width: 100%;
+            height: 100%;*/
+        }
+
+        .empty-grid::before {
+            padding: 1em;
+            line-height: 3em;
+            content: "No records found.";
+        }
+
+        .k-grid th {
+            /*font-size: 17px !important;*/
+            /*padding-top: 12px;
+        padding-bottom: 12px;*/
+            text-align: center;
+            background-color: #e4e4e4;
+            color: #000000 !important;
+            /*height: 53px;*/
+            border: 1px solid #ddd !important;
+            /*border-left: transparent;
+                border-right: transparent;
+                border-bottom: 1px solid black;
+                border-top: 1px solid black;*/
+            font-size: small !important;
+            font-weight: bold !important;
+        }
+    </style>
+</head>
+<body>
+    @using SCTimeSheet.Controllers
+    @using SCTimeSheet_UTIL
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar" style="background-color: #FAFAFA;   z-index: 1;box-shadow: 5px 1px 17px 0px #dedede; color: #fafafa;">
+            <div class="sidebar-header" style="background-color: #FAFAFA; ">
+                <p>
+                    <div class="hero-img1">
+                        <img src="~/Contents/assets/Images/sem.png" id="logo" alt="Cinque Terre" width="85%">
+                    </div>
+                </p>
+                @*</div>
+                    </div>*@
+
+                <ul class="sidebarList">
+                    @if (UserAccess.HasRole(Session, Constants.PageManagerDashboard + "|" + Constants.Access))
+                    {
+                        <li class="@Html.IsActive(control: "ManagerDashboard")">
+                            <a href="~/ManagerDashboard" id="dashboard" style="color:#78788D">
+                                @if (Html.GetActive(control: "ManagerDashboard"))
+                                {
+                                    <img src="~/Contents/assets/Images/dash.png" id="dashboard-logo" alt="home" style="width: 35px;">
+                                }
+                                else
+                                {
+                                    <img src="~/Contents/assets/Images/das.png" id="dashboard-logo" alt="home" style="width: 35px;">
+                                }
+                                Dashboard
+                            </a>
+                        </li>
+                    }
+                    @if (UserAccess.HasRole(Session, Constants.PageEmployeeDashboard + "|" + Constants.Access))
+                    {
+                        <li class="@Html.IsActive(control: "EmployeeDashboard")">
+
+                            <a href="~/EmployeeDashboard" id="dashboard" style="color:#78788D">
+                                @if (Html.GetActive(control: "EmployeeDashboard"))
+                                {
+                                    <img src="~/Contents/assets/Images/dash.png" id="dashboard-logo" alt="home" style="width: 35px;">
+                                }
+                                else
+                                {
+                                    <img src="~/Contents/assets/Images/das.png" id="dashboard-logo" alt="home" style="width: 35px;">
+                                } Dashboard
+                            </a>
+                        </li>
+                    }
+                    @if (UserAccess.HasRole(Session, Constants.PageAdminDashboard + "|" + Constants.Access))
+                    {
+                        <li class="@Html.IsActive(control: "AdminDashboard")">
+                            <a href="~/AdminDashboard" id="dashboard" style="color:#78788D">
+                                @if (Html.GetActive(control: "AdminDashboard"))
+                                {
+                                    <img src="~/Contents/assets/Images/dash.png" id="dashboard-logo" alt="home" style="width: 35px;">
+                                }
+                                else
+                                {
+                                    <img src="~/Contents/assets/Images/das.png" id="dashboard-logo" alt="home" style="width: 35px;">
+                                } Dashboard
+                            </a>
+                        </li>
+                    }
+                    @if (UserAccess.HasRole(Session, Constants.PageNewEntry + "|" + Constants.Access))
+                    {
+                        <li class="@Html.IsActive(control: "NewEntry")">
+                            <a href="~/NewEntry" id="newentry" style="color:#78788D">
+                                @if (Html.GetActive(control: "NewEntry"))
+                                {
+                                    <img src="~/Contents/assets/Images/new.png" id="newentry-logo" alt="home" style="width: 35px;">
+                                }
+                                else
+                                {
+                                    <img src="~/Contents/assets/Images/newentry.png" id="newentry-logo" alt="home" style="width: 35px;">
+                                } New Entry
+                            </a>
+                        </li>
+                    }
+                    @if (UserAccess.HasRole(Session, Constants.PageNewEntryBehalf + "|" + Constants.Access))
+                    {
+                        <li class="@Html.IsActive(control: "NewEntryOnBehalfOne")">
+                            <a href="~/NewEntryOnBehalfOne" id="newentrybehalf" style="color:#78788D">
+                                @if (Html.GetActive(control: "NewEntryOnBehalfOne"))
+                                {
+                                    <img src="~/Contents/assets/Images/beha1.png" id="newentrybehalf-logo" alt="home" style="width: 35px;">
+                                }
+                                else
+                                {
+                                    <img src="~/Contents/assets/Images/beha.png" id="newentrybehalf-logo" alt="home" style="width: 35px;">
+                                } New Entry on Behalf
+                            </a>
+                        </li>
+                    }
+                    @if (UserAccess.HasRole(Session, Constants.PageTimesheetApproval + "|" + Constants.Access))
+                    {
+                        <li class="@Html.IsActive(control: "TimesheetApproval")">
+                            <a href="~/TimesheetApproval" id="timesheetapproval" style="color:#78788D">
+                                @if (Html.GetActive(control: "TimesheetApproval"))
+                                {
+                                    <img src="~/Contents/assets/Images/aproval.png" id="timesheetapproval-logo" alt="home" style="width: 35px;">
+                                }
+                                else
+                                {
+                                    <img src="~/Contents/assets/Images/aproval.2png.png" id="timesheetapproval-logo" alt="home" style="width: 35px;">
+                                } Timesheet Approval
+                            </a>
+                        </li>
+                    }
+                    <li class="@Html.IsActive(control: "TimesheetApproval")">
+                        <a href="#" id="admin" style="color:#78788D"><img src="~/Contents/assets/Images/uti.png" id="admin-logo" alt="home" style="width: 35px;"> Administration</a>
+                        <ul class="sidebarList">
+                            @if (UserAccess.HasRole(Session, Constants.PageCommonMaster + "|" + Constants.Access))
+                            {
+                                <li>
+                                    <a href="~/CommonMaster" id="master" style="color:#78788D ;background-color: #fafafa;">
+                                        @if (Html.GetActive(control: "CommonMaster"))
+                                        {
+                                            <img src="~/Contents/assets/Images/mater.png" id="master-logo" alt="home" style="width: 35px;">
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Contents/assets/Images/master.2.png" id="master-logo" alt="home" style="width: 35px;">
+                                        } Grant
+                                    </a>
+                                </li>
+                            }
+                            @if (UserAccess.HasRole(Session, Constants.PageProjectMainList + "|" + Constants.Access))
+                            {
+                                <li>
+                                    <a href="~/ProjectMain" id="promaster" style="color:#78788D;background-color: #fafafa;">
+                                        @if (Html.GetActive(control: "ProjectMain"))
+                                        {
+                                            <img src="~/Contents/assets/Images/pro.png" id="promaster-logo" alt="home" style="width: 35px;">
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Contents/assets/Images/project.png" id="promaster-logo" alt="home" style="width: 35px;">
+                                        } Project Master
+                                    </a>
+                                </li>
+                            }
+
+                            @if (UserAccess.HasRole(Session, Constants.PageMasterListOfInvolvement + "|" + Constants.Access))
+                            {
+                                <li>
+                                    <a href="~/MasterListOfInvolvement" id="proInvPercentage" style="color:#78788D;background-color: #fafafa;">
+                                        @if (Html.GetActive(control: "MasterListOfInvolvement"))
+                                        {
+                                            <img src="~/Contents/assets/Images/percent2.png" id="proInvPercentage-logo" alt="home" style="width: 35px;">
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Contents/assets/Images/percent.png" id="proInvPercentage-logo" alt="home" style="width: 35px;">
+                                        } Total Project Involvement %
+                                    </a>
+                                </li>
+                            }
+                            @if (UserAccess.HasRole(Session, Constants.AdminTimeSheetLock + "|" + Constants.Access))
+                            {
+                                <li>
+                                    <a href="~/AdminTimeSheetLock" id="lock" style="color:#78788D;background-color: #fafafa;">
+                                        @if (Html.GetActive(control: "AdminTimeSheetLock"))
+                                        {
+                                            <img src="~/Contents/assets/Images/lock1.png" id="lock-logo" alt="home" style="width: 35px;">
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Contents/assets/Images/lock.png" id="lock-logo" alt="home" style="width: 35px;">
+                                        } Lock Timesheet
+                                    </a>
+                                </li>
+                            }
+                            @if (UserAccess.HasRole(Session, Constants.PageReport + "|" + Constants.Access))
+                            {
+                                <li>
+                                    <a href="#" style="color:#78788D;background-color: #fafafa;"><img src="~/Contents/assets/Images/report.png" style="width: 35px;"> Report</a>
+                                    <ul>
+                                        @if (UserAccess.HasRole(Session, Constants.PageFullTimesheetReport + "|" + Constants.Access))
+                                        {
+                                            <li>
+                                                <a href="http://webprdrpt.sembapp.corp/Reports/Pages/Report.aspx?ItemPath=%2fRTSReportsv2%2fFull+Timesheet+Report" id="report" target="_blank" style="color:#78788D;background-color: #fafafa;">
+                                                    @if (Html.GetActive(control: "FullTimesheetReport"))
+                                                    {
+                                                        <img src="~/Contents/assets/Images/repo.png" id="report-logo" alt="home" style="width: 35px;">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/Contents/assets/Images/report.png" id="report-logo" alt="home" style="width: 35px;">
+                                                    } Full Timesheet Report
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (UserAccess.HasRole(Session, Constants.PageReport + "|" + Constants.Access))
+                                        {
+                                            <li>
+                                                <a href="~/Report" id="report" style="color:#78788D;background-color: #fafafa;">
+                                                    @if (Html.GetActive(control: "Report"))
+                                                    {
+                                                        <img src="~/Contents/assets/Images/repo.png" id="report-logo" alt="home" style="width: 35px;">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/Contents/assets/Images/report.png" id="report-logo" alt="home" style="width: 35px;">
+                                                    } Statistics Report
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                                @if (UserAccess.HasRole(Session, Constants.SendEmail + "|" + Constants.Access))
+                                {
+                                    <li>
+                                        <a href="~/SendEmail" id="notify" style="color:#78788D;background-color: #fafafa;">
+                                            @if (Html.GetActive(control: "SendEmail"))
+                                            {
+                                                <img src="~/Contents/assets/Images/alarm1.png" id="notify-logo" alt="home" style="width: 35px;">
+                                            }
+                                            else
+                                            {
+                                                <img src="~/Contents/assets/Images/alarm2.png" id="notify-logo" alt="home" style="width: 35px;">
+                                            } Notification
+                                        </a>
+                                    </li>
+                                }
+                                @if (UserAccess.HasRole(Session, Constants.Users + "|" + Constants.Access))
+                                {
+                                    <li>
+                                        <a href="~/Users" id="notify" style="color:#78788D;background-color: #fafafa;">
+                                            @if (Html.GetActive(control: "Users"))
+                                            {
+                                                <img src="~/Contents/assets/Images/pro.png" id="notify-logo" alt="home" style="width: 35px;">
+                                            }
+                                            else
+                                            {
+                                                <img src="~/Contents/assets/Images/project.png" id="notify-logo" alt="home" style="width: 35px;">
+                                            } Users
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                    </li>
+                    @*@if (UserAccess.HasRole(Session, Constants.PageContactUs + "|" + Constants.Access))
+                        {*@
+                    <li class="@Html.IsActive(control: "ContactUs")">
+                        <a href="~/ContactUs" id="contact" style="color:#78788D">
+                            @if (Html.GetActive(control: "ContactUs"))
+                            {
+                                <img src="~/Contents/assets/Images/phone-book2.png" id="contact-logo" alt="home" style="width: 35px;">
+                            }
+                            else
+                            {
+                                <img src="~/Contents/assets/Images/phone-book1.png" id="contact-logo" alt="home" style="width: 35px;">
+                            } Contact Us
+                        </a>
+                    </li>
+                    @*}*@
+
+                </ul>
+            </div>
+        </nav>
+
+        <div id="content" style="background-color: #F0F0F0; padding: 20px; ">
+
+
+            <div class="container-fluid">
+                <div class="hero-img">
+                    <img src="~/Contents/assets/Images/sss.png" alt="IMG" style="height: 41px;">
+                </div>
+
+
+                <button type="button" id="sidebarCollapse" class="btn btn-info" style="background-color: #f0f0f0; border-color: #018364;
+                            color: #018364;; margin-bottom: 20px; border-radius: 50px; width: 50px;height: 50px;margin-right: 14px;">
+                    <i class="fas fa-align-left"></i>
+                </button>
+                </button>
+                @{
+                    var role = Convert.ToInt32(Session[Constants.SessionRoleID]) == 1 ? "Admin Name" : "Name";
+                    var name = @Session[Constants.SessionEmpName];
+                    <b style="float: right;color:#989292;">@role : @name &nbsp; &nbsp; |&nbsp; &nbsp;  <i class='fas fa-power-off'></i>  @Html.ActionLink("Logout", "Logout", "Login", null, new { @class = "pull-right" })</b>
+
+                }
+                </a>
+                <r style="font-size: 48px;padding-left: 0px; color: #989292 ">@ViewBag.title</r>
+                <br>
+
+                @RenderBody()
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    @*<script src="~/Contents/assets/js/jquery-3.3.1.slim.min.js"></script>            this js is commented because ajax not working on it*@
+    <script src="~/Contents/assets/js/popper.min.js"></script>
+    <script src="~/Contents/assets/js/bootstrap.min.js"></script>
+
+    <script src="~/Contents/js/jquery.dataTables.min.js"></script>
+    <script src="~/Contents/js/dataTables.bootstrap4.min.js"></script>
+
+    <script src="~/Contents/js/moment.js"></script>
+    <script src="~/Contents/js/notify.js"></script>
+    <script src="~/Contents/js/bootstrap-datepicker.js"></script>
+    <script src="~/Contents/js/dataTables.buttons.min.js"></script>
+    <script src="~/Contents/js/jszip.min.js"></script>
+    <script src="~/Contents/js/buttons.html5.min.js"></script>
+    <script src="~/Contents/js/buttons.flash.min.js"></script>
+    <script src="~/Contents/js/buttons.print.min.js"></script>
+    <script src="~/Scripts/kendo/cultures/kendo.culture.es-MX.min.js"></script>
+
+    @*<script src="~/Contents/assets/js/jquery-3.1.1.min.js"></script>
+        @*<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>*@
+
+
+    @*<!-- Popper.JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+        <!-- Bootstrap JS -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>*@
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+        //$('#dashboard').click(function () {
+        //    $('#dashboard-logo').attr('src', '../../Contents/assets/Login/images/dash.png');
+        //});
+        //$('#newentry').click(function () {
+        //    $('#newentry-logo').attr('src', '../../Contents/assets/Login/images/new.png');
+        //});
+
+        $(document)
+            .ajaxStart(function () {
+                kendo.ui.progress($(".wrapper"), true);
+            })
+            .ajaxStop(function () {
+                kendo.ui.progress($(".wrapper"), false);
+            })
+            .ajaxError(function () {
+                kendo.ui.progress($(".wrapper"), false);
+            });
+    </script>
+</body>
+
+</html>

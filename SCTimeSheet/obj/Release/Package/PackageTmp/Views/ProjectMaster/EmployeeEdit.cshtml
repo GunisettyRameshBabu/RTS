@@ -1,0 +1,183 @@
+﻿@model SCTimeSheet.Models.ProjectEmpList
+@{
+    ViewBag.Title = "Member Edit";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="card-body" style="background-color: #fff;border-radius:10px; margin-top: 45px; padding: 48px; padding-bottom: 81px;">
+        <p>
+            <div>
+                @*style="overflow:scroll;"*@
+                @Html.HiddenFor(model => model.EmployeeID)
+                @Html.HiddenFor(m => m.IsRDProject)
+                @Html.HiddenFor(m => m.ProjectEndDate)
+                @Html.HiddenFor(m => m.IsManager)
+                <table class="customers" id="MYtest">
+                    <tr>
+                        <td>
+                            Project Name:
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.ProjectName, new { @readonly = "readonly", @class = "form-control", autocomplete = "off", style = "width: 100%; background-color: #d1c9c6;border-radius: 9px;" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Project Member:
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.EmpName, new { @readonly = "readonly", @class = "form-control", autocomplete = "off", style = "width: 100%; background-color: #d1c9c6;border-radius: 9px;" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Project Manager:
+                        </td>
+                        <td>
+                            @*@Html.TextBoxFor(model => model.IsManager, new { @class = "form-control", autocomplete = "off", style = "width: 100%; background-color: #f6f6f6;border-radius: 9px;" })*@
+                            @Html.DropDownListFor(model => model.CheckRole, new List<SelectListItem>
+      {new SelectListItem{Text="--Select Any--", Value="-1"},
+                      new SelectListItem{Text="Yes", Value="true"},
+        new SelectListItem{Text="No", Value="false"}}, new {  @class = "form-control select2",  @id = "drpIsManager", style = "width: 100%; background-color: #f6f6f6;border-radius: 9px;" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            % of Involvement:
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.InvPercentage, new { @min = "0", @max = "100", maxlength = 3, @step = "any", type = "number", @class = "form-control", autocomplete = "off", style = "width: 100%; background-color: #f6f6f6;border-radius: 9px;" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Start Date:
+                        </td>
+                        <td style="white-space:nowrap">
+                            @(Html.Kendo().DatePickerFor(x => x.StartDate)
+                                                                             .Name("StartDate")
+
+                                                                             .Format("dd MMM yyyy")
+                                                                             .HtmlAttributes(new { style = "width: 50%; background-color: #f6f6f6;border-radius: 9px;display: inline-block;", @required = "required" })
+                            )
+                            <button type="button" class="btn btn-success" id="btnDefault1" style="background-color: #00664E;border-color: #00664E;" onclick="GetProjectStartDate(); return false;">Default</button>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            End Date:
+                        </td>
+                        <td style="white-space:nowrap">
+                            @(Html.Kendo().DatePickerFor(x => x.EndDate)
+                                                                                    .Name("EndDate")
+
+                                                                                    .Format("dd MMM yyyy")
+                                                                                    //.ParseFormats(new List<string>() { "dd MMM yyyy" })
+                                                                                    .Max(Model.ProjectEndDate.Value.ToShortDateString())
+                                                                                    .HtmlAttributes(new { style = "width: 50%; background-color: #f6f6f6;border-radius: 9px;display: inline-block;", @required = "required" })
+                            )
+                            <button type="button" class="btn btn-success" id="btnDefaul2" style="background-color: #00664E;border-color: #00664E;" onclick="GetProjectStartDate(); return false;">Default</button>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            Role:
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(model => model.RoleID, new SelectList(ViewBag.RoleList, "RoleID", "RoleName"), "--Select Any--", new { @class = "form-control select2", @id = "drpRole", style = "width: 100%; background-color: #f6f6f6;border-radius: 9px;" })
+                        </td>
+                    </tr>
+
+                </table>
+                <br />
+                <button type="button" id="submit-Search" class="btn btn-primary" style="background-color: #00664E; border-color:  #00664E;" onclick='window.location = "@Url.Action("ProjectEdit", "ProjectMaster" , new { id = Model.ProjectID })";'>Back</button>
+
+                <button type="submit" id="submit-Search" class="btn btn-primary" style="background-color: #00664E; border-color:  #00664E;" name="action:UpdateEmployee">Update</button>
+            </div>
+
+        </p>
+    </div>
+
+
+
+}
+
+<script>
+    $("document").ready(function () {
+
+       var mes = '@ViewBag.Message';
+        
+        if (mes != "" && mes != null && mes != undefined) {
+            pattern = "line";
+            mes = mes.replace(new RegExp(pattern, "g"), '\n')
+            alert(mes);
+           // kendo.alert(mes);
+        }
+        //$('#promaster-logo').attr('src', '../../Contents/assets/Login/images/pro.png');
+        $('#promaster').css('color', 'black');
+
+        //$('#admin-logo').attr('src', '../../Contents/assets/Images/utility.png');
+        $('#admin').css('color', 'black');
+        debugger;
+        $('#drpRole').val('@Model.RoleID');
+
+        if ($("#IsRDProject").val() == "2") {
+            $("#drpRole").prop("disabled", true);
+        }
+
+        $(".k-datepicker").kendoValidator({
+            rules: {
+                //implement your custom date validation  
+                dateValidation: function (e) {
+                    console.log("e", e);
+                    var currentDate = Date.parse($(e).val());
+                    //Check if Date parse is successful  
+                    if (!currentDate) {
+                        return false;
+                    }
+                    return true;
+                }
+            },
+            messages: {
+                dateValidation: "Invalid date format"
+            }
+        });
+        $(".k-datepicker").find('span').find('input').attr("readonly", "readonly");
+        @*var datepicker = $("#EndDate").data("kendoDatePicker");
+
+        datepicker.max('@Model.ProjectEndDate');*@
+    });
+
+    function GetProjectStartDate() {
+     
+        var projectid = @Model.ProjectID;
+        if (projectid != null) {
+            $.ajax({
+                type: "POST",
+                data: { projectid: projectid },
+                url: '@Url.Action("GetProjectDate", "ProjectMaster")',
+                success: function (data) {
+                 
+                    var date = kendo.parseDate(data[0].EndDate);
+                    var endDate = kendo.toString(kendo.parseDate(new Date(date.getFullYear(), date.getMonth() == 12 ? 11 : date.getMonth(), date.getDate())), 'dd MMM yyyy');
+                    $("#EndDate").data("kendoDatePicker").value(endDate);
+                    date = kendo.parseDate(data[0].StartDate);
+                    var startDate = kendo.toString(kendo.parseDate(new Date(date.getFullYear(),date.getMonth() == 12 ? 11 : date.getMonth(),date.getDate())), 'dd MMM yyyy');
+                    $("#StartDate").data("kendoDatePicker").value(startDate);
+
+                },
+                error: function (data) {
+                    console.log("error");
+                }
+            });
+        }
+    }
+
+
+
+</script>
+

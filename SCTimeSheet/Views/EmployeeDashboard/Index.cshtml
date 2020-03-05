@@ -1,0 +1,668 @@
+﻿@model SCTimeSheet_DAL.Models.SearchModel
+@{
+    /**/
+
+    ViewBag.Title = "Dashboard";
+}
+<style>
+    /*table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }*/
+
+    .dataTables_wrapper .pagination {
+        float: right !important;
+    }
+
+    .k-grid th {
+        /*font-size: 17px !important;*/
+        /*padding-top: 12px;
+        padding-bottom: 12px;*/
+        text-align: center;
+        background-color: #e4e4e4;
+        color: #000000 !important;
+        /*height: 53px;*/
+        /*border: 1px solid #ddd !important;*/
+        /*border-left: transparent;
+                border-right: transparent;
+                border-bottom: 1px solid black;
+                border-top: 1px solid black;*/
+        font-size: small !important;
+        font-weight: bold !important;
+    }
+
+    ul#legend li {
+        display: inline;
+    }
+
+    .input-color {
+        position: relative;
+    }
+
+        .input-color label {
+            padding-left: 20px;
+        }
+
+        .input-color .color-box {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            background-color: #ccc;
+            position: absolute;
+            left: 5px;
+            top: 5px;
+        }
+
+    .tooltip-inner {
+        min-width: 100px !important;
+        max-width: 100% !important;
+    }
+</style>
+@using SCTimeSheet_UTIL
+@using (Html.BeginForm())
+{
+    // @Html.AntiForgeryToken()
+    <div class="card-body" style="background-color: #fff;border-radius:10px;  padding:20px;">
+        @*<h5 style="font-size: 26px; color: #646464;">Employee Dashboard</h5>*@
+
+        <p>
+
+            <div class="row">
+                <div class="col-md-3" id="">
+                    <lable style="color: #646464;"> Grant Type</lable>
+                    @(Html.Kendo().DropDownListFor(x => x.GrantTypeId)
+                                                                                      .Name("grantDropDown")
+                                                                                      .DataTextField("MstCode")
+                                                                                      .DataValueField("MstID")
+                                                                                     .OptionLabel("--Select Any--")
+                                                                                      //.BindTo(ViewBag.ProjectList)
+                                                                                      .DataSource(source =>
+                                                                                      {
+                                                                                          source.Read(read =>
+                                                                                          {
+                                                                                              read.Action("GetGrantTypes", "EmployeeDashBoard").Data("getSelectedProjects");
+                                                                                          });
+                                                                                      })
+                                                                                      .Events(e =>
+                                                                                      {
+                                                                                          e.Change("onGrantChange");
+                                                                                      })
+                                                                                      .Filter("contains")
+
+                                                                                      .HtmlAttributes(new { style = "width: 100%; background-color: #f6f6f6;border-radius: 9px;" })
+
+
+                    )
+                </div>
+                <div class="col-md-3" id="">
+                    <lable style="color: #646464;">Project</lable>
+                    @*@Html.LabelFor(model => model.ProjectID, new { style = "color: #646464;" })*@
+                    @(Html.Kendo().DropDownListFor(x => x.ProjectID)
+                                                                                        .Name("projectDropdown")
+                                                                                        .DataTextField("ProjectName")
+                                                                                        .DataValueField("ProjectID")
+                                                                                       .OptionLabel("--Select Any--")
+                                                                                        //.BindTo(ViewBag.ProjectList)
+                                                                                        .DataSource(source =>
+                                                                                        {
+                                                                                            source.Read(read =>
+                                                                                            {
+                                                                                                read.Action("GetProjects", "EmployeeDashBoard").Data("getSelectedGrants");
+                                                                                            });
+                                                                                        })
+                                                                                         .Events(e =>
+                                                                                         {
+                                                                                             e.Change("onprojectchange");
+                                                                                         })
+                                                                                        .Filter("contains")
+
+                                                                                        .HtmlAttributes(new { style = "width: 100%; background-color: #f6f6f6;border-radius: 9px;" })
+
+
+                    )
+                </div>
+                @*<div class="col-md-3">
+                        <br/>
+                        <button type="button" id="submit-Search" class="btn btn-primary" style="background-color: #00664E; border-color:  #00664E;">View</button>
+                    </div>*@
+            </div>
+
+        </p>
+
+    </div>
+
+    <br />
+    /*margin-top: 88px;*/
+
+    <div class="card-body" style="background-color: #fff;border-radius:10px; padding-right: 20px; padding-bottom: 20px;">
+
+        <h3>Projects</h3>
+
+        @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.SearchList>()
+                                                                                                                              .Name("SearchGrid")
+                                                                                                                              .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                                                                                              .DataSource(dataSource => dataSource
+                                                                                                                                  .Ajax()
+                                                                                                                                  .Batch(true)
+                                                                                                                                  .PageSize(20)
+                                                                                                                                  .ServerOperation(true)
+                                                                                                                                  .Model(model =>
+                                                                                                                                  {
+                                                                                                                                      model.Id(p => p.ProjectId);
+
+                                                                                                                                  })
+                                                                                                                                  .Read(read => read
+                                                                                                                                      .Action("Search", "EmployeeDashboard")
+                                                                                                                                      .Data("GetProjectAndGrant")
+                                                                                                                                  )
+                                                                                                                              )
+                                                                                                                              .Events(x => x.DataBound("onProjectGridDataBound"))
+                                                                                                                              .Columns(columns =>
+                                                                                                                              {
+                                                                                                                                  columns.Bound(product => product.ProjectCode).Title("Project Code").Filterable(false);
+                                                                                                                                  columns.Bound(p => p.ProjectName).Filterable(true).ClientTemplate("<a class='label label-primary'   href='javascript:void(0);' onclick='GetSelectedProjectDetails(#=ProjectId#)'>#=ProjectName#</a>").Title("Project").HtmlAttributes(new { @style = "color:blue" }).Filterable(true);
+                                                                                                                                  columns.Bound(product => product.ProjectGrant).Title("Grant Type").Filterable(true);
+                                                                                                                                  columns.Bound(product => product.InvPercentage).Title("% of Involvement").Filterable(false);
+                                                                                                                                  columns.Bound(product => product.prgStartDate).Format("{0:dd MMM yyyy}").Title("Project Start Date").Filterable(false);
+                                                                                                                                  columns.Bound(product => product.prgEndDate).Format("{0:dd MMM yyyy}").Title("Project End Date").Filterable(false);
+                                                                                                                                  columns.Bound(product => product.isPM).Title("Project Manager").Filterable(false);
+                                                                                                                                  columns.Bound(product => product.EmpStartDate).Format("{0:dd MMM yyyy}").Title("Member Start Date").Filterable(false);
+                                                                                                                                  columns.Bound(product => product.EmpEndDate).Format("{0:dd MMM yyyy}").Title("Member End Date").Filterable(false);
+
+                                                                                                                              })
+                                                                                                                              .CellAction(cell =>
+                                                                                                                              {
+
+                                                                                                                                  cell.HtmlAttributes["style"] = "background:blue;";
+
+                                                                                                                              })
+                                                                                                                          .Pageable()
+                                                                                                                           .Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+                                                                                                                          .Filterable()
+        )
+    </div>
+    @*<button class="collapsible" id="collaps" onclick="hideshow(); return false;">
+            Expand
+        </button>*@
+    <br />
+    <div class="card-body" style="background-color: #fff;border-radius:10px;  padding: 20px;">
+        @*<h5 style="font-size: 26px; color: #646464;">Manager Dashboard</h5>*@
+        <div class="row">
+            <div class="col-md-6">
+                <h3 style=" float:left;">My Timesheet</h3>
+            </div>
+            <div class="col-md-6">
+                <button type="button" class="collapsible" style="float:right;border: none;background: none;" onclick="hideshow(); return false;"><img id="collaps" style="float:right;width:20px;" src="~/Contents/assets/Images/down-arrow-circle-hi_up.png" alt="SomeAlternateText"></button>
+
+            </div>
+        </div>
+
+        <div id="timesheetList">
+            <div class="row">
+                <div class="col-md-2  input-color">
+                    <label>Rejected</label>
+                    <div class="color-box" style="background-color: red;"></div>
+                    <!-- Replace "#FF850A" to change the color -->
+                </div>
+                <div class="col-md-2 input-color">
+                    <label>Approved</label>
+                    <div class="color-box" style="background-color: green;"></div>
+                    <!-- Replace "navy" to change the color -->
+                </div>
+                <div class="col-md-2 input-color">
+                    <label>Approval Pending</label>
+                    <div class="color-box" style="background-color: orange;"></div>
+                    <!-- Replace "navy" to change the color -->
+                </div>
+                <div class="col-md-2 input-color">
+                    <label> No Submission</label>
+                    <div class="color-box" style="background-color: white;border:1px solid black;align-content:center;text-align:center;">-</div>
+                    <!-- Replace "navy" to change the color -->
+                </div>
+            </div>
+
+            @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.MonthList>()
+                                                                                    .Name("MYTSGrid")
+                                                                                    .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                                                    .DataSource(dataSource => dataSource
+                                                                                        .Ajax()
+                                                                                        .AutoSync(false)
+                                                                                        .Batch(true)
+                                                                                        .PageSize(20)
+                                                                                        .ServerOperation(true)
+                                                                                        .Model(model =>
+                                                                                        {
+                                                                                            model.Id(p => p.ProjectID);
+                                                                                            model.Field(p => p.ProjectID).Editable(false);
+                                                                                            model.Field(p => p.ProjectCode).Editable(false);
+                                                                                            model.Field(p => p.ProjectName).Editable(false);
+                                                                                            model.Field(p => p.ProjectGrant).Editable(false);
+                                                                                            model.Field(p => p.InvPercentage).Editable(false);
+
+                                                                                            model.Field(p => p.Status1).Editable(false);
+                                                                                        })
+                                                                                        .Read(read => read
+                                                                                            .Action("GetProjectDetails", "EmployeeDashboard")
+                                                                                            .Data("GetTSParams")
+                                                                                        )
+                                                                                    )
+                                                                                    .Events(x => x.DataBound("onDataBound"))
+                                                                                    .Columns(columns =>
+                                                                                    {
+                                                                                        columns.Bound(product => product.ProjectCode).Width(130);
+                                                                                        columns.Bound(product => product.ProjectName).Width(220);
+                                                                                        columns.Bound(product => product.ProjectStartDate).Width(120).Format("{0:dd MMM yyyy}");
+                                                                                        columns.Bound(product => product.ProjectEndDate).Width(120).Format("{0:dd MMM yyyy}");
+                                                                                        columns.Bound(product => product.ProjectGrant).Width(200);
+                                                                                        columns.Bound(product => product.ProjectManager).Width(100);
+                                                                                        columns.Bound(product => product.InvPercentage).Width(100);
+                                                                                        columns.Template(product => "").Title("Time Sheets").ClientTemplate("#= buildContactsGrid(data) #").Width(600);
+
+                                                                                    })
+                                                                                    .CellAction(cell =>
+                                                                                    {
+
+                                                                                        cell.HtmlAttributes["style"] = "background:blue;";
+
+                                                                                    })
+                                                                                .Pageable()
+                                                                                 .Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+            )
+
+        </div>
+    </div>
+
+    <div id="PrjDetailsModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 700px;">
+                <div class="modal-header">
+                    <h3 class="modal-title" style="color: #646464;">Project Details</h3>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">X</button>
+                </div>
+                <div class="modal-body">
+                    <div id="testtable">
+                        <table class="customers" id="MYtest">
+                            <thead>
+                                <tr>
+                                    <th style="display:none;">EmployeeID</th>
+                                    <th>Project Member</th>
+                                    <th>Project Manager</th>
+                                    <th>Involvement %</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+}
+<script>
+    function GetTSParams() {
+        var grid = $("#SearchGrid").data("kendoGrid");
+        if (grid.dataSource.filter()) {
+            var items = grid.dataSource.view();
+            var projects = [];
+            for (var i = 0; i < items.length; i++) {
+                projects.push(items[i].ProjectId)
+            }
+            if (projects.length == 0) {
+                projects.push(0);
+            }
+            return { projectId: projects }
+        }
+        else {
+
+            var project = $("#projectDropdown").val();
+            var grant = $("#grantDropDown").val();
+
+            if ((project != null && project != undefined && project != '') || (grant != null && grant != undefined && grant != '')) {
+                var items = grid.dataSource.view();
+                var projects = [];
+                for (var i = 0; i < items.length; i++) {
+                    projects.push(items[i].ProjectId)
+                }
+                return { projectId: projects }
+            }
+            else {
+                return { projectId: [] }
+            }
+
+        }
+
+    }
+        function buildContactsGrid(client)
+    {
+
+            var htmlContacts = '';
+            htmlContacts += "<table style='table-layout: fixed;' class='table-bordered'><tr style='background-color:lightgray;font-weight: bold;'><th style='width:50px;'>Year</th><th style='width:40px;'>Jan</th><th style='width:40px;'>Feb</th><th style='width:40px;'>Mar</th><th style='width:40px;'>Apr</th><th style='width:40px;'>May</th><th style='width:40px;'>Jun</th><th style='width:40px;'>Jul</th><th style='width:40px;'>Aug</th><th style='width:40px;'>Sep</th><th style='width:40px;'>Oct</th><th style='width:40px;'>Nov</th><th style='width:40px;'>Dec</th></tr><tr>";
+            $(client.TimeSheet).each(function (index, item) {
+                htmlContacts += "<td>" + item.Year + "</td><td data-toggle='tooltip' data-html='true' title='" + getToolTip(item.Jan) + "'  class='" + getStatus(item.Jan) + "'>" + getValue(item.Jan) + "</td><td data-toggle='tooltip' data-html='true' title='" + getToolTip(item.Feb) + "'  class='" + getStatus(item.Feb) + "'>" + getValue(item.Feb) + "</td><td data-toggle='tooltip' data-html='true' title='" + getToolTip(item.Mar) + "'  class='" + getStatus(item.Mar) + "'>" + getValue(item.Mar) + "</td><td data-toggle='tooltip' data-html='true' title='" + getToolTip(item.Apr) + "'  class='" + getStatus(item.Apr) + "'>" + getValue(item.Apr) + "</td><td data-toggle='tooltip' data-html='true' title='" + getToolTip(item.May) + "'  class='" + getStatus(item.May) + "'>" + getValue(item.May) + "</td><td data-toggle='tooltip' data-html='true' title='" + getToolTip(item.Jun) + "'  class='" + getStatus(item.Jun) + "'>" + getValue(item.Jun) + "</td><td data-toggle='tooltip' data-html='true' title='" + getToolTip(item.Jul) + "'  class='" + getStatus(item.Jul) + "'>" + getValue(item.Jul) + "</td><td data-toggle='tooltip' data-html='true' title='" + getToolTip(item.Aug) + "'  class='" + getStatus(item.Aug) + "'>" + getValue(item.Aug) + "</td><td data-toggle='tooltip' data-html='true' title='" + getToolTip(item.Sep) + "'  class='" + getStatus(item.Sep) + "'>" + getValue(item.Sep) + "</td><td data-toggle='tooltip' data-html='true' title='" + getToolTip(item.Oct) + "'  class='" + getStatus(item.Oct) + "'>" + getValue(item.Oct) + "</td><td data-toggle='tooltip' data-html='true' title='" + getToolTip(item.Nov) + "'  class='" + getStatus(item.Nov) + "'>" + getValue(item.Nov) + "</td><td data-toggle='tooltip' data-html='true' title='" + getToolTip(item.Dec) + "'  class='" + getStatus(item.Dec) + "'>" + getValue(item.Dec) + "</td></tr>";
+            });
+            htmlContacts += "</table>";
+            return htmlContacts;
+    }
+    function getSelectedProjects() {
+        debugger;
+        return {
+            projectId: $("#projectDropdown").val()
+        };
+    }
+
+    function getSelectedGrants() {
+        return {
+            grantID: $("#grantDropDown").val()
+        };
+    }
+
+     function onprojectchange() {
+        //$("#grantDropdown").data("kendoDropDownList").dataSource.read();
+       // $("#grantDropDown").data("kendoDropDownList").dataSource.read();
+         $.ajax({
+            type: "POST",
+             data: { projectId: $("#projectDropdown").val()},
+                url: '@Url.Action("GetGrantTypes", "EmployeeDashBoard")',
+                success: function (data) {
+                    var dataSource = new kendo.data.DataSource({
+                        data:data
+                    });
+                    var dropdownlist = $("#grantDropDown").data("kendoDropDownList");
+                    dropdownlist.setDataSource(dataSource);
+                   // dropdownlist.value("");
+                },
+                error: function (data) {
+                    console.log("error");
+                }
+         });
+         $("#SearchGrid").data("kendoGrid").dataSource.filter({});
+         $("#SearchGrid").data().kendoGrid.dataSource.read();
+    }
+
+    function onGrantChange() {
+        //$("#projectDropdown").data("kendoDropDownList").dataSource.read();
+         // $("#projectDropdown").data("kendoDropDownList").dataSource.read();
+       // alert($("#grantDropDown").val());
+        $.ajax({
+            type: "POST",
+            data: { grantID: $("#grantDropDown").val()},
+                url: '@Url.Action("GetProjects", "EmployeeDashBoard")',
+                success: function (data) {
+                    var dataSource = new kendo.data.DataSource({
+                        data:data
+                    });
+                    var dropdownlist = $("#projectDropdown").data("kendoDropDownList");
+                    dropdownlist.setDataSource(dataSource);
+                    //dropdownlist.value("");
+                },
+                error: function (data) {
+                    console.log("error");
+                }
+        });
+        $("#SearchGrid").data("kendoGrid").dataSource.filter({});
+        $("#SearchGrid").data().kendoGrid.dataSource.read();
+    }
+
+    function onProjectGridDataBound() {
+        $("#MYTSGrid").data().kendoGrid.dataSource.read();
+        $("#MYTSGrid").css("display", "block");
+    }
+
+    function onDataBound() {
+        $('[data-toggle="tooltip"]').tooltip({ container: ".wrapper", boundary: 'window', placement: 'top' });
+    }
+
+    $(document).ready(function () {
+        //$('#dashboard-logo').attr('src', '../../Contents/assets/Login/images/dash.png');
+        $('#dashboard').css('color', 'black');
+      //  GetSearchResults(0,0);
+        $("#testtable").hide();
+
+       // getlegends();
+    });
+
+    function hideshow() {
+        debugger;
+        var t = location.href;
+        var url = t.split("EmployeeDashboard");
+        var imgsrc1 = url[0] + "Contents/assets/Images/down-arrow-circle-hi_down.png";
+        var imgsrc2 = url[0] + "Contents/assets/Images/down-arrow-circle-hi_up.png";
+        if (document.getElementById("collaps").src == imgsrc1) {
+           // getProjectDetails();
+            document.getElementById("collaps").src = imgsrc2;
+            $('#timesheetList').removeAttr("style");
+
+        }
+        else if (document.getElementById("collaps").src = imgsrc2) {
+            $('#timesheetList').removeAttr("style");
+            document.getElementById("collaps").src = imgsrc1;
+            $('#timesheetList').hide();
+
+        }
+    }
+
+
+
+    $('.monthpicker').monthpicker();
+
+    $('.select2').select2();
+
+    function GetSearchResults(projectid, _grantid) {
+
+        var data = { projectid: projectid, grantId: _grantid };
+
+        $("#searchList").DataTable({
+            "ajax": {
+                "url": '@Url.Action("Search")',
+                "type": "POST",
+                "data": data,
+                "datatype": "json"
+            },
+            "columns": [
+
+                { "data": "ProjectCode", "name": "ProjectCode", "autoWidth": true },
+                { "data": "ProjectName",
+                    "render": function (data, type, row, meta) {
+                        return '<a class="label label-primary" style="color:#118467;" href="javascript:void(0);" onclick="GetSelectedProjectDetails(' + row.ProjectId + ');">' + data + '</a>';
+                    }
+                },
+                { "data": "ProjectGrant", "name": "ProjectGrant", "autoWidth": true },
+                { "data": "InvPercentage", "name": "InvPercentage", "autoWidth": true },
+                { "data": "prgStartDate", "name": "prgStartDate", "autoWidth": true },
+                { "data": "prgEndDate", "name": "prgEndDate", "autoWidth": true },
+                { "data": "isPM", "name": "isPM", "autoWidth": true },
+                { "data": "EmpStartDate", "name": "EmpStartDate", "autoWidth": true },
+                { "data": "EmpEndDate", "name": "EmpEndDate", "autoWidth": true }
+            ],
+            "searching": false,
+            "lengthChange": false,
+            destroy: true
+        });
+    }
+
+    function getlegends() {
+        $("#legends").DataTable();
+
+    }
+    function getProjectDetails() {
+        //var Projectid = projectid;
+        $("#tbltimesheetlist").show();
+        $("#mytimesheetListemp").DataTable({
+            "ajax": {
+                //"data": { "projectid": projectid },
+                "url": '@Url.Action("GetProjectDetails")',
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs":
+                [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+
+                }],
+
+
+            "columns": [
+
+               //{ "data": "EmpId", "name": "EmpId", "autoWidth": true },
+                { "data": "ProjectID", "name": "ProjectID", "autoWidth": true },
+                { "data": "ProjectCode", "name": "ProjectCode", "autoWidth": true },
+                { "data": "ProjectName", "name": "ProjectName", "autoWidth": true },
+                { "data": "ProjectGrant", "name": "ProjectGrant", "autoWidth": true },
+                { "data": "InvPercentage", "name": "InvPercentage", "autoWidth": true },
+               { "data": "Year", "nae": "Year", "autoWidth": true },
+               { "data": "Jan", "name": "Jan", "autoWidth": true },
+               { "data": "Feb", "name": "Feb", "autoWidth": true },
+               { "data": "Mar", "name": "Mar", "autoWidth": true },
+
+               { "data": "Apr", "name": "Apr", "autoWidth": true },
+               { "data": "May", "name": "May", "autoWidth": true },
+               { "data": "Jun", "name": "Jun", "autoWidth": true },
+               { "data": "Jul", "name": "Jul", "autoWidth": true },
+
+               { "data": "Aug", "name": "Aug", "autoWidth": true },
+               { "data": "Sep", "name": "Sep", "autoWidth": true },
+               { "data": "Oct", "name": "Oct", "autoWidth": true },
+               { "data": "Nov", "name": "Nov", "autoWidth": true },
+
+               { "data": "Dec", "name": "Dec", "autoWidth": true },
+
+                ],
+               "searching": false,
+               "lengthChange": false,
+               destroy: true
+    });
+    }
+
+
+    function GetSelectedProjectDetails(projectid) {
+        window.location.href = "@Url.Action("EmployeeProjectDetails", "EmployeeDashboard")?ProjectId=" + projectid;
+    }
+
+
+
+
+    //$("#submit-Search").click(function () {
+    //    $("#SearchGrid").data("kendoGrid").dataSource.filter({});
+    //    $("#SearchGrid").data().kendoGrid.dataSource.read();
+
+    //});
+
+    function GetProjectAndGrant() {
+        if ($("#projectDropdown").val() != 0) {
+            var projectid = $("#projectDropdown").val();
+        }
+        else {
+            var projectid = 0;
+        }
+
+        if ($("#grantDropDown").val() != '') {
+            var _grantid = $("#grantDropDown").val();
+        }
+        else {
+            var _grantid = 0;
+        }
+
+        return { projectId: projectid, grantId: _grantid }
+    }
+
+ function getStatus(value) {
+        console.log(value);
+        if (value != undefined && value != '') {
+            var status = value.length == 1 ? "" : value.substring(0, value.indexOf('-'));
+            switch (status) {
+
+                case "3":
+                    return 'green';
+                    break;
+                case "2":
+                    return 'yellow';
+                    break;
+                case "4":
+                    return 'red';
+                    break;
+                default:
+                    return '';
+                    break;
+            }
+        }
+        return '';
+    }
+    function getValue(value) {
+        if (value != undefined && value != '') {
+            if (value.length == 1) {
+                return value;
+            }
+            else {
+                var firstIndex = this.nthIndex(value, '-', 1);
+                var nthIndex = this.nthIndex(value, '-', 2);
+                return round( value.substring(firstIndex + 1, (nthIndex - firstIndex) + 1),1);
+            }
+        }
+        return '-';
+    }
+
+    function round(value, precision) {
+        if (!isNaN(value)) {
+            var multiplier = Math.pow(10, precision || 0);
+            return Math.round(value * multiplier) / multiplier;
+        }
+        else {
+            return value;
+        }
+    }
+    function getToolTip(value) {
+        if (value != undefined && value != '') {
+            if (value.length == 1) {
+                return 'No Submission';
+            }
+            else {
+
+                var nthIndex = this.nthIndex(value, '-', 2);
+                return value.substring(nthIndex + 1);
+            }
+        }
+        return 'No Submission';
+    }
+
+    function nthIndex(str, pat, n) {
+        var L = str.length, i = -1;
+        while (n-- && i++ < L) {
+            i = str.indexOf(pat, i);
+            if (i < 0) break;
+        }
+        return i;
+    }
+</script>
+<style>
+    .red {
+        background: red;
+        text-align: center;
+        color: white;
+    }
+
+    .green {
+        background: green;
+        text-align: center;
+        color: white;
+    }
+
+    .yellow {
+        background: orange;
+        text-align: center;
+        color: white;
+    }
+
+    .white {
+        background: white;
+        text-align: center;
+    }
+</style>

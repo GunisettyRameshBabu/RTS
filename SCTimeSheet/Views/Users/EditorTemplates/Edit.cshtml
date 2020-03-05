@@ -1,0 +1,226 @@
+﻿@model SCTimeSheet.Models.User
+<style>
+    .row-padding {
+        padding-top: 20px;
+    }
+</style>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/custom-validators.js")" type="text/javascript"></script>
+<div class="container">
+    <div class="row row-padding">
+        <div class="col-md-2">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.UserID)
+            @Html.LabelFor(model => model.EmployeeCode, htmlAttributes: new { @class = "control-label ", @style = "font-weight:bold" })
+        </div>
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.EmployeeCode, new { htmlAttributes = new { @class = "form-control", onchange = "OnEmployeeCodeChange()" } })
+            @Html.ValidationMessageFor(model => model.EmployeeCode, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label ", @style = "font-weight:bold" })
+        </div>
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row row-padding">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.MiddleName, htmlAttributes: new { @class = "control-label ", @style = "font-weight:bold" })
+        </div>
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.MiddleName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label ", @style = "font-weight:bold" })
+        </div>
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row row-padding">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label ", @style = "font-weight:bold" })
+        </div>
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" , @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.RoleID, htmlAttributes: new { @class = "control-label ", @style = "font-weight:bold" })
+        </div>
+        <div class="col-md-3">
+            @(Html.Kendo().DropDownList()
+                                              .Name("RoleID")
+                                              .OptionLabel("Select Role...")
+                                                .DataTextField("RoleName")
+                                              .DataValueField("RoleID")
+                                              .DataSource(dataSource =>
+                                              {
+                                                  dataSource.Read(read => read.Action("GetRoles", "Users"));
+
+                                              })
+            )
+            @Html.ValidationMessageFor(model => model.RoleID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="row row-padding">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label ", @style = "font-weight:bold" })
+        </div>
+        <div class="col-md-3">
+            @*@Html.EditorFor(model => model.IsActive)*@
+            @(Html.Kendo().CheckBoxFor(x => x.IsActive).Label(""))
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+        </div>
+        @*<div class="col-md-2">
+                @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label ", @style = "font-weight:bold" })
+            </div>
+            <div class="col-md-3">
+                @(Html.Kendo().DropDownList()
+                                          .Name("Gender")
+                                          .OptionLabel("Select Gender...")
+                                            .DataTextField("MstName")
+                                          .DataValueField("MstID")
+                                          .DataSource(dataSource =>
+                                          {
+                                              dataSource.Read(read => read.Action("GetMasterData", "Users", new { type = 1 }));
+
+                                          })
+                                          .HtmlAttributes(new { @style = "width:100%" })
+                )
+                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+            </div>*@
+    </div>
+    @if (Model.UserID > 0)
+    {
+        <div class="row row-padding">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label ", @style = "font-weight:bold" })
+            </div>
+            <div class="col-md-3">
+                @(Html.Kendo().DatePickerFor(x => x.DOB)
+                                                         .Name("DOB")
+                                                          // .Value(DateTime.Now)
+                                                          .Max(DateTime.Now)
+                                                      .Format("MM/dd/yyyy")
+
+                                                          .ParseFormats(new List<string>() { "MM/dd/yyyy" })
+                                                          .Events(e =>
+                                                          {
+                                                          // e.Change("StartDateChange");
+                                                      })
+                                                         .HtmlAttributes(new { style = "width: 100%", title = "Select Date of birth", type = "text" })
+                )
+                @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.Nationality, htmlAttributes: new { @class = "control-label ", @style = "font-weight:bold" })
+            </div>
+            <div class="col-md-3">
+                @(Html.Kendo().DropDownList()
+                                                       .Name("Nationality")
+                                                       .OptionLabel("Select Nationality...")
+                                                         .DataTextField("CountryName")
+                                                       .DataValueField("CountryID")
+                                                       .DataSource(dataSource =>
+                                                       {
+                                                           dataSource.Read(read => read.Action("GetCountries", "Users"));
+
+                                                       })
+                                                      .HtmlAttributes(new { @style = "width:100%" }))
+                @Html.ValidationMessageFor(model => model.Nationality, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row row-padding">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.Qualification, htmlAttributes: new { @class = "control-label ", @style = "font-weight:bold" })
+            </div>
+            <div class="col-md-3">
+                @(Html.Kendo().DropDownList()
+                                                          .Name("Qualification")
+                                                          .OptionLabel("Select Qualification...")
+                                                            .DataTextField("MstName")
+                                                          .DataValueField("MstID")
+                                                          .DataSource(dataSource =>
+                                                          {
+                                                              dataSource.Read(read => read.Action("GetMasterData", "Users", new { type = 2 }));
+
+                                                          })
+                                                         .HtmlAttributes(new { @style = "width:100%" }))
+                @Html.ValidationMessageFor(model => model.Qualification, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.PermanentResidance, htmlAttributes: new { @class = "control-label ", @style = "font-weight:bold" })
+            </div>
+            <div class="col-md-3">
+                @(Html.Kendo().DropDownList()
+                                                       .Name("PermanentResidance")
+                                                       .OptionLabel("Select Permanent Residance...")
+                                                         .DataTextField("CountryName")
+                                                       .DataValueField("CountryID")
+                                                       .DataSource(dataSource =>
+                                                       {
+                                                           dataSource.Read(read => read.Action("GetCountries", "Users"));
+
+                                                       })
+                                                       .HtmlAttributes(new { @style = "width:100%" }))
+
+                @Html.ValidationMessageFor(model => model.PermanentResidance, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    }
+
+</div>
+<script type="text/javascript">
+
+    function OnEmployeeCodeChange() {
+
+        var text = $("#EmployeeCode").val();
+
+            $.ajax({
+                type: "POST",
+                data: { empCode: text },
+                url: '@Url.Action("GetEmployee", "Users")',
+                success: function (data) {
+                    if (data.status == 200) {
+                        if (data.data != undefined && data.data != null && data.data != '') {
+                            $("#FirstName").val(data.data.EmpFirstName);
+                            $("#MiddleName").val(data.data.EmpMiddleName);
+                            $("#LastName").val(data.data.EmpLastName);
+                            $("#Email").val(data.data.Email);
+                        }
+                    }
+                    
+                    else {
+                        alert(JSON.stringify(data.data));
+                        $("#FirstName").val('');
+                        $("#MiddleName").val('');
+                        $("#LastName").val('');
+                        $("#Email").val('');
+                        $("#RoleID").val('');
+                        $("#EmployeeCode").val('');
+                    }
+
+
+                },
+                error: function (data) {
+                    alert(JSON.stringify(data.statusText));
+                    $("#FirstName").val('');
+                    $("#MiddleName").val('');
+                    $("#LastName").val('');
+                    $("#Email").val('');
+                    $("#RoleID").val('');
+                    $("#EmployeeCode").val('');
+                }
+            });
+ }
+</script>

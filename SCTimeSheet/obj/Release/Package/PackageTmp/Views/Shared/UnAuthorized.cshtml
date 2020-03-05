@@ -1,0 +1,72 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unauthorized Access | Sempcorp</title>
+
+    <script src="~/Contents/js/jquery.min.js"></script>
+    <link href="~/Contents/css/layout.css" rel="stylesheet" />
+    <link href="~/Contents/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Contents/css/responsive.bootstrap.min.css" rel="stylesheet" />
+
+    <style type="text/css">
+        .bs-example {
+            margin: 20px;
+        }
+
+        th {
+            background-color: #e4e4e4;
+        }
+
+        .nav-tabs > li.active > a {
+            background-color: rgb(0,108,83) !important;
+            color: white !important;
+        }
+
+        .row {
+            margin-right: 0px !important;
+        }
+
+        .navbar {
+            border-radius: 0px !important;
+        }
+    </style>
+
+</head>
+<body>
+    <nav class="navbar navbar-light" style="background-color:rgb(0,108,83); padding: 10px;">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img src="~/Contents/images/2.png" alt="image" style="height:40px" />
+            </div>
+            <span class="userProfileText"> <i class='fas fa-power-off'></i> @Html.ActionLink("Logout", "Logout", "Login", null, new { @class = "pull-right", Style = "color:White;" })</span>
+        </div>
+    </nav>
+    <!-- Main content -->
+    <div class="row" style="padding:20px">
+        <div class="col-md-6 col-md-offset-4">
+            <div class="col-md-2" style="padding:0px;">
+                <h1 style="font-weight:bold; margin-top:30px; color:#ff0000; font-size:50px">401</h1>
+            </div>
+            <div class="col-md-8" style="margin-left:-30px">
+                <h3 style="color:#ff0000">Unauthorized!</h3>
+                <h5 style="line-height:24px">
+                    You are not authorized to access this page. Please contact your System Administrator.
+                    Meanwhile, you may @Html.ActionLink("return to login", "Logout", "Login")
+                </h5>
+            </div>
+        </div>
+    </div>
+    <!-- /.content -->
+</body>
+</html>

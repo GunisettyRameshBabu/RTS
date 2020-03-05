@@ -1,0 +1,803 @@
+﻿@model SCTimeSheet_DAL.Models.ProjectListEdit
+@{
+    /**/
+
+    /**/
+
+    /**/
+
+    /**/
+
+    ViewBag.Title = "Project Edit";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .dataTables_wrapper .pagination {
+        float: right !important;
+    }
+</style>
+
+<div class="card-body" style="background-color: #fff;border-radius:10px;">
+    @using (Html.BeginForm("UpdateProject", "ProjectMaster", new { @id = "CNform" }))
+    {
+        <div>
+            @*style="overflow:scroll;"*@
+            @Html.HiddenFor(x => x.ProjectID)
+            <table class="customers" id="MYtest">
+                <tr>
+                    <td>
+                        Project Name:
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ProjectName, new { @class = "form-control", style = "width: 100%; border-radius: 9px;", @required = "required" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Project Code:
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.ProjectCode, new { @class = "form-control", style = "width: 100%; border-radius: 9px;", @required = "required" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Cost Centre Code:
+                    </td>
+                    <td>
+                        @*@Html.TextBoxFor(model => model.CostCentre, new { @class = "form-control", style = "width: 100%; border-radius: 9px;" })*@
+                        @Html.DropDownListFor(model => model.CostCentre, new SelectList(ViewBag.costList, "CostID", "CostName"), "--Select Any--", new { @required = "required", @class = "form-control select2", style = "width: 100%;" })
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        IO No:
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.InternalOrder, new { @class = "form-control", style = "width: 100%; border-radius: 9px;", @required = "required" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Grant Type:
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(model => model.ProjectGrant, new SelectList(ViewBag.GrantList, "MstID", "MstCode"),
+                       "--Select Any--", new { @onchange = "onGrantChange()", @id = "drpgrant", @class = "form-control select2", style = "width: 100%; border-radius: 9px;", @required = "required" })
+                        @Html.ValidationMessageFor(model => model.ProjectGrant, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr id="drpTheme">
+                    <td>
+                        Theme:
+                    </td>
+                    <td>
+
+                        @Html.DropDownListFor(model => model.Theme, new SelectList(ViewBag.ThemeList, "MstID", "MstCode"), "--Select Any--", new { @id = "drptheme", @class = "form-control select2", style = "width: 100%; border-radius: 9px;" })
+                        @Html.ValidationMessageFor(model => model.Theme, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        R&D Projects:
+                    </td>
+                    <td>
+                        @if (Model.IsRDProject == 1)
+                        {
+                            <label>@Html.RadioButtonFor(model => model.IsRDProject, 1, new { @id = "Rbtest", name = "rndD", @checked = "checked", @onclick = "GetSelectedItem();" })Yes</label>
+                            <label>@Html.RadioButtonFor(model => model.IsRDProject, 2, new { @id = "Rbtest", name = "rndD", @onclick = "GetSelectedItem();" })No</label>
+                        }
+                        else
+                        {
+                            <label>@Html.RadioButtonFor(model => model.IsRDProject, 1, new { @id = "Rbtest", name = "rndD", @onclick = "GetSelectedItem();" })Yes</label>
+                            <label>@Html.RadioButtonFor(model => model.IsRDProject, 2, new { @id = "Rbtest", name = "rndD", @checked = "checked", @onclick = "GetSelectedItem();" })No</label>
+                        }
+                        @Html.HiddenFor(x => x.IsRDProject)
+                    </td>
+                </tr>
+                <tr id="row1">
+                    <td>
+                        Research Area:
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(model => model.ResearchArea, new SelectList(ViewBag.ResearchList, "RsID", "RsDesc"), "--Select Any--", new { @id = "research", @class = "form-control select2", style = "width: 100%; border-radius: 9px;" })
+                        @Html.ValidationMessageFor(model => model.ResearchArea, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr id="row2">
+                    <td>
+                        Type of Research:
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(model => model.TypeofResearch, new SelectList(ViewBag.ResearchTypeList, "MstID", "MstCode"), "--Select Any--", new { @id = "type", @class = "form-control select2", style = "width: 100%; border-radius: 9px;" })
+                        @Html.ValidationMessageFor(model => model.TypeofResearch, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Project Start Date:
+                    </td>
+                    <td>
+                        @(Html.Kendo().DatePicker()
+                                                                                                                     .Name("StartDate")
+                                                                                                                      .Events(e =>
+                                                                                         {
+                                                                                             e.Change("onStartDateChange");
+                                                                                         })
+                                                                                                                     .Format("dd MMM yyyy")
+                                                                                                                     .HtmlAttributes(new { required = "Required", @id = "txtstartdate", style = "width: 50%; border-radius: 9px;display: inline-block;" })
+                        )
+                        <button type="button" class="btn btn-success" id="btnProjectStartDate" style="background-color: #00664E;border-color: #00664E;" onclick="SetProjectStartDate(); return false;">Default</button>
+                        @*@Html.TextBoxFor(model => model.StartDate, "{0:dd MMM yyyy}", new { @class = "form-control datepicker", @readonly = "readonly", style = "width: 100%; border-radius: 9px;" })*@
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Project End Date:
+                    </td>
+                    <td>
+                        @(Html.Kendo().DatePicker()
+                                                                                                                           .Name("EndDate")
+                                                                           .Events(e =>
+                                                                           {
+                                                                               e.Change("onStartDateChange");
+                                                                           })
+                                                                                                                           .Format("dd MMM yyyy")
+                                                                                                                           .HtmlAttributes(new { required = "Required", @id = "txtenddate", style = "width: 50%; border-radius: 9px;display: inline-block;" })
+                        )
+                        <button type="button" class="btn btn-success" id="btnProjectEndDate" style="background-color: #00664E;border-color: #00664E;" onclick="SetProjectEndDate(); return false;">Default</button>
+                        @*@Html.TextBoxFor(model => model.EndDate, "{0:dd MMM yyyy}", new { @class = "form-control datepicker", @readonly = "readonly", style = "width: 100%; border-radius: 9px;" })*@
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Project Desc (optional):
+                    </td>
+                    <td>
+                        @Html.TextAreaFor(model => model.ProjectDesc, new { @class = "form-control", style = "width: 100%; border-radius: 9px;" })
+
+                    </td>
+                </tr>
+
+            </table>
+            <div class="row">
+                <div class="col-md-3">
+                    <h6>Add Project Member</h6>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-9">
+                    @Html.TextBoxFor(x => x.EmpSearchText, new { @class = "form-control", @style = "width: 100%; border-radius: 9px;", @id = "txtsearch" })
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary" style="background-color: #ff7432; border-color:  #ff7432;" onclick="GetEmployeeSearch(); return false;">Search</button>
+                </div>
+            </div>
+
+            <input type="hidden" id="hidempid" />
+
+            <br />
+            <div id="emplist">
+
+
+                @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.EmployeeSearch>()
+                                                                                       .Name("empsearch")
+                                                                                       .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                                                       .Columns(columns =>
+                                                                                       {
+                                                                                           columns.Template(@<text></text>).ClientTemplate("<input type='checkbox' class='checkbox' id='chk#=EmployeeID#' />").Width(40).HeaderTemplate("<input id='headerCheckBox' style='cursor: pointer;' type='checkbox' onclick='selectAllEmpItems(this);' />");
+                                                                                        columns.Bound(p => p.EmpName).ClientTemplate("<input type='button' class='label label-primary' style='width:80%'  value='#=EmpName#' />");
+                                                                                        columns.Bound(p => p.Designation);
+                                                                                        columns.Bound(p => p.Email);
+                                                                                        columns.Bound(p => p.Company);
+                                                                                        columns.Bound(p => p.Department);
+
+                                                                                    })
+                                                     .Pageable()
+                                                     .Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+                                                     .Scrollable()
+
+
+
+                                                     .DataSource(dataSource => dataSource
+                                                         .Ajax()
+                                                         .PageSize(20)
+                                                         .Read(read => read.Action("GetEmployeeSearch", "ProjectMaster").Data("GetEmpText"))
+                                                      )
+                                                      .Events(e => e.DataBound("db"))
+                )
+            </div>
+            <br />
+            <h6> Selected Project Members</h6>
+            @Html.HiddenFor(m => m.ProjectMembers)
+            @Html.HiddenFor(m => m.ProjectMembersNames)
+            @(Html.Kendo().MultiSelect()
+                                                                             .Name("selectedEmps")
+                                                                             .DataTextField("Name")
+                                                                             .HtmlAttributes(new { style = "width: 50%" })
+                                                                             .Events(e =>
+                                                                             {
+                                                                                 e.Deselect("onDeselect");
+                                                                             })
+                                                                              .DataValueField("Id")
+            )
+
+
+            <br />
+            <table class="customers" id="projectdetails">
+
+                <tr>
+                    <td>
+                        Project Manager
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(model => model.CheckRole, new List<SelectListItem>
+       {new SelectListItem{Text="--Select Any--", Value=""},
+                       new SelectListItem{Text="Yes", Value="true"},
+         new SelectListItem{Text="No", Value="false"}}, new {  @class = "form-control select2",  @id = "drpRole", style = "width: 100%; border-radius: 9px;" })
+                        @*@Html.ValidationMessageFor(model => model.model2.CheckRole, "", new { @class = "text-danger" })*@
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        % of Involvement
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.InvPercentage, new { @min = "0", @max = "100", maxlength = 3, type = "number", @class = "form-control", style = "width: 100%; border-radius: 9px;" })
+                        @Html.ValidationMessageFor(model => model.InvPercentage, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Member Start Date
+                    </td>
+                    <td style="white-space:nowrap">
+                        @(Html.Kendo().DatePickerFor(x => x.MemberStartDate)
+                                                                                 .Name("MemberStartDate")
+                                                                                 .Events(e =>
+                                                                                 {
+                                                                                     e.Change("onMemberStartDateChange");
+                                                                                 })
+                                                                                 .Format("dd MMM yyyy")
+                                                                                 .HtmlAttributes(new { @id = "memberStartDate", style = "width: 50%; border-radius: 9px;display: inline-block;" })
+                        )
+                        <button type="button" class="btn btn-success" id="btnDefault1" style="background-color: #00664E;border-color: #00664E;" onclick="GetProjectStartDate(); return false;">Default</button>
+                        @*@Html.TextBoxFor(model => model.model2.StartDate, "{dd-mm-yyyy}", new { @required = "required", @id = "startdate", @readonly = "readonly", @class = "form-control datepicker",  style = "width: 100%; border-radius: 9px;" })*@
+                        @Html.ValidationMessageFor(model => model.MemberStartDate, "", new { @class = "text-danger" })
+                    </td>
+                    @*<td style='border-right:none;border-left:none;border-bottom:none;border-top:none'>
+                            <button type="button" class="btn btn-success" id="btnDefault1" style="background-color: #00664E;border-color: #00664E;" onclick="GetProjectStartDate(); return false;">Default</button>
+                        </td>*@
+                </tr>
+                <tr>
+                    <td>
+                        Member End Date
+                    </td>
+                    <td style="white-space:nowrap">
+                        @(Html.Kendo().DatePickerFor(x => x.MemberEndDate)
+                                                                                 .Name("MemberEndDate")
+                                                                                 .ParseFormats(new List<string>() { "dd/MM/yyyy" })
+                                                                                 .Format("dd MMM yyyy")
+                                                                                 .Max("31 Dec 2999")
+                                                                 .Events(e =>
+                                                                                 {
+                                                                                     e.Change("onMemberStartDateChange");
+                                                                                 })
+                                                                                 .HtmlAttributes(new { @id = "memberEndDate", style = "width: 50%; border-radius: 9px;display: inline-block;" })
+                        )
+                        <button type="button" class="btn btn-success" id="btnDefaul2" style="background-color: #00664E;border-color: #00664E;" onclick="GetProjectEndDate(); return false;">Default</button>
+                        @*@Html.TextBoxFor(model => model.model2.EndDate, "{dd-mm-yyyy}", new { @required = "required", @id = "enddate", @readonly = "readonly", @class = "form-control datepicker",  style = "width: 100%; border-radius: 9px;" })*@
+                        @Html.ValidationMessageFor(model => model.MemberEndDate, "", new { @class = "text-danger" })
+                    </td>
+                    @*<td style='border-right:none;border-left:none;border-bottom:none;border-top:none'>
+                            <button type="button" class="btn btn-success" id="btnDefaul2" style="background-color: #00664E;border-color: #00664E;" onclick="GetProjectStartDate(); return false;">Default</button>
+                        </td>*@
+                </tr>
+                @*<tr>
+                        <td>
+                            Role:
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(model => model.RefRole, new SelectList(ViewBag.RoleList, "RoleID", "RoleName"), "--Select Any--", new { @class = "form-control select2", @id = "drprefRole", style = "width: 100%; border-radius: 9px;" })
+                            @Html.ValidationMessageFor(model => model.RefRole, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>*@
+
+            </table>
+
+
+
+        </div>
+
+        <div style="float:right;margin-top:10px;">
+            <button type="button"  class="btn btn-primary" style="background-color: #00664E; border-color:  #00664E;" onclick='window.location = "@Url.Action("Index", "ProjectMain")";'>Back</button>
+
+
+            <button type="button" class="btn btn-primary" style="background-color: #00664E; border-color:  #00664E;" onclick="validateMemberStartDate(true)">Update</button>
+            <button type="submit" id="submit-Search" class="btn btn-primary" style="display:none;">Update</button>
+        </div>
+
+    }
+    <div>
+
+        <h5 style="font-size: 26px; color: #646464;">
+            Project Members
+        </h5>
+        <br />
+
+        @(Html.Kendo().Grid<SCTimeSheet.Models.EmployeeProjectListUI>()
+                                                                                   .Name("projectMemberList")
+                                                                                   .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                                                   .Columns(columns =>
+                                                                                   {
+                                                                               //columns.Command(command => { command.Destroy(); }).Width(100);
+                                                                               columns.Bound(p => p.EmpName).ClientTemplate("<input type='button' class='label label-primary' style='width:80%' ondblclick='GetEditvalues(#=EmployeeID#)'  value='#=EmpName#' />");
+                                                                                       columns.Bound(p => p.IsManager);
+                                                                                       columns.Bound(p => p.InvPercentage);
+                                                                                       columns.Bound(p => p.StartDate).Format("{0:dd MMM yyyy}");
+                                                                                       columns.Bound(p => p.EndDate).Format("{0:dd MMM yyyy}");
+                                                                                       columns.Bound(p => p.EmpRole);
+
+                                                                                   })
+
+                                                                   .Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+
+                                                                  .DataSource(dataSource => dataSource
+                                                                      .Ajax()
+
+                                                                      .Model(model => model.Id(p => p.EmployeeID))
+                                                                      .Read(read => read.Action("GetProjectMember", "ProjectMaster").Data("GetProjectId"))
+                                                                   //.Destroy(destroy => destroy.Action("RemoveProjectMember", "ProjectMaster"))
+                                                                   )
+        )
+    </div>
+</div>
+
+
+
+
+
+<script>
+   monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    function onGrantChange() {
+        var value = $("#drpgrant").val();
+        if (value != '' && value != null && value != undefined) {
+            $.ajax({
+                type: "GET",
+                data: { grantId: value },
+                url: '@Url.Action("GetThemeList", "ProjectMaster")',
+                success: function (data) {
+                    if (data == "True") {
+                        $("#drpTheme").show();
+                        $('#drptheme').attr('required', 'required');
+                    } else {
+                        $('#drptheme').removeAttr('required');
+                        $("#drpTheme").hide();
+                    }
+                }
+            });
+        }
+        else {
+            $('#drptheme').removeAttr('required');
+            $("#drpTheme").hide();
+        }
+
+    };
+    function GetProjectId() {
+        return { projectId: $("#ProjectID").val() };
+    }
+    function db(e) {
+
+        if ($("#ProjectMembers").val() != null && $("#ProjectMembers").val() != undefined && $("#ProjectMembers").val() != "") {
+            var memberIds = $("#ProjectMembers").val().split(",");
+            for (var i = 0; i < memberIds.length; i++) {
+                if ($("#chk" + memberIds[i]).length == 1) {
+                    $("#chk" + memberIds[i]).prop("checked", true);
+                }
+            }
+        }
+    }
+    function onStartDateChange() {
+        var datepicker = $("#txtenddate").data("kendoDatePicker");
+
+        datepicker.min($("#txtstartdate").val());
+
+        var datepicker1 = $("#memberStartDate").data("kendoDatePicker");
+
+        datepicker1.min($('#txtstartdate').val());
+        var datepicker2 = $("#memberEndDate").data("kendoDatePicker");
+
+        datepicker2.min($("#txtstartdate").val());
+
+
+        if ($("#txtenddate").val() != '') {
+
+            datepicker2.max($('#txtenddate').val());
+            datepicker1.max($('#txtenddate').val());
+        }
+        if ($("#txtstartdate").val() != '' && $("#txtenddate").val() != '') {
+            if (Date.parse($("#txtenddate").val()) < Date.parse($("#txtstartdate").val())) {
+
+                datepicker.value($("#txtstartdate").val());
+            }
+        }
+    }
+    function SetProjectStartDate() {
+        var todayDate = kendo.toString(kendo.parseDate(new Date()), 'dd MMM yyyy');
+        $("#txtstartdate").data("kendoDatePicker").value(todayDate);
+        var datepicker = $("#txtenddate").data("kendoDatePicker");
+
+        datepicker.min(todayDate);
+
+        if ($("#txtstartdate").val() != '' && $("#txtenddate").val() != '') {
+            if (Date.parse($("#txtenddate").val()) < Date.parse($("#txtstartdate").val())) {
+
+                datepicker.value($("#txtstartdate").val());
+            }
+        }
+
+    }
+
+    function SetProjectEndDate() {
+        var endDate = kendo.toString(kendo.parseDate(new Date(2099, 11, 31)), 'dd MMM yyyy');
+        $("#txtenddate").data("kendoDatePicker").value(endDate);
+        var datepicker = $("#txtenddate").data("kendoDatePicker");
+
+        datepicker.min(todayDate);
+
+        if ($("#txtstartdate").val() != '' && $("#txtenddate").val() != '') {
+            if (Date.parse($("#txtenddate").val()) < Date.parse($("#txtstartdate").val())) {
+
+                datepicker.value($("#txtstartdate").val());
+            }
+        }
+    }
+    function GetSelectedItem() {
+        var value = $("#Rbtest:checked").val();
+        if (value == 2) {
+            $('#row1').hide();
+            $('#row2').hide();
+        }
+        else {
+            $('#row1').show();
+            $('#row2').show();
+            $('#research').attr('required', 'required');
+            $('#type').attr('required', 'required');
+        }
+
+    }
+
+    function GetProjectStartDate() {
+
+        $('#memberStartDate').val($('#txtstartdate').val());
+
+        var datepicker = $("#memberEndDate").data("kendoDatePicker");
+
+        datepicker.min($('#txtstartdate').val());
+
+        if ($("#memberStartDate").val() != '' && $("#memberEndDate").val() != '') {
+            if (Date.parse($("#memberEndDate").val()) < Date.parse($("#memberStartDate").val())) {
+
+                datepicker.value($("#memberStartDate").val());
+            }
+        }
+
+        validateMemberStartDate();
+
+    }
+
+    function validateMemberStartDate(submit = false) {
+        let selectedDate = new Date($('#memberStartDate').val());
+        let errMessage = '';
+        for (var i = 0; i < selectedUsers.length; i++) {
+            let joinDate = new Date(selectedUsers[i].JoinDate);
+
+            if (joinDate > selectedDate) {
+                let dateFormatted = joinDate.getDate() + "-"
+                    + monthNames[(joinDate.getMonth())] + "-"
+                    + joinDate.getFullYear();
+                errMessage = errMessage + "\n\nEmployee " + selectedUsers[i].Name + " join date is " + dateFormatted + ", Please input member start date from " + dateFormatted + " onwards";
+            }
+        }
+
+        if (errMessage != '') {
+            alert(errMessage);
+        }
+
+        if (submit && errMessage == '') {
+            $("#submit-Search").click();
+        }
+    }
+
+    function onMemberStartDateChange() {
+        validateMemberStartDate();
+
+            var datepicker = $("#memberEndDate").data("kendoDatePicker");
+
+            datepicker.min($('#memberStartDate').val());
+
+
+
+            if ($("#memberStartDate").val() != '' && $("#memberEndDate").val() != '') {
+                if (Date.parse($("#memberEndDate").val()) < Date.parse($("#memberStartDate").val())) {
+
+                    datepicker.value($("#memberStartDate").val());
+                }
+            }
+
+   
+    }
+
+
+    function GetProjectEndDate() {
+        $('#memberEndDate').val($('#txtenddate').val());
+        var datepicker = $("#memberEndDate").data("kendoDatePicker");
+        if ($("#memberStartDate").val() != '' && $("#memberEndDate").val() != '') {
+            if (Date.parse($("#memberEndDate").val()) < Date.parse($("#memberStartDate").val())) {
+
+                datepicker.value($("#memberStartDate").val());
+            }
+        }
+    }
+
+    function onDeselect(e) {
+        //debugger;
+        var dataItem = e.dataItem;
+        selectedUsers = selectedUsers.filter(x => x.Id != dataItem.Id);
+        //employeeid = selectedUsers.map(x => x.Id).toString();
+        setMultiSelectValues(false);
+        if ($("#chk"+dataItem.Id).length == 1) {
+            $("#chk" + dataItem.Id).prop("checked", false);
+        }
+    }
+    $(document).ready(function () {
+
+        $("#txtsearch").val("");
+        $("#InvPercentage").val("");
+        //$("#drprefRole").val("");
+        $("#drpRole").val("false");
+
+        var mes = '@ViewBag.Message';
+        this.selectedUsers = [];
+        setMultiSelectValues();
+        if (mes != "" && mes != null && mes != undefined) {
+            pattern = "line";
+            mes = mes.replace(new RegExp(pattern, "g"), '\n')
+            alert(mes);
+        }
+
+        $('#promaster').css('color', 'black');
+
+        $('#admin').css('color', 'black');
+
+        if ($('#txtsearch').val() == "" || $('#txtsearch').val() == null || $('#txtsearch').val() == undefined) {
+            $('#emplist').hide();
+        }
+        else {
+            GetEmployeeSearch();
+        }
+
+        if ($("#ProjectMembersNames").val() != "" && $('#ProjectMembersNames').val() != null && $('#ProjectMembersNames').val() != undefined) {
+            var memberIds = $("#ProjectMembers").val().split(",");
+            var memberNames = $("#ProjectMembersNames").val().split(",");
+            selectedUsers = [];
+            if (memberIds.length ==  memberNames.length) {
+                for (var i = 0; i < memberIds.length; i++) {
+                    selectedUsers.push({ Id: memberIds[i], Name: memberNames[i] });
+                }
+                setMultiSelectValues();
+            }
+        }
+
+        if ($("#IsRDProject").val() != "1") {
+            $('#row1').hide();
+            $('#row2').hide();
+            //$("#drprefRole").prop("disabled", true);
+
+        }
+        else {
+          //  $("#drprefRole").prop("disabled", false);
+           // $('#drprefRole').attr('required', 'required');
+        }
+
+        $(".k-datepicker").find('span').find('input').attr("readonly", "readonly");
+
+        var datepicker = $("#memberStartDate").data("kendoDatePicker");
+
+        datepicker.min($('#txtstartdate').val());
+
+        datepicker.value("");
+
+        var datepicker2 = $("#memberEndDate").data("kendoDatePicker");
+
+        datepicker2.min($("#txtstartdate").val());
+        datepicker2.value("");
+
+        if ($("#txtenddate").val() != '') {
+
+            datepicker2.max($('#txtenddate').val());
+            datepicker.max($('#txtenddate').val());
+        }
+
+        onGrantChange();
+
+    });
+
+
+    function selectRow() {
+        row = $(this).closest("tr");
+        grid = $("#empsearch").data("kendoGrid");
+        dataItem = grid.dataItem(row);
+        debugger;
+        if (this.checked) {
+            if (selectedUsers.filter(x => x.Id == dataItem.EmployeeID).length == 0) {
+                selectedUsers.push({ Id: dataItem.EmployeeID, Name: dataItem.EmpName , JoinDate: dataItem.JoinDate , LeavingDate: dataItem.LeavingDate});
+            }
+        }
+        else {
+            if (selectedUsers.filter(x => x.Id == dataItem.EmployeeID).length > 0) {
+                selectedUsers = selectedUsers.filter(x => x.Id != dataItem.EmployeeID);
+            }
+        }
+
+        setMultiSelectValues();
+    }
+
+    function AddEmp() {
+        row = $(this).closest("tr");
+        grid = $("#empsearch").data("kendoGrid");
+        dataItem = grid.dataItem(row);
+        if (selectedUsers.filter(x => x.Id == dataItem.EmployeeID).length == 0) {
+            selectedUsers.push({ Id: dataItem.EmployeeID, Name: dataItem.EmpName, JoinDate: dataItem.JoinDate, LeavingDate: dataItem.LeavingDate });
+            setMultiSelectValues();
+            $("#chk" + dataItem.EmployeeID).prop('checked', true);
+        }
+
+    }
+
+    function GetEmpText() {
+        var searchtext = $('#txtsearch').val();
+        return { searchtext: searchtext }
+    }
+
+    function selectAllEmpItems(headerCheckBox) {
+
+        var grid = $("#empsearch").data("kendoGrid");
+        var items = grid.dataSource.view();
+
+
+        if (!headerCheckBox.checked) {
+            //  employeeid = '';
+            //  selectedUsers = [];
+            for (var i = 0; i < items.length; i++) {
+                dataItem = items[i];
+                if (selectedUsers.filter(x => x.Id == dataItem.EmployeeID).length > 0) {
+                    selectedUsers = selectedUsers.filter(x => x.Id != dataItem.EmployeeID);
+                }
+            }
+            setMultiSelectValues();
+        }
+        else {
+            employeeid = '';
+            for (var i = 0; i < items.length; i++) {
+
+                dataItem = items[i];
+                if (employeeid != '') {
+                    employeeid = employeeid + ',' + dataItem.EmployeeId;
+                }
+                else {
+                    employeeid = dataItem.EmployeeId;
+                }
+                if (selectedUsers.filter(x => x.Id == dataItem.EmployeeId).length == 0) {
+                    selectedUsers.push({ Id: dataItem.EmployeeID, Name: dataItem.EmpName, JoinDate: dataItem.JoinDate, LeavingDate: dataItem.LeavingDate });
+                }
+
+
+            }
+            setMultiSelectValues();
+        }
+
+
+        $(".checkbox").each(function () {
+            this.checked = headerCheckBox.checked;
+        })
+    }
+
+
+
+        function GetEmployeeSearch() {
+
+        $('#emplist').show();
+            $('#prjctdetails').show();
+            $("#empsearch").data().kendoGrid.dataSource.read();
+            $("#empsearch").css("display", "block");
+            $("#headerCheckBox").prop('checked', false);
+            $("#empsearch").data().kendoGrid.table.on("click", ".checkbox", selectRow);
+            $("#empsearch").data().kendoGrid.table.on("click", ".label", AddEmp);
+
+        }
+    var employeeid = new Array();
+    var selectedUsers = [];
+
+        function SetEmpName(value) {
+
+            var temp = new Array();
+            temp = value.split(",");
+            if (employeeid!='')
+            {
+                employeeid = employeeid + ',' + temp[1];
+            }
+            else {
+                employeeid = temp[1];
+            }
+
+            selectedUsers.push({ Id: temp[1], Name: temp[0] });
+
+            setMultiSelectValues();
+
+
+    }
+
+    function setMultiSelectValues(change = true) {
+
+
+        if (change) {
+            var dataSource = new kendo.data.DataSource({
+                data: this.selectedUsers
+            });
+            var multiselect = $("#selectedEmps").data("kendoMultiSelect");
+            //multiselect.value([]);
+            multiselect.setDataSource(dataSource);
+            multiselect.value(this.selectedUsers);
+        }
+
+
+        $("#ProjectMembers").val(this.selectedUsers.map(x => x.Id).toString());
+        $("#ProjectMembersNames").val(this.selectedUsers.map(x => x.Name).toString());
+        if (this.selectedUsers.length > 0) {
+            $('#InvPercentage').attr('required', 'required');
+            $('#memberStartDate').attr('required', 'required');
+            $('#memberEndDate').attr('required', 'required');
+        }
+        else {
+            $('#InvPercentage').removeAttr('required');
+            $('#memberStartDate').removeAttr('required');
+            $('#memberEndDate').removeAttr('required');
+
+        }
+
+    }
+
+    function GetTestvalues() {
+
+
+    }
+
+        function UpdateProject() {
+            debugger;
+            var data = JSON.stringify(model);
+         $.ajax({
+            type: "POST",
+             data: data,
+            url: '@Url.Action("UpdateProject", "ProjectMaster")',
+           success: function (data) {
+
+            }
+        });
+    }
+
+
+    function GetEditvalues(EmployeeID) {
+        window.location.href = '@Url.Action("EmployeeEdit", "ProjectMaster")'+ "/" + $("#ProjectID").val() +"/"+ EmployeeID;
+    }
+
+
+</script>
+
+
+
+
+

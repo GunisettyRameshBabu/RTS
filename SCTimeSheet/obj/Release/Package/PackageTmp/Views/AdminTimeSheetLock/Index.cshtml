@@ -1,0 +1,137 @@
+﻿@model SCTimeSheet_DAL.Models.TimeSheetLockModel
+
+@{
+    ViewBag.Title = "Lock Timesheet";
+}
+@using (Html.BeginForm("Create", "AdminTimeSheetLock", FormMethod.Post))
+{
+    <div class="card-body" style="background-color: #fff;border-radius:10px; ">
+        <div class="row">
+            @*<div class="col-md-3">
+                    <label for="startDate">Start Date</label>
+                    @(Html.Kendo().DatePickerFor(x => x.StartDate)
+                                                                          .Name("startDate")
+                                                                           .Value(ViewBag.StartDate)
+                                                                           .Min(ViewBag.StartDate)
+                                                                           .Max(ViewBag.EndDate)
+                                                                          //.Events(e =>
+                                                                          //{
+                                                                          //    e.Change("startDateChange");
+                                                                          //})
+                                                                          .HtmlAttributes(new { style = "width: 100%", title = "datepicker" })
+                    )
+                </div>
+                <div class="col-md-3">
+                    <label for="endDate">End Date</label>
+                    @(Html.Kendo().DatePickerFor(x => x.EndDate)
+                                                                          .Name("endDate")
+                                                                            .Value(ViewBag.EndDate)
+                                                                           .Min(ViewBag.StartDate)
+                                                                           .Max(ViewBag.EndDate)
+                                                                          .HtmlAttributes(new { style = "width: 100%", title = "datepicker" })
+                    )
+                </div>*@
+            <div class="col-md-2">
+                <h6 style="font-size: 26px; color: #646464;padding-left: 18px;">Select Quarter </h6>
+
+            </div>
+            <div class="col-md-2">
+                @(Html.Kendo().DropDownListFor(x => x.Quarter)
+                                                                                                                                                             .Name("Quarter")
+                                                                                                                                                             .DataTextField("Text")
+                                                                                                                                                             .DataValueField("Value")
+
+                                                                                                                                                             .BindTo(ViewBag.QuarterList)
+                                                                                                                                                            .HtmlAttributes(new { style = "width: 50%; border-radius: 9px;" })
+                )
+            </div>
+            @*<div class="col-md-1">
+                    <label for="status">@ViewBag.LockStatus</label>
+                   @(Html.Kendo().CheckBox().Name("status").HtmlAttributes(new { style = "width: 100%", id = "status" , @disabled= "@disabled", @checked="checked" }))
+                </div>*@
+
+            <div class="col-md-1">
+                <button type="submit" id="submit-Search" class="btn btn-primary" style="background-color: #00664E; border-color:  #00664E;">@ViewBag.LockStatus</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+                {
+                    <br />
+                    <label class="text-danger">@ViewBag.ErrorMessage</label>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <br />
+                <h1>History</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+
+                @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.TimeSheetLockUIModel>()
+                                                                                           .Name("timeSheetLockGrid")
+                                                                                           .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                                                           .DataSource(dataSource => dataSource
+                                                                                               .Ajax()
+                                                                                               .Batch(true)
+                                                                                               .PageSize(20)
+                                                                                               .ServerOperation(false)
+                                                                                               .Model(model =>
+                                                                                               {
+                                                                                                   model.Id(p => p.StartDate);
+                                                                                                   model.Field(p => p.EndDate);
+                                                                                                   model.Field(p => p.Status);
+                                                                                                   model.Field(p => p.updatedBy);
+                                                                                                   model.Field(p => p.UpdatedDate);
+                                                                                                   model.Field(p => p.Quarter);
+
+                                                                                               })
+                                                                                                 .Read(read => read
+                                                        .Action("GetTimeSheetLockDetails", "AdminTimeSheetLock")
+                                                    )
+
+                                                                                           )
+                                                                                           .Columns(columns =>
+                                                                                           {
+                                                                                               columns.Bound(product => product.StartDate).ClientTemplate("#=  (StartDate == null)? '' : kendo.toString(kendo.parseDate(StartDate, 'yyyy-MM-dd'), 'dd MMM yyyy') #");
+                                                                                               columns.Bound(product => product.EndDate).ClientTemplate("#=  (EndDate == null)? '' : kendo.toString(kendo.parseDate(EndDate, 'yyyy-MM-dd'), 'dd MMM yyyy') #");
+                                                                                               columns.Bound(product => product.Status);
+                                                                                               columns.Bound(product => product.updatedBy).Title("Update By");
+                                                                                               columns.Bound(product => product.UpdatedDate).Title("Update Date").ClientTemplate("#=  (UpdatedDate == null)? '' : kendo.toString(kendo.parseDate(UpdatedDate, 'yyyy-MM-dd'), 'dd MMM yyyy') #"); ;
+                                                                                               columns.Bound(product => product.Quarter);
+
+                                                                                           })
+
+                                                                                       .Pageable()
+                                                                                        .Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+                )
+            </div>
+
+        </div>
+</div>
+        }
+
+        <script>
+            $(document).ready(function () {
+                //$('#lock-logo').attr('src', '../../Contents/assets/Images/lock1.png');
+                $('#lock').css('color', 'black');
+
+                //$('#admin-logo').attr('src', '../../Contents/assets/Images/utility.png');
+                $('#admin').css('color', 'black');
+            });
+            function startDateChange() {
+
+                //var selectedDate = new Date(this.value());
+                //var msecsInADay = 86400000;
+                //var endDate = new Date(selectedDate.getTime() + msecsInADay);
+
+                ////Set Minimum Date of EndDatePicker After Selected Date of StartDatePicker
+                //$("#endDate").datepicker( "minDate", endDate);
+                //$("#endDate").datepicker("maxDate", '+2M');
+            }
+        </script>

@@ -1,0 +1,11 @@
+﻿@(Html.Kendo().NumericTextBox<decimal>()
+                    .Name("InvPercentage")
+                    //.Format("p0")
+                    .Min(0)
+                    .Max(100)
+                   .Decimals(2)
+                    //.Step(1.00)
+                    //.Events(e =>
+                    //e.Change("onEdit1Change").Spin("onEdit1Change"))
+                    .HtmlAttributes(new { style = "width: 100%", title = "#=InvPercentage#", @step = "any" })
+)

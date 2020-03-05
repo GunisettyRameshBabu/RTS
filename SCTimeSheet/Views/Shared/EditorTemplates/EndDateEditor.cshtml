@@ -1,0 +1,14 @@
+﻿@(Html.Kendo().DatePicker()
+                .Name("EndDate")
+                .Value("#=EndDate#")
+              .Events(e =>
+              {
+                  e.Change("EndDateChange").Open("EndDateOpen");
+              })
+                .HtmlAttributes(new { style = "width: 50%", title = "Select End Date" ,@required = "required" })
+               .Format("dd MMM yyyy")
+)
+
+<script>
+   
+</script>

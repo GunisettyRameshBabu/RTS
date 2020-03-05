@@ -1,0 +1,23 @@
+﻿@*@(Html.Kendo().DropDownList()
+              .Name("IsManager")
+              .DataTextField("Text")
+              .DataValueField("Value")
+              
+              .BindTo(new List<SelectListItem>() {
+      new SelectListItem() {
+          Text = "Yes",
+          Value = "YES"
+      },
+      new SelectListItem() {
+          Text = "No",
+          Value = "NO"
+      },
+              })
+              .Value("#=IsManager#")
+              .HtmlAttributes(new { style = "width: 100%" })
+)*@
+
+@(
+Html.Kendo().CheckBox()
+.Name("IsManager")
+)
