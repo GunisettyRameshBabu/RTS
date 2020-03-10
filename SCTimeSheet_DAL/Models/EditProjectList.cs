@@ -12,7 +12,7 @@ namespace SCTimeSheet_DAL.Models
 
         public ProjectListEdit()
         {
-           
+            
         }
         [Key]
         public Int64 ProjectID { get; set; }
@@ -41,31 +41,13 @@ namespace SCTimeSheet_DAL.Models
 
         public int IsRDProject { get; set; }
 
-        public string ProjectMembers { get; set; } = "";
-        public string ProjectMembersNames { get; set; } = "";
-
-        public Int64 RefRole { get; set; }
-
-
-        //[Required]
-        [Display(Name = "CheckRole")]
-        public bool CheckRole { get; set; }
-
-
-        public DateTime? MemberStartDate { get; set; }
-
-
-        public DateTime? MemberEndDate { get; set; }
-
-        //[Required]
-        [Display(Name = "InvPercentage")]
-        public Int64? InvPercentage { get; set; }
-
         //[Required]
         [Display(Name = "ProjectGrant")]
         public Int64? MemberProjectGrant { get; set; }
 
         public string EmpSearchText { get; set; }
+
+       public string EmployeeProjectList { get; set; }
     }
 
     public class EditProjectList

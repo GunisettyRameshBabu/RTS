@@ -1,5 +1,6 @@
 ﻿using SCTimeSheet_UTIL.Resource;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -119,7 +120,10 @@ namespace SCTimeSheet_DAL.Models
 
     public class ProjectMasterModelNew
     {
-       
+       public ProjectMasterModelNew()
+        {
+           // EmployeeProjectList = new List<EmployeeProjectList>();
+        }
         public Int64 ProjectID { get; set; }
 
         
@@ -191,21 +195,21 @@ namespace SCTimeSheet_DAL.Models
         [NotMapped]
         public AddProjectEmployee ProjectEmployeeModel { get; set; }
 
-        public string ProjectMembers { get; set; }
+       // public string ProjectMembers { get; set; }
 
         
-        [Display(Name = "CheckRole")]
-        public bool CheckRole { get; set; }
+        //[Display(Name = "CheckRole")]
+        //public bool CheckRole { get; set; }
 
 
-        public DateTime? MemberStartDate { get; set; }
+        //public DateTime? MemberStartDate { get; set; }
 
 
-        public DateTime? MemberEndDate { get; set; }
+        //public DateTime? MemberEndDate { get; set; }
 
         
-        [Display(Name = "InvPercentage")]
-        public Int64? InvPercentage { get; set; }
+        //[Display(Name = "InvPercentage")]
+        //public Int64? InvPercentage { get; set; }
 
         
         [Display(Name = "ProjectGrant")]
@@ -213,9 +217,11 @@ namespace SCTimeSheet_DAL.Models
 
         public Int64 RefRole { get; set; }
 
-        public string ProjectMembersNames { get; set; } = "";
+       // public string ProjectMembersNames { get; set; } = "";
 
         public string EmpSearchText { get; set; }
+
+        public string EmployeeProjectList { get; set; }
     }
 
 }

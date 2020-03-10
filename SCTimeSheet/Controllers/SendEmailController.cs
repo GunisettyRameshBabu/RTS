@@ -130,12 +130,15 @@ namespace SCTimeSheet.Controllers
                     mail.To.Add(new MailAddress(item));
                 }
 
-                foreach (var item in collection.AdditionalEmails.Split(','))
+                if (!string.IsNullOrEmpty(collection.AdditionalEmails))
                 {
-                    if (!string.IsNullOrEmpty(item))
+                    foreach (var item in collection.AdditionalEmails.Split(','))
                     {
-                        mail.To.Add(new MailAddress(item));
+                        if (!string.IsNullOrEmpty(item))
+                        {
+                            mail.To.Add(new MailAddress(item));
 
+                        }
                     }
                 }
                 mail.From = new MailAddress(_mailId);

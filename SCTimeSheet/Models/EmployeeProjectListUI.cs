@@ -16,7 +16,7 @@ namespace SCTimeSheet.Models
 
         [UIHint("IsManager")]
         [Display(Name = "Project Manager")]
-        public string IsManager { get; set; }
+        public bool IsManager { get; set; }
 
         [UIHint("ProjectMemberInvPercentage")]
         [Display(Name = "% of Project Involvement")]

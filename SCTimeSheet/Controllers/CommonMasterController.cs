@@ -59,7 +59,7 @@ namespace SCTimeSheet.Controllers
 
         private static async Task SendEmail(string grantName, string grantCode,bool isNew = true )
         {
-            string _mailId = ReadConfig.GetValue("MailId");
+            string _mailId = ReadConfig.GetValue("SystemEmail");
             string _mailTo = ReadConfig.GetValue("MailTo");
             string _mailPassword = ReadConfig.GetValue("MailPassword");
             int _mailPort = Convert.ToInt32(ReadConfig.GetValue("MailPort"));

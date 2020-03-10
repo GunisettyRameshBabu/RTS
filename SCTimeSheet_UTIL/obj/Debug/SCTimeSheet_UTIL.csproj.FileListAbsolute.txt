@@ -43,3 +43,12 @@ C:\RTS\Sembcorp 03-03-2020\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.csproj.Ge
 C:\RTS\Sembcorp 03-03-2020\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.csproj.CoreCompileInputs.cache
 C:\RTS\Sembcorp 03-03-2020\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.dll
 C:\RTS\Sembcorp 03-03-2020\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.pdb
+C:\Users\A217168\source\repos\RTS\SCTimeSheet_UTIL\bin\Debug\SCTimeSheet_UTIL.dll
+C:\Users\A217168\source\repos\RTS\SCTimeSheet_UTIL\bin\Debug\SCTimeSheet_UTIL.pdb
+C:\Users\A217168\source\repos\RTS\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.csprojAssemblyReference.cache
+C:\Users\A217168\source\repos\RTS\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.Resource.ResourceDisplay.resources
+C:\Users\A217168\source\repos\RTS\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.Resource.ResourceMessage.resources
+C:\Users\A217168\source\repos\RTS\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.csproj.GenerateResource.cache
+C:\Users\A217168\source\repos\RTS\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.dll
+C:\Users\A217168\source\repos\RTS\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.pdb
+C:\Users\A217168\Source\Repos\RTS\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.csproj.CoreCompileInputs.cache

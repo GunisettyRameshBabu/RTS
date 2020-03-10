@@ -1,9 +1,9 @@
 ﻿@(Html.Kendo().DatePicker()
-                        .Name("EndDate")
-                        .Value("#=EndDate#")
+                            .Name("EndDate")
+                            .Value("#=EndDate#")
 
-                        .HtmlAttributes(new { style = "width: 60%", title = "Select End Date", @required = "required" })
-                       .Format("dd MMM yyyy")
+                            .HtmlAttributes(new { style = "width: 60%", title = "Select End Date", @required = "required" })
+                           .Format("dd MMM yyyy")
 )
 
-@(Html.Kendo().Button().Name("Default").Content("Default").HtmlAttributes(new { style = "width: 28%", @class = "btn btn-primary" , onclick= "GetProjectEndDate(dataItem);" }))
+<button type="button" class="btn" style="background-color: #00664E;color: white;" onclick="GetProjectEndDate(); return false;">Default</button>

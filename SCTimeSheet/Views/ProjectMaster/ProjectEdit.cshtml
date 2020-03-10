@@ -24,6 +24,7 @@
         <div>
             @*style="overflow:scroll;"*@
             @Html.HiddenFor(x => x.ProjectID)
+            @Html.HiddenFor(x => x.EmployeeProjectList)
             <table class="customers" id="MYtest">
                 <tr>
                     <td>
@@ -121,13 +122,13 @@
                     </td>
                     <td>
                         @(Html.Kendo().DatePicker()
-                                                                                                                             .Name("StartDate")
-                                                                                                                              .Events(e =>
-                                                                                                 {
-                                                                                                     e.Change("onStartDateChange");
-                                                                                                 })
-                                                                                                                             .Format("dd MMM yyyy")
-                                                                                                                             .HtmlAttributes(new { required = "Required", @id = "txtstartdate", style = "width: 50%; border-radius: 9px;display: inline-block;" })
+                                                                                                                                                                                             .Name("StartDate")
+                                                                                                                                                                                              .Events(e =>
+                                                                                                                                                                 {
+                                                                                                                                                                     e.Change("onStartDateChange");
+                                                                                                                                                                 })
+                                                                                                                                                                                             .Format("dd MMM yyyy")
+                                                                                                                                                                                             .HtmlAttributes(new { required = "Required", @id = "txtstartdate", style = "width: 50%; border-radius: 9px;display: inline-block;" })
                         )
                         <button type="button" class="btn btn-success" id="btnProjectStartDate" style="background-color: #00664E;border-color: #00664E;" onclick="SetProjectStartDate(); return false;">Default</button>
                         @*@Html.TextBoxFor(model => model.StartDate, "{0:dd MMM yyyy}", new { @class = "form-control datepicker", @readonly = "readonly", style = "width: 100%; border-radius: 9px;" })*@
@@ -139,13 +140,13 @@
                     </td>
                     <td>
                         @(Html.Kendo().DatePicker()
-                                                                                                                                   .Name("EndDate")
-                                                                                   .Events(e =>
-                                                                                   {
-                                                                                       e.Change("onStartDateChange");
-                                                                                   })
-                                                                                                                                   .Format("dd MMM yyyy")
-                                                                                                                                   .HtmlAttributes(new { required = "Required", @id = "txtenddate", style = "width: 50%; border-radius: 9px;display: inline-block;" })
+                                                                                                                                                                                                   .Name("EndDate")
+                                                                                                                                                   .Events(e =>
+                                                                                                                                                   {
+                                                                                                                                                       e.Change("onStartDateChange");
+                                                                                                                                                   })
+                                                                                                                                                                                                   .Format("dd MMM yyyy")
+                                                                                                                                                                                                   .HtmlAttributes(new { required = "Required", @id = "txtenddate", style = "width: 50%; border-radius: 9px;display: inline-block;" })
                         )
                         <button type="button" class="btn btn-success" id="btnProjectEndDate" style="background-color: #00664E;border-color: #00664E;" onclick="SetProjectEndDate(); return false;">Default</button>
                         @*@Html.TextBoxFor(model => model.EndDate, "{0:dd MMM yyyy}", new { @class = "form-control datepicker", @readonly = "readonly", style = "width: 100%; border-radius: 9px;" })*@
@@ -173,7 +174,7 @@
                     @Html.TextBoxFor(x => x.EmpSearchText, new { @class = "form-control", @style = "width: 100%; border-radius: 9px;", @id = "txtsearch" })
                 </div>
                 <div class="col-md-3">
-                    <button type="submit" class="btn btn-primary" style="background-color: #ff7432; border-color:  #ff7432;" onclick="GetEmployeeSearch(); return false;">Search</button>
+                    <button type="button" class="btn btn-primary" style="background-color: #ff7432; border-color:  #ff7432;" onclick="GetEmployeeSearch(); return false;">Search</button>
                 </div>
             </div>
 
@@ -184,122 +185,37 @@
 
 
                 @(Html.Kendo().Grid<SCTimeSheet_DAL.Models.EmployeeSearch>()
-                                                                                               .Name("empsearch")
-                                                                                               .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
-                                                                                               .Columns(columns =>
-                                                                                               {
-                                                                                                   columns.Template(@<text></text>).ClientTemplate("<input type='checkbox' class='checkbox' id='chk#=EmployeeID#' />").Width(40).HeaderTemplate("<input id='headerCheckBox' style='cursor: pointer;' type='checkbox' onclick='selectAllEmpItems(this);' />");
-                                                                                                columns.Bound(p => p.EmpName).ClientTemplate("<input type='button' class='label label-primary' style='width:80%'  value='#=EmpName#' />");
-                                                                                                columns.Bound(p => p.Designation);
-                                                                                                columns.Bound(p => p.Email);
-                                                                                                columns.Bound(p => p.Company);
-                                                                                                columns.Bound(p => p.Department);
+                                                                                                                                                               .Name("empsearch")
+                                                                                                                                                               .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                                                                                                                               .Columns(columns =>
+                                                                                                                                                               {
+                                                                                                                                                                   columns.Template(@<text></text>).ClientTemplate("<input type='checkbox' class='checkbox' id='chk#=EmployeeID#' />").Width(40).HeaderTemplate("<input id='headerCheckBox' style='cursor: pointer;' type='checkbox' onclick='selectAllEmpItems(this);' />");
+                                                                                                                                                                columns.Bound(p => p.EmpName).ClientTemplate("<input type='button' class='label label-primary' style='width:80%'  value='#=EmpName#' />");
+                                                                                                                                                                columns.Bound(p => p.Designation);
+                                                                                                                                                                columns.Bound(p => p.Email);
+                                                                                                                                                                columns.Bound(p => p.Company);
+                                                                                                                                                                columns.Bound(p => p.Department);
 
-                                                                                            })
-                                                          .Pageable()
-                                                          .Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
-                                                          .Scrollable()
+                                                                                                                                                            })
+                                                                                                  .Pageable()
+                                                                                                  .Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+                                                                                                  .Scrollable()
 
 
 
-                                                          .DataSource(dataSource => dataSource
-                                                              .Ajax()
-                                                              .ServerOperation(false)
-                                                              .PageSize(20)
-                                                              .Read(read => read.Action("GetEmployeeSearch", "ProjectMaster").Data("GetEmpText"))
-                                                           )
-                                                           .Events(e => e.DataBound("db"))
+                                                                                                  .DataSource(dataSource => dataSource
+                                                                                                      .Ajax()
+                                                                                                      .ServerOperation(false)
+                                                                                                      .PageSize(20)
+                                                                                                      .Read(read => read.Action("GetEmployeeSearch", "ProjectMaster").Data("GetEmpText"))
+                                                                                                   )
+                                                                                                   .Events(e => e.DataBound("db"))
                 )
             </div>
-            @*<br />
-            <h6> Selected Project Members</h6>
-            @Html.HiddenFor(m => m.ProjectMembers)
-            @Html.HiddenFor(m => m.ProjectMembersNames)
-            @(Html.Kendo().MultiSelect()
-                                                                                     .Name("selectedEmps")
-                                                                                     .DataTextField("Name")
-                                                                                     .HtmlAttributes(new { style = "width: 50%" })
-                                                                                     .Events(e =>
-                                                                                     {
-                                                                                         e.Deselect("onDeselect");
-                                                                                     })
-                                                                                      .DataValueField("Id")
-            )*@
-
-
-            @*<table class="customers" id="projectdetails">
-
-                         <tr>
-                             <td>
-                                 Project Manager
-                             </td>
-                             <td>
-                                 @Html.DropDownListFor(model => model.CheckRole, new List<SelectListItem>
-                {new SelectListItem{Text="--Select Any--", Value=""},
-                                new SelectListItem{Text="Yes", Value="true"},
-                  new SelectListItem{Text="No", Value="false"}}, new {  @class = "form-control select2",  @id = "drpRole", style = "width: 100%; border-radius: 9px;" })
-
-                             </td>
-                         </tr>
-                         <tr>
-                             <td>
-                                 % of Involvement
-                             </td>
-                             <td>
-                                 @Html.TextBoxFor(model => model.InvPercentage, new { @min = "0", @max = "100", maxlength = 3, type = "number", @class = "form-control", style = "width: 100%; border-radius: 9px;" })
-                                 @Html.ValidationMessageFor(model => model.InvPercentage, "", new { @class = "text-danger" })
-                             </td>
-                         </tr>
-                         <tr>
-                             <td>
-                                 Member Start Date
-                             </td>
-                             <td style="white-space:nowrap">
-                                 @(Html.Kendo().DatePickerFor(x => x.MemberStartDate)
-                                                                                          .Name("MemberStartDate")
-                                                                                          .Events(e =>
-                                                                                          {
-                                                                                              e.Change("onMemberStartDateChange");
-                                                                                          })
-                                                                                          .Format("dd MMM yyyy")
-                                                                                          .HtmlAttributes(new { @id = "memberStartDate", style = "width: 50%; border-radius: 9px;display: inline-block;" })
-                                 )
-                                 <button type="button" class="btn btn-success" id="btnDefault1" style="background-color: #00664E;border-color: #00664E;" onclick="GetProjectStartDate(); return false;">Default</button>
-                                @Html.ValidationMessageFor(model => model.MemberStartDate, "", new { @class = "text-danger" })
-                             </td>
-
-                         </tr>
-                         <tr>
-                             <td>
-                                 Member End Date
-                             </td>
-                             <td style="white-space:nowrap">
-                                 @(Html.Kendo().DatePickerFor(x => x.MemberEndDate)
-                                                                                          .Name("MemberEndDate")
-                                                                                          .ParseFormats(new List<string>() { "dd/MM/yyyy" })
-                                                                                          .Format("dd MMM yyyy")
-                                                                                          .Max("31 Dec 2999")
-                                                                          .Events(e =>
-                                                                                          {
-                                                                                              e.Change("onMemberStartDateChange");
-                                                                                          })
-                                                                                          .HtmlAttributes(new { @id = "memberEndDate", style = "width: 50%; border-radius: 9px;display: inline-block;" })
-                                 )
-                                 <button type="button" class="btn btn-success" id="btnDefaul2" style="background-color: #00664E;border-color: #00664E;" onclick="GetProjectEndDate(); return false;">Default</button>
-                                 @Html.ValidationMessageFor(model => model.MemberEndDate, "", new { @class = "text-danger" })
-                             </td>
-
-                         </tr>
-
-                     </table>*@
-
 
 
         </div>
 
-
-
-    }
         <div>
 
             <h5 style="font-size: 26px; color: #646464;">
@@ -308,41 +224,48 @@
             <br />
 
             @(Html.Kendo().Grid<SCTimeSheet.Models.EmployeeProjectListUI>()
-                                                                                                           .Name("projectMemberList")
-                                                                                                           .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                                                                                                                                                                           .Name("projectMemberList")
+                                                                                                                                                                                           .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
 
-                                                                                                           .Columns(columns =>
-                                                                                                           {
-                                                                                                               columns.Bound(p => p.EmpName).Width(250);
-                                                                                                               columns.Bound(p => p.IsManager).Width(50);
-                                                                                                               columns.Bound(p => p.InvPercentage).Width(100);
-                                                                                                               columns.Bound(p => p.StartDate).Format("{0:dd MMM yyyy}").Width(150);
-                                                                                                               columns.Bound(p => p.EndDate).Format("{0:dd MMM yyyy}").Width(150);
-                                                                                                               columns.ForeignKey(p => p.EmpRole, (System.Collections.IEnumerable)ViewData["RoleList"], "RoleID", "RoleName").Width(150);
-                                                                                                               // columns.Bound(p => p.EmpRole).Width(150).Editable("empRoleEditable");
-                                                                                                               columns.Command(command => {
-                                                                                                                   command.Custom("Delete").Visible("deleteVisible").Click("deleteEmp");
-                                                                                                               }).Width(50);
+                                                                                                                                                                                           .Columns(columns =>
+                                                                                                                                                                                           {
 
-                                                                                                           })
+                                                                                                                                                                                               columns.Bound(p => p.EmpName).Width(250);
+                                                                                                                                                                                               columns.Bound(p => p.IsManager).Width(50).Template(@<text></text>).ClientTemplate("#if (data.IsManager == true) " +
+                                                                                                                                         "{# <input type='checkbox' checked disabled /> #}" +
+                                                                                                                                         "else {# <input type='checkbox'  disabled /> #}#");
+                                                                                                                                                                                                columns.Bound(p => p.InvPercentage).Width(100);
+                                                                                                                                                                                                columns.Bound(p => p.StartDate).Format("{0:dd MMM yyyy}").Width(150);
+                                                                                                                                                                                                columns.Bound(p => p.EndDate).Format("{0:dd MMM yyyy}").Width(150);
+                                                                                                                                                                                                columns.ForeignKey(p => p.EmpRole, (System.Collections.IEnumerable)ViewData["RoleList"], "RoleID", "RoleName").Width(150).Hidden(Model.IsRDProject != 1);
+                                                                                                                                                                                                columns.Template(p => "").Title("Roles").Width(150).Hidden(Model.IsRDProject == 1).ClientTemplate("");
+
+                                                                                                                                                                                                    columns.Command(command =>
+                                                                                                                                                                                                {
+                                                                                                                                                                                                     command.Custom("Delete").Visible("deleteVisible").Click("deleteEmp");
+                                                                                                                                                                                                 }).Width(50);
+
+                                                                                                                                                                                                })
 
 
-        .Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
-        .Editable(editable => editable.Mode(GridEditMode.InCell))
-        .DataSource(dataSource => dataSource
-        .Ajax()
-        .Model(x => { x.Field(y => y.EmpName).Editable(false);
-            x.Field(y => y.EmpRole).Editable(false);
-        }
-        )
-            .Batch(true)
-            .Model(model => model.Id(p => p.EmployeeID))
-            .ServerOperation(false)
-            .Update("Editing_Update", "Grid")
+                                                                                                  .Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
+                                                                                                  .Editable(editable => editable.Mode(GridEditMode.InCell))
+                                                                                                  .DataSource(dataSource => dataSource
+                                                                                                  .Ajax()
+                                                                                                  .Model(x =>
+                                                                                                  {
+                                                                                                      x.Field(y => y.EmpName).Editable(false);
+                                                                                                      x.Field(y => y.EmpRole).Editable(false);
+                                                                                                  }
+                                                                                                  )
+                                                                                                      .Batch(true)
+                                                                                                      .Model(model => model.Id(p => p.EmployeeID))
+                                                                                                      .ServerOperation(false)
+                                                                                                      .Update("Editing_Update", "Grid")
 
-            .Read(read => read.Action("GetProjectMember", "ProjectMaster").Data("GetProjectId"))
-            //.Destroy(destroy => destroy.Action("RemoveProjectMember", "ProjectMaster"))
-            )
+                                                                                                      .Read(read => read.Action("GetProjectMember", "ProjectMaster").Data("GetProjectId"))
+                                                                                                      //.Destroy(destroy => destroy.Action("RemoveProjectMember", "ProjectMaster"))
+                                                                                                      )
             )
 
             <div style="float:right;margin-top:10px;">
@@ -351,10 +274,13 @@
 
                 <button type="button" class="btn btn-primary" style="background-color: #00664E; border-color:  #00664E;" onclick="validateMemberStartDate(true)">Update</button>
                 <button type="submit" id="submit-Search" class="btn btn-primary" style="display:none;">Update</button>
+
             </div>
         </div>
 
-    
+
+    }
+
 </div>
 
 
@@ -362,6 +288,7 @@
 
 
 <script>
+
 
     function empRoleEditable(dataItem) {
         return '@Model.IsRDProject' == 1;
@@ -371,7 +298,7 @@
         return dataItem.IsNew == true;
     }
 
-    
+
    monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     function onGrantChange() {
         var value = $("#drpgrant").val();
@@ -401,14 +328,18 @@
         return { projectId: $("#ProjectID").val() };
     }
     function db(e) {
+        projectMemberGrid = $("#projectMemberList").data("kendoGrid");
+        var empdata = projectMemberGrid.dataSource.data();
 
-        if ($("#ProjectMembers").val() != null && $("#ProjectMembers").val() != undefined && $("#ProjectMembers").val() != "") {
-            var memberIds = $("#ProjectMembers").val().split(",");
-            for (var i = 0; i < memberIds.length; i++) {
-                if ($("#chk" + memberIds[i]).length == 1) {
-                    $("#chk" + memberIds[i]).prop("checked", true);
+        empGrid = $("#empSearch").data("kendoGrid");
+        var data = projectMemberGrid.dataSource.data();
+        for (var i = 0; i < data.length; i++) {
+            if (empdata.filter(x => x.EmployeeID == data[i].EmployeeID).length > 0) {
+                if ($("#chk" + data[i].EmployeeID).length == 1) {
+                    $("#chk" + data[i].EmployeeID).prop("checked", true);
                 }
             }
+            
         }
     }
     function onStartDateChange() {
@@ -471,108 +402,143 @@
         if (value == 2) {
             $('#row1').hide();
             $('#row2').hide();
+         
         }
         else {
             $('#row1').show();
             $('#row2').show();
             $('#research').attr('required', 'required');
             $('#type').attr('required', 'required');
+           
         }
+
+       
 
     }
 
-    function GetProjectStartDate(dataItem) {
-
-        $('#StartDate').val($('#txtstartdate').val());
-        dataItem.set("StartDate", $('#txtstartdate').val());
-        dataItem.set("dirty", true);
-        $('#projectMemberList').data('kendoGrid').refresh();
-        //var datepicker = $("#memberEndDate").data("kendoDatePicker");
-
-        //datepicker.min($('#txtstartdate').val());
-
-        //if ($("#StartDate").val() != '' && $("#memberEndDate").val() != '') {
-        //    if (Date.parse($("#memberEndDate").val()) < Date.parse($("#memberStartDate").val())) {
-
-        //        datepicker.value($("#memberStartDate").val());
-        //    }
-        //}
-
-       // validateMemberStartDate();
-
+    function GetProjectStartDate() {
+        const startDate = new Date($('#txtstartdate').val());
+        $('#StartDate').val(startDate);
+        grid = $("#projectMemberList").data("kendoGrid");
+        dataItem = grid.dataItem($("tr.k-grid-edit-row"));
+        dataItem.set("StartDate", startDate);
+        onMemberStartDateChange();
     }
 
     function validateMemberStartDate(submit = false) {
-        let selectedDate = new Date($('#StartDate').val());
-        let errMessage = '';
-        for (var i = 0; i < selectedUsers.length; i++) {
-            let joinDate = new Date(selectedUsers[i].JoinDate);
 
+        projectMemberGrid = $("#projectMemberList").data("kendoGrid");
+        var data = projectMemberGrid.dataSource.data();
+        var dirty = $.grep(data, function (item) {
+            return item.dirty || item.IsNew;
+        });
+        console.log(dirty);
+        let errMessage = '';
+        for (var i = 0; i < dirty.length; i++) {
+            let selectedDate = new Date(dirty[i].StartDate);
+            let joinDate = new Date(dirty[i].JoinDate);
             if (joinDate > selectedDate) {
                 let dateFormatted = joinDate.getDate() + "-"
                     + monthNames[(joinDate.getMonth())] + "-"
                     + joinDate.getFullYear();
-                errMessage = errMessage + "\n\nEmployee " + selectedUsers[i].Name + " join date is " + dateFormatted + ", Please input member start date from " + dateFormatted + " onwards";
+                errMessage = errMessage + "\n\nEmployee " + dirty[i].EmpName + " join date is " + dateFormatted + ", Please input member start date from " + dateFormatted + " onwards";
             }
-        }
 
+            if (dirty[i].EndDate == null || dirty[i].EndDate == undefined) {
+                errMessage = errMessage + "\n\Please select end date for  " + dirty[i].EmpName;
+            }
+
+        }
         if (errMessage != '') {
             alert(errMessage);
         }
-
         if (submit && errMessage == '') {
-            $("#submit-Search").click();
-        }
-    }
+            let items = [];
+            if (dirty.length > 0) {
+                let empIds = dirty.map(x => x.EmployeeID);
+                $.ajax({
+                    type: "POST",
+                    data: { projectId: @Model.ProjectID , empIds: empIds },
+                    url: '@Url.Action("checkInvolvementPercentage", "ProjectMaster")',
+                    success: function (data) {
+                        console.log(data);
+                        for (var i = 0; i < data.length; i++) {
+                            if ((dirty[i].InvPercentage + (data[i].currentInvolvement == null ? 0 : data[i].currentInvolvement)) > data[i].totalInvolvement) {
+                                errMessage = errMessage + "Employee " + dirty[i].EmpName + " has exceeded the maximum allocation , current allocation is " + data[i].currentInvolvement + " , maximum allocation is " + data[i].totalInvolvement + " and Available allocation is " + (data[i].totalInvolvement - (data[i].currentInvolvement == null ? 0 : data[i].currentInvolvement)) + " \n \n";
+                            } else {
+                                items.push({
+                                    EmployeeID: dirty[i].EmployeeID,
+                                    EmpName: dirty[i].EmpName,
+                                    IsManager: dirty[i].IsManager,
+                                    InvPercentage: dirty[i].InvPercentage,
+                                    StartDate: dirty[i].StartDate,
+                                    EndDate: dirty[i].EndDate,
+                                    RoleID: dirty[i].RoleID,
+                                    ProjectId: '@Model.ProjectID',
+                                    IsRDProject: '@Model.IsRDProject'
+                                });
+                            }
+                        }
+                        if (errMessage != '') {
+                            alert(errMessage);
+                        } else {
+                            $("#EmployeeProjectList").val(JSON.stringify(items));
+                            $("#submit-Search").click();
+                        }
 
-    function onMemberStartDateChange() {
-        validateMemberStartDate();
-
-            var datepicker = $("#memberEndDate").data("kendoDatePicker");
-
-            datepicker.min($('#memberStartDate').val());
+                    }
 
 
-
-            if ($("#memberStartDate").val() != '' && $("#memberEndDate").val() != '') {
-                if (Date.parse($("#memberEndDate").val()) < Date.parse($("#memberStartDate").val())) {
-
-                    datepicker.value($("#memberStartDate").val());
-                }
+                });
             }
+            else {
+                $("#EmployeeProjectList").val(JSON.stringify(items));
+                $("#submit-Search").click();
+            }
+        }
+        }
 
-   
-    }
+    function onMemberStartDateChange(e) {
+        let selectedDate = new Date($('#StartDate').val());
+        let errMessage = '';
+        grid = $("#projectMemberList").data("kendoGrid");
+        dataItem = grid.dataItem($("tr.k-grid-edit-row"));
+        let joinDate = new Date(dataItem.JoinDate);
 
+        if (joinDate > selectedDate) {
+            let dateFormatted = joinDate.getDate() + "-"
+                + monthNames[(joinDate.getMonth())] + "-"
+                + joinDate.getFullYear();
+            errMessage = errMessage + "\n\nEmployee " + dataItem.EmpName + " join date is " + dateFormatted + ", Please input member start date from " + dateFormatted + " onwards";
+            dataItem.set("StartDate", joinDate);
+           var datepicker = $("#StartDate").data("kendoDatePicker");
 
-    function GetProjectEndDate(dataItem) {
-        $('#EndDate').val($('#txtenddate').val());
-        //var datepicker = $("#memberEndDate").data("kendoDatePicker");
-        //if ($("#memberStartDate").val() != '' && $("#memberEndDate").val() != '') {
-        //    if (Date.parse($("#memberEndDate").val()) < Date.parse($("#memberStartDate").val())) {
+            datepicker.min(joinDate);
 
-        //        datepicker.value($("#memberStartDate").val());
-        //    }
-        //}
-    }
+        }
 
-    function onDeselect(e) {
-        //debugger;
-        var dataItem = e.dataItem;
-        selectedUsers = selectedUsers.filter(x => x.Id != dataItem.Id);
-        //employeeid = selectedUsers.map(x => x.Id).toString();
-        setMultiSelectValues(false);
-        if ($("#chk"+dataItem.Id).length == 1) {
-            $("#chk" + dataItem.Id).prop("checked", false);
+        if (errMessage != '') {
+            if (e != undefined && e != null) {
+                e.preventDefault();
+            }
+            alert(errMessage);
         }
     }
+
+
+    function GetProjectEndDate() {
+        const endDate = new Date($('#txtenddate').val());
+        $('#EndDate').val(endDate);
+        grid = $("#projectMemberList").data("kendoGrid");
+        dataItem = grid.dataItem($("tr.k-grid-edit-row"));
+        dataItem.set("EndDate", endDate);
+    }
+
     $(document).ready(function () {
 
         $("#txtsearch").val("");
 
         var mes = '@ViewBag.Message';
-        this.selectedUsers = [];
-        setMultiSelectValues();
         if (mes != "" && mes != null && mes != undefined) {
             pattern = "line";
             mes = mes.replace(new RegExp(pattern, "g"), '\n')
@@ -590,34 +556,22 @@
             GetEmployeeSearch();
         }
 
-        if ($("#ProjectMembersNames").val() != "" && $('#ProjectMembersNames').val() != null && $('#ProjectMembersNames').val() != undefined) {
-            var memberIds = $("#ProjectMembers").val().split(",");
-            var memberNames = $("#ProjectMembersNames").val().split(",");
-            selectedUsers = [];
-            if (memberIds.length ==  memberNames.length) {
-                for (var i = 0; i < memberIds.length; i++) {
-                    selectedUsers.push({ Id: memberIds[i], Name: memberNames[i] });
-                }
-                setMultiSelectValues();
-            }
-        }
 
         if ($("#IsRDProject").val() != "1") {
             $('#row1').hide();
             $('#row2').hide();
-            
+
         }
 
         $(".k-datepicker").find('span').find('input').attr("readonly", "readonly");
 
-        
+
         onGrantChange();
 
     });
 
 
     function selectRow() {
-        debugger;
         row = $(this).closest("tr");
         grid = $("#empsearch").data("kendoGrid");
         dataItem = grid.dataItem(row);
@@ -627,53 +581,56 @@
                 //this logic creates a new item in the datasource/datagrid
                 var dataSource = projectMemberGrid.dataSource;
                 if (dataSource._data.filter(x => x.EmployeeID == dataItem.EmployeeID).length == 0) {
-                    if ('@Model.IsRDProject' == 1) {
-                        dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: 'NO', InvPercentage: 0, EmpRole: dataItem.RoleID, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: dataItem.JoinDate });
+                    @*if ('@Model.IsRDProject' == 1) {
+                        dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: false, InvPercentage: 0, EmpRole: dataItem.RoleID, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: dataItem.JoinDate });
                     }
                     else {
-                        dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: 'NO', InvPercentage: 0, EmpRole: null, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: dataItem.JoinDate });
-                    }
+                        dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: false, InvPercentage: 0, EmpRole: null, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: dataItem.JoinDate });
+                    }*@
+                    dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: false, InvPercentage: 0, EmpRole: dataItem.RoleID, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: dataItem.JoinDate });
+
                    dataSource.page(dataSource.totalPages());
                     projectMemberGrid.editRow(projectMemberGrid.tbody.children().first());
                 }
-                
+
             }
             else {
                 let item = projectMemberGrid.dataSource._data.filter(x => x.EmployeeID == dataItem.EmployeeID)[0];
                 projectMemberGrid.dataSource.remove(item);
-                
+
             }
-            
+
         }
-        
+
     }
 
     function AddEmp() {
-        debugger;
         row = $(this).closest("tr");
         grid = $("#empsearch").data("kendoGrid");
         dataItem = grid.dataItem(row);
-        projectMemberGrid = $("#projectMemberList").data("kendoGrid"); 
+        projectMemberGrid = $("#projectMemberList").data("kendoGrid");
         if (projectMemberGrid) {
             //this logic creates a new item in the datasource/datagrid
             var dataSource = projectMemberGrid.dataSource;
             if (dataSource._data.filter(x => x.EmployeeID == dataItem.EmployeeID).length == 0) {
-                if ('@Model.IsRDProject' == 1) {
-                        dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: 'NO', InvPercentage: 0, EmpRole: dataItem.RoleID, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: dataItem.JoinDate });
+                @*if ('@Model.IsRDProject' == 1) {
+                        dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: false, InvPercentage: 0, EmpRole: dataItem.RoleID, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: dataItem.JoinDate });
                     }
                     else {
-                        dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: 'NO', InvPercentage: 0, EmpRole: null, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: dataItem.JoinDate });
+                        dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: false, InvPercentage: 0, EmpRole: null, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: dataItem.JoinDate });
+                }*@
+
+                dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: false, InvPercentage: 0, EmpRole: dataItem.RoleID, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: dataItem.JoinDate });
+
+
+                if ($("#chk" + dataItem.EmployeeID).length == 1) {
+                    $("#chk" + dataItem.EmployeeID).prop("checked", true);
                 }
 
                  dataSource.page(dataSource.totalPages());
                 projectMemberGrid.editRow(projectMemberGrid.tbody.children().first());
             }
         }
-        //if (selectedUsers.filter(x => x.Id == dataItem.EmployeeID).length == 0) {
-        //    selectedUsers.push({ Id: dataItem.EmployeeID, Name: dataItem.EmpName, JoinDate: dataItem.JoinDate, LeavingDate: dataItem.LeavingDate });
-        //    setMultiSelectValues();
-        //    $("#chk" + dataItem.EmployeeID).prop('checked', true);
-        //}
 
     }
 
@@ -681,10 +638,16 @@
         e.preventDefault();
 
         var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-        
+
         grid = $("#projectMemberList").data("kendoGrid");
-        
+
         grid.dataSource.remove(dataItem);
+
+        if ($("#chk" + dataItem.EmployeeID).length == 1) {
+            $("#chk" + dataItem.EmployeeID).prop("checked", false);
+        }
+
+
     }
 
     function GetEmpText() {
@@ -698,7 +661,7 @@
         var items = grid.dataSource.view();
 
         projectMemberGrid = $("#projectMemberList").data("kendoGrid");
-       
+
         if (!headerCheckBox.checked) {
             for (var i = 0; i < items.length; i++) {
                 var dataSource = projectMemberGrid.dataSource;
@@ -708,29 +671,32 @@
                         projectMemberGrid.dataSource.remove(dataItem);
                     }
                 }
-                
+
             }
         }
         else {
-            
+
             for (var i = 0; i < items.length; i++) {
                 var dataSource = projectMemberGrid.dataSource;
                 dataItem = items[i];
-                
-                
+
+
                 if (dataSource._data.filter(x => x.EmployeeID == dataItem.EmployeeID).length == 0) {
-                    if ('@Model.IsRDProject' == 1) {
-                        dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: 'NO', InvPercentage: 0, EmpRole: dataItem.RoleID, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: dataItem.JoinDate });
+                    @*if ('@Model.IsRDProject' == 1) {
+                        dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: false, InvPercentage: 0, EmpRole: dataItem.RoleID, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: dataItem.JoinDate });
                     }
                     else {
-                        dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: 'NO', InvPercentage: 0, EmpRole: null, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: dataItem.JoinDate });
-                    }
+                        dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: false, InvPercentage: 0, EmpRole: null, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: dataItem.JoinDate });
+                    }*@
+
+                    dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: false, InvPercentage: 0, EmpRole: dataItem.RoleID, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: dataItem.JoinDate });
+
                     dataSource.page(dataSource.totalPages());
                 }
 
 
             }
-           
+
         }
 
 
@@ -744,83 +710,12 @@
         function GetEmployeeSearch() {
 
         $('#emplist').show();
-            $('#prjctdetails').show();
             $("#empsearch").data().kendoGrid.dataSource.read();
             $("#empsearch").css("display", "block");
             $("#headerCheckBox").prop('checked', false);
             $("#empsearch").data().kendoGrid.table.on("click", ".checkbox", selectRow);
             $("#empsearch").data().kendoGrid.table.on("click", ".label", AddEmp);
-
-        }
-    var employeeid = new Array();
-    var selectedUsers = [];
-
-        function SetEmpName(value) {
-
-            var temp = new Array();
-            temp = value.split(",");
-            if (employeeid!='')
-            {
-                employeeid = employeeid + ',' + temp[1];
-            }
-            else {
-                employeeid = temp[1];
-            }
-
-            selectedUsers.push({ Id: temp[1], Name: temp[0] });
-
-            setMultiSelectValues();
-
-
     }
-
-    function setMultiSelectValues(change = true) {
-
-
-        if (change) {
-            var dataSource = new kendo.data.DataSource({
-                data: this.selectedUsers
-            });
-            //var multiselect = $("#selectedEmps").data("kendoMultiSelect");
-            //multiselect.setDataSource(dataSource);
-            //multiselect.value(this.selectedUsers);
-        }
-
-
-        $("#ProjectMembers").val(this.selectedUsers.map(x => x.Id).toString());
-        $("#ProjectMembersNames").val(this.selectedUsers.map(x => x.Name).toString());
-        if (this.selectedUsers.length > 0) {
-            $('#InvPercentage').attr('required', 'required');
-            $('#memberStartDate').attr('required', 'required');
-            $('#memberEndDate').attr('required', 'required');
-        }
-        else {
-            $('#InvPercentage').removeAttr('required');
-            $('#memberStartDate').removeAttr('required');
-            $('#memberEndDate').removeAttr('required');
-
-        }
-
-    }
-
-    function GetTestvalues() {
-
-
-    }
-
-        function UpdateProject() {
-            debugger;
-            var data = JSON.stringify(model);
-         $.ajax({
-            type: "POST",
-             data: data,
-            url: '@Url.Action("UpdateProject", "ProjectMaster")',
-           success: function (data) {
-
-            }
-        });
-    }
-
 
 
 </script>
