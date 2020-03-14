@@ -23,7 +23,7 @@
 
                                                                                                        columns.Bound(p => p.ItemNo).Filterable(false).Width(50);
                                                                                                        columns.Bound(p => p.ProjectCode).Filterable(true);
-                                                                                                       columns.Bound(p => p.ProjectName).Filterable(true).ClientTemplate("<a class='label label-primary'   href='" + Url.Action("ProjectEdit", "ProjectMaster") + "/#= ProjectID#'>#=ProjectName#</a>")
+                                                                                                       columns.Bound(p => p.ProjectName).Width(400).Filterable(true).ClientTemplate("<a class='label label-primary'   href='" + Url.Action("ProjectEdit", "ProjectMaster") + "/#= ProjectID#'>#=ProjectName#</a>")
                                                                                                         .HtmlAttributes(new { @style = "color:blue" });
                                                                                                        columns.Bound(p => p.StartDate).Filterable(false).Format("{0:dd MMM yyyy}");
                                                                                                        columns.Bound(p => p.EndDate).Filterable(false).Format("{0:dd MMM yyyy}");
@@ -116,75 +116,10 @@
         if (mes != "" && mes != null && mes != undefined) {
             alert(mes);
         }
-
-        //$('#promaster-logo').attr('src', '../../Contents/assets/Login/images/pro.png');
         $('#promaster').css('color', 'black');
-
-        //$('#admin-logo').attr('src', '../../Contents/assets/Images/utility.png');
         $('#admin').css('color', 'black');
-     @*$("#timesheetListNOB").DataTable({
-                             "ajax": {
-                                 "url": '@Url.Action("Read")',
-                    "type": "POST",
-                    "datatype": "json"
-                                 },
-                "columnDefs":
-                    [{
-                        "targets": [0],
-                        "visible": false,
-                        "searchable": false
-
-                    },
-                        {
-                            "targets": [4, 5],
-                            "width": "125px"
-                        }
-                    ],
-
-                "columns": [
-
-                    { "data": "ProjectID", "name": "ProjectID", "autoWidth": true },
-                    { "data": "ItemNo", "name": "ItemNo", "autoWidth": true },
-                    { "data": "ProjectCode", "name": "ProjectCode", "autoWidth": true },
-                    //{ "data": "ProjectName", "name": "ProjectName", "autoWidth": true },
-                    {
-
-                        "data": "ProjectName",
-
-                        "render": function (data, type, row, meta) {
-
-
-
-                 return '<a class="label label-primary" style="color:#118467;" href="javascript:void(0);" onclick="GetProjectEdit(' + row.ProjectID + ');">' + data + '</a>';
-
-             }
-                    },
-                    { "data": "StartDate", "name": "StartDate", "autoWidth": true },
-                    { "data": "EndDate", "name": "EndDate", "autoWidth": true },
-                    { "data": "ProjectGrant", "name": "ProjectGrant", "autoWidth": true },
-                    { "data": "ResearchArea", "name": "ResearchArea", "autoWidth": true },
-                    { "data": "TypeofResearch", "name": "TypeofResearch", "autoWidth": true },
-                    { "data": "InternalOrder", "name": "InternalOrder", "autoWidth": true },
-                    { "data": "CostCentre", "name": "CostCentre", "autoWidth": true },
-                    //{ "data": "ProjectDesc", "name": "ProjectDesc", "autoWidth": true },
-
-
-                ],
-                "searching": false,
-                "lengthChange": false
-            });*@
+    
         });
-
-    function GetProjectEdit(projectid) {
-        $.ajax({
-            type: "POST",
-            data: { projectid: projectid },
-            url: '@Url.Action("GetRedirect", "ProjectMaster")',
-            success: function (data) {
-                window.location.href = '@Url.Action("ProjectEdit", "ProjectMaster")';
-            }
-        });
-        }
 
 </script>
 

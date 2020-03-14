@@ -33,3 +33,12 @@ C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet_UT
 C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\obj\Release\SCTimeSheet_UTIL.csproj.CoreCompileInputs.cache
 C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\obj\Release\SCTimeSheet_UTIL.dll
 C:\Users\blr.user3\SEMBCORP\SEMBCORP-2019-10-21\SEMBCORP\SEMBCORP\SCTimeSheet_UTIL\obj\Release\SCTimeSheet_UTIL.pdb
+C:\Users\A217168\Source\Repos\RTS\SCTimeSheet_UTIL\bin\Release\SCTimeSheet_UTIL.dll
+C:\Users\A217168\Source\Repos\RTS\SCTimeSheet_UTIL\bin\Release\SCTimeSheet_UTIL.pdb
+C:\Users\A217168\Source\Repos\RTS\SCTimeSheet_UTIL\obj\Release\SCTimeSheet_UTIL.csprojAssemblyReference.cache
+C:\Users\A217168\Source\Repos\RTS\SCTimeSheet_UTIL\obj\Release\SCTimeSheet_UTIL.Resource.ResourceDisplay.resources
+C:\Users\A217168\Source\Repos\RTS\SCTimeSheet_UTIL\obj\Release\SCTimeSheet_UTIL.Resource.ResourceMessage.resources
+C:\Users\A217168\Source\Repos\RTS\SCTimeSheet_UTIL\obj\Release\SCTimeSheet_UTIL.csproj.GenerateResource.cache
+C:\Users\A217168\Source\Repos\RTS\SCTimeSheet_UTIL\obj\Release\SCTimeSheet_UTIL.csproj.CoreCompileInputs.cache
+C:\Users\A217168\Source\Repos\RTS\SCTimeSheet_UTIL\obj\Release\SCTimeSheet_UTIL.dll
+C:\Users\A217168\Source\Repos\RTS\SCTimeSheet_UTIL\obj\Release\SCTimeSheet_UTIL.pdb

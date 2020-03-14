@@ -3,7 +3,7 @@
                 .Value("#=StartDate#")
                 .Events(e =>
                 {
-                    e.Change("onMemberStartDateChange");
+                    e.Change("onMemberStartDateChange").Open("onMemberStartDateOpen").Close("onMemberStartDateClose");
                 })
                 .HtmlAttributes(new { style = "width: 60%", title = "Select Start Date", @required = "required" })
                .Format("dd MMM yyyy")

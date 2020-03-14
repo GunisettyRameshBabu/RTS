@@ -103,7 +103,14 @@ namespace SCTimeSheet.Controllers
                         {
                             if (Models.Common.CheckDateRange(item.StartDate, Convert.ToDateTime(month1), lastDate3))
                             {
-                                if (!Models.Common.CheckIfNotMonthDateDate(Convert.ToDateTime(month1), Convert.ToDateTime(month2), Convert.ToDateTime(month3), item.StartDate) || !Models.Common.CheckIfNotMonthDateDate(lastDate1, lastDate2, lastDate3, item.EndDate))
+                                if (!Models.Common.CheckIfNotMonthDateDate(Convert.ToDateTime(month1), Convert.ToDateTime(month2), Convert.ToDateTime(month3), item.StartDate) || (item.EndDate <= lastDate3 && !Models.Common.CheckIfNotMonthDateDate(lastDate1, lastDate2, lastDate3, item.EndDate)))
+                                {
+                                    item.ShowWarning = true;
+                                }
+                            }
+                            else if (Models.Common.CheckDateRange(item.EndDate, Convert.ToDateTime(month1), lastDate3))
+                            {
+                                if (!Models.Common.CheckIfNotMonthDateDate(Convert.ToDateTime(month1), Convert.ToDateTime(month2), Convert.ToDateTime(month3), item.StartDate) || (item.EndDate <= lastDate3 && !Models.Common.CheckIfNotMonthDateDate(lastDate1, lastDate2, lastDate3, item.EndDate)))
                                 {
                                     item.ShowWarning = true;
                                 }
@@ -128,8 +135,6 @@ namespace SCTimeSheet.Controllers
         [HttpPost]
         public ActionResult GetEmpList([DataSourceRequest]DataSourceRequest request, NewEntryByProjectSelection MODEL, int empId, string quarter = null)
         {
-            //ViewBag.EmployeeList = DropdownList.EmployeeListViaRole((long)Session[Constants.SessionEmpID], (long)(Session[Constants.SessionRoleID]));
-            //ViewBag.ProjectList = DropdownList.ProjectList((long)Session[Constants.SessionEmpID], (long)(Session[Constants.SessionRoleID]));
             ViewBag.Quadrent = GetQuardrent();
             quarter = quarter ?? GetQuardrent();
             try
@@ -178,7 +183,14 @@ namespace SCTimeSheet.Controllers
                         {
                             if (Models.Common.CheckDateRange(item.StartDate, Convert.ToDateTime(month1), lastDate3))
                             {
-                                if (!Models.Common.CheckIfNotMonthDateDate(Convert.ToDateTime(month1), Convert.ToDateTime(month2), Convert.ToDateTime(month3), item.StartDate) || !Models.Common.CheckIfNotMonthDateDate(lastDate1, lastDate2, lastDate3, item.EndDate))
+                                if (!Models.Common.CheckIfNotMonthDateDate(Convert.ToDateTime(month1), Convert.ToDateTime(month2), Convert.ToDateTime(month3), item.StartDate) || ( item.EndDate <= lastDate3 && !Models.Common.CheckIfNotMonthDateDate(lastDate1, lastDate2, lastDate3, item.EndDate)))
+                                {
+                                    item.ShowWarning = true;
+                                }
+                            }
+                            else if(Models.Common.CheckDateRange(item.EndDate, Convert.ToDateTime(month1), lastDate3))
+                            {
+                                if (!Models.Common.CheckIfNotMonthDateDate(Convert.ToDateTime(month1), Convert.ToDateTime(month2), Convert.ToDateTime(month3), item.StartDate) || (item.EndDate <= lastDate3 && !Models.Common.CheckIfNotMonthDateDate(lastDate1, lastDate2, lastDate3, item.EndDate)))
                                 {
                                     item.ShowWarning = true;
                                 }

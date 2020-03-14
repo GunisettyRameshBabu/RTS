@@ -58,8 +58,6 @@
         public const string P_GetEmpTimesheet_Approve_Test = "P_GetEmpTimesheet_Approve_Test";
         public const string P_GetManager_ProjectList = "P_GetManager_ProjectList";
         public const string P_GetEmp_Project_Details = "P_GetEmp_Project_Details";
-        public const string P_GetEmp_Project_Details_Edit = "P_GetEmp_Project_Details_Edit";
-        public const string P_UpdateEmployeeList = "P_UpdateEmployeeList";
         public const string P_GetEmployeeSearch = "P_GetEmployeeSearch";
         public const string P_InsertProjectEmployee = "P_InsertProjectEmployee";
         public const string P_GetProjectDate = "P_GetProjectDate";

@@ -143,7 +143,7 @@
                                                                                                                                                                                                    .Name("EndDate")
                                                                                                                                                    .Events(e =>
                                                                                                                                                    {
-                                                                                                                                                       e.Change("onStartDateChange");
+                                                                                                                                                       e.Change("onStartDateChange").Open("onStartDateChange");
                                                                                                                                                    })
                                                                                                                                                                                                    .Format("dd MMM yyyy")
                                                                                                                                                                                                    .HtmlAttributes(new { required = "Required", @id = "txtenddate", style = "width: 50%; border-radius: 9px;display: inline-block;" })
@@ -237,9 +237,8 @@
                                                                                                                                                                                                 columns.Bound(p => p.InvPercentage).Width(100);
                                                                                                                                                                                                 columns.Bound(p => p.StartDate).Format("{0:dd MMM yyyy}").Width(150);
                                                                                                                                                                                                 columns.Bound(p => p.EndDate).Format("{0:dd MMM yyyy}").Width(150);
-                                                                                                                                                                                                columns.ForeignKey(p => p.EmpRole, (System.Collections.IEnumerable)ViewData["RoleList"], "RoleID", "RoleName").Width(150).Hidden(Model.IsRDProject != 1);
-                                                                                                                                                                                                columns.Template(p => "").Title("Roles").Width(150).Hidden(Model.IsRDProject == 1).ClientTemplate("");
-
+                                                                                                                                                                                               columns.ForeignKey(p => p.EmpRole, (System.Collections.IEnumerable)ViewData["RoleList"], "RoleID", "RoleName").Width(150).Hidden(Model.IsRDProject != 1).Editable("empRoleEditable");
+                                                                                                                                                                                     columns.Template(p => "EmpRoleReadOnly").Width(150).Hidden(Model.IsRDProject == 1).ClientTemplate("").Title("Roles");
                                                                                                                                                                                                     columns.Command(command =>
                                                                                                                                                                                                 {
                                                                                                                                                                                                      command.Custom("Delete").Visible("deleteVisible").Click("deleteEmp");
@@ -255,7 +254,6 @@
                                                                                                   .Model(x =>
                                                                                                   {
                                                                                                       x.Field(y => y.EmpName).Editable(false);
-                                                                                                      x.Field(y => y.EmpRole).Editable(false);
                                                                                                   }
                                                                                                   )
                                                                                                       .Batch(true)
@@ -291,7 +289,7 @@
 
 
     function empRoleEditable(dataItem) {
-        return '@Model.IsRDProject' == 1;
+        return !dataItem.IsNew;
     }
     function deleteVisible(dataItem) {
         // hide the Edit button for the item with ProductID=1
@@ -344,25 +342,9 @@
     }
     function onStartDateChange() {
         var datepicker = $("#txtenddate").data("kendoDatePicker");
-
         datepicker.min($("#txtstartdate").val());
-
-        var datepicker1 = $("#memberStartDate").data("kendoDatePicker");
-
-        datepicker1.min($('#txtstartdate').val());
-        var datepicker2 = $("#memberEndDate").data("kendoDatePicker");
-
-        datepicker2.min($("#txtstartdate").val());
-
-
-        if ($("#txtenddate").val() != '') {
-
-            datepicker2.max($('#txtenddate').val());
-            datepicker1.max($('#txtenddate').val());
-        }
         if ($("#txtstartdate").val() != '' && $("#txtenddate").val() != '') {
-            if (Date.parse($("#txtenddate").val()) < Date.parse($("#txtstartdate").val())) {
-
+            if (new Date($("#txtenddate").val()) < new Date($("#txtstartdate").val())) {
                 datepicker.value($("#txtstartdate").val());
             }
         }
@@ -397,24 +379,31 @@
             }
         }
     }
+
     function GetSelectedItem() {
+
         var value = $("#Rbtest:checked").val();
+        var grid = $("#projectMemberList").data("kendoGrid");
         if (value == 2) {
             $('#row1').hide();
             $('#row2').hide();
-         
+            $('#research').prop('required', false);
+            $('#type').prop('required', false);
+            grid.hideColumn("EmpRole");
+            grid.showColumn(6);
         }
         else {
             $('#row1').show();
             $('#row2').show();
             $('#research').attr('required', 'required');
             $('#type').attr('required', 'required');
-           
+            grid.showColumn("EmpRole");
+            grid.hideColumn(6);
         }
-
-       
+        $("table", grid.element).css("width", "100%");
 
     }
+
 
     function GetProjectStartDate() {
         const startDate = new Date($('#txtstartdate').val());
@@ -426,14 +415,32 @@
     }
 
     function validateMemberStartDate(submit = false) {
-
+        let errMessage = '';
+        if ($("#txtstartdate").val() == '') {
+            errMessage = "Please select project start date";
+        }
+        else if ($("#txtenddate").val() == '') {
+            errMessage = "Please select project end date";
+        }
+        if (errMessage != '') {
+            alert(errMessage);
+            return false;
+        }
+        let projectStartDate = new Date($("#txtstartdate").val());
+        let projectEndDate = new Date($("#txtenddate").val());
+        if (projectEndDate < projectStartDate) {
+            errMessage = "Project End Date can not be earlier than the start date";
+        }
+        if (errMessage != '') {
+            alert(errMessage);
+            return false;
+        }
         projectMemberGrid = $("#projectMemberList").data("kendoGrid");
         var data = projectMemberGrid.dataSource.data();
         var dirty = $.grep(data, function (item) {
             return item.dirty || item.IsNew;
         });
-        console.log(dirty);
-        let errMessage = '';
+        
         for (var i = 0; i < dirty.length; i++) {
             let selectedDate = new Date(dirty[i].StartDate);
             let joinDate = new Date(dirty[i].JoinDate);
@@ -496,7 +503,61 @@
                 $("#submit-Search").click();
             }
         }
+    }
+
+    function onMemberEndDateOpen(e) {
+        grid = $("#projectMemberList").data("kendoGrid");
+        dataItem = grid.dataItem($("tr.k-grid-edit-row"));
+        let selectedDate = new Date(dataItem.StartDate);
+        var datepicker = $("#EndDate").data("kendoDatePicker");
+        datepicker.min(selectedDate);
+
+        if ($('#txtenddate').val() != '') {
+            datepicker.max(new Date($('#txtenddate').val()));
         }
+    }
+
+    function onMemberEndDateClose(e) {
+        grid = $("#projectMemberList").data("kendoGrid");
+        dataItem = grid.dataItem($("tr.k-grid-edit-row"));
+        let startDate = new Date(dataItem.StartDate);
+        let endDate = new Date(dataItem.EndDate);
+
+        if (endDate < startDate) {
+            dataItem.set("StartDate", startDate);
+        }
+    }
+
+    function onMemberStartDateOpen(e) {
+        debugger;
+        grid = $("#projectMemberList").data("kendoGrid");
+        dataItem = grid.dataItem($("tr.k-grid-edit-row"));
+        let joinDate = new Date(dataItem.JoinDate);
+        let selectedDate = new Date(dataItem.StartDate);
+        var datepicker = $("#StartDate").data("kendoDatePicker");
+        if (joinDate >= selectedDate) {
+            datepicker.min(joinDate);
+        } else {
+            if ($("#txtstartdate").val() != '') {
+                datepicker.min(new Date($('#txtstartdate').val()));
+            }
+        }
+
+        if ($('#txtenddate').val() != '') {
+            datepicker.max(new Date($('#txtenddate').val()));
+        }
+    }
+
+    function onMemberStartDateClose(e) {
+        grid = $("#projectMemberList").data("kendoGrid");
+        dataItem = grid.dataItem($("tr.k-grid-edit-row"));
+        let startDate = new Date(dataItem.StartDate);
+        let endDate = new Date(dataItem.EndDate);
+
+        if (endDate < startDate) {
+            dataItem.set("EndDate", endDate);
+        }
+    }
 
     function onMemberStartDateChange(e) {
         let selectedDate = new Date($('#StartDate').val());
@@ -581,27 +642,18 @@
                 //this logic creates a new item in the datasource/datagrid
                 var dataSource = projectMemberGrid.dataSource;
                 if (dataSource._data.filter(x => x.EmployeeID == dataItem.EmployeeID).length == 0) {
-                    @*if ('@Model.IsRDProject' == 1) {
-                        dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: false, InvPercentage: 0, EmpRole: dataItem.RoleID, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: dataItem.JoinDate });
-                    }
-                    else {
-                        dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: false, InvPercentage: 0, EmpRole: null, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: dataItem.JoinDate });
-                    }*@
-                    dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: false, InvPercentage: 0, EmpRole: dataItem.RoleID, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: dataItem.JoinDate });
-
-                   dataSource.page(dataSource.totalPages());
+                    let projectStartDate = new Date($('#txtstartdate').val());
+                    let joinDate = new Date(dataItem.JoinDate);
+                    dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: false, InvPercentage: 0, EmpRole: dataItem.RoleID, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: projectStartDate > joinDate ? projectStartDate : dataItem.JoinDate });
+                    dataSource.page(dataSource.totalPages());
                     projectMemberGrid.editRow(projectMemberGrid.tbody.children().first());
                 }
-
             }
             else {
                 let item = projectMemberGrid.dataSource._data.filter(x => x.EmployeeID == dataItem.EmployeeID)[0];
                 projectMemberGrid.dataSource.remove(item);
-
             }
-
         }
-
     }
 
     function AddEmp() {
@@ -613,20 +665,12 @@
             //this logic creates a new item in the datasource/datagrid
             var dataSource = projectMemberGrid.dataSource;
             if (dataSource._data.filter(x => x.EmployeeID == dataItem.EmployeeID).length == 0) {
-                @*if ('@Model.IsRDProject' == 1) {
-                        dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: false, InvPercentage: 0, EmpRole: dataItem.RoleID, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: dataItem.JoinDate });
-                    }
-                    else {
-                        dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: false, InvPercentage: 0, EmpRole: null, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: dataItem.JoinDate });
-                }*@
-
-                dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: false, InvPercentage: 0, EmpRole: dataItem.RoleID, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: dataItem.JoinDate });
-
-
+                let projectStartDate = new Date($('#txtstartdate').val());
+                let joinDate = new Date(dataItem.JoinDate);
+                dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: false, InvPercentage: 0, EmpRole: dataItem.RoleID, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: projectStartDate > joinDate ? projectStartDate : dataItem.JoinDate });
                 if ($("#chk" + dataItem.EmployeeID).length == 1) {
                     $("#chk" + dataItem.EmployeeID).prop("checked", true);
                 }
-
                  dataSource.page(dataSource.totalPages());
                 projectMemberGrid.editRow(projectMemberGrid.tbody.children().first());
             }
@@ -671,7 +715,6 @@
                         projectMemberGrid.dataSource.remove(dataItem);
                     }
                 }
-
             }
         }
         else {
@@ -679,27 +722,14 @@
             for (var i = 0; i < items.length; i++) {
                 var dataSource = projectMemberGrid.dataSource;
                 dataItem = items[i];
-
-
                 if (dataSource._data.filter(x => x.EmployeeID == dataItem.EmployeeID).length == 0) {
-                    @*if ('@Model.IsRDProject' == 1) {
-                        dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: false, InvPercentage: 0, EmpRole: dataItem.RoleID, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: dataItem.JoinDate });
-                    }
-                    else {
-                        dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: false, InvPercentage: 0, EmpRole: null, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: dataItem.JoinDate });
-                    }*@
-
-                    dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: false, InvPercentage: 0, EmpRole: dataItem.RoleID, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: dataItem.JoinDate });
-
+                    let projectStartDate = new Date($('#txtstartdate').val());
+                    let joinDate = new Date(dataItem.JoinDate);
+                    dataSource.insert(0, { EmpName: dataItem.EmpName, EmployeeID: dataItem.EmployeeID, IsManager: false, InvPercentage: 0, EmpRole: dataItem.RoleID, IsNew: true, JoinDate: dataItem.JoinDate, StartDate: projectStartDate > joinDate ? projectStartDate : dataItem.JoinDate });
                     dataSource.page(dataSource.totalPages());
                 }
-
-
             }
-
         }
-
-
         $(".checkbox").each(function () {
             this.checked = headerCheckBox.checked;
         })

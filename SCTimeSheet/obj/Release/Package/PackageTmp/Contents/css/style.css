@@ -64,3 +64,7 @@ body
 .k-header .k-link {
     text-align: center;
 }
+
+.gutter-top {
+    padding-top: 10px;
+}

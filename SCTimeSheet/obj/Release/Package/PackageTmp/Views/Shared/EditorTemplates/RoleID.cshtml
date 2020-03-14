@@ -5,6 +5,7 @@
                       .OptionLabel("Select Role...")
                         .DataTextField("RoleName")
                       .DataValueField("RoleID")
+                      .Value("#=RoleID#")
                       .DataSource(dataSource =>
                       {
                           dataSource.Read(read => read.Action("GetRoles", "Users"));

@@ -142,7 +142,7 @@ namespace SCTimeSheet.Controllers
                  new object[] {
                         new SqlParameter("@ProjectId",   model.ProjectID),
                         new SqlParameter("@EmployeeID", item.EmployeeID),
-                       new SqlParameter("@CheckRole",   item.CheckRole),
+                       new SqlParameter("@CheckRole",   item.IsManager),
                         new SqlParameter("@InvPercentage",  item.InvPercentage),
                         new SqlParameter("@RefRole",  model.IsRDProject == 1 ? (refRole.RoleID ?? 0) : 0),
                         new SqlParameter("@StartDate",   item.StartDate),
@@ -315,7 +315,7 @@ namespace SCTimeSheet.Controllers
                new object[] {
                         new SqlParameter("@ProjectId",   EPL.ProjectID),
                         new SqlParameter("@EmployeeID", item.EmployeeID),
-                       new SqlParameter("@CheckRole",   item.CheckRole),
+                       new SqlParameter("@CheckRole",   item.IsManager),
                         new SqlParameter("@InvPercentage",item.InvPercentage),
                         new SqlParameter("@RefRole",EPL.IsRDProject == 1 ? (refRole.RoleID ?? 0) : 0),
                         new SqlParameter("@StartDate",  item.StartDate),
@@ -365,7 +365,8 @@ namespace SCTimeSheet.Controllers
                         emp.InvPercentage = item.InvPercentage;
                         emp.StartDate = item.StartDate;
                         emp.EndDate = item.EndDate;
-                        emp.CheckRole = item.CheckRole;
+                        emp.CheckRole = item.IsManager;
+                        emp.RefRole = item.EmpRole;
                         DB.Entry(emp).State = System.Data.Entity.EntityState.Modified;
                         DB.SaveChanges();
                     }

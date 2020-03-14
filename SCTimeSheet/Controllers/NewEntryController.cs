@@ -398,7 +398,14 @@ namespace SCTimeSheet.Controllers
                 {
                     if (Models.Common.CheckDateRange(item.StartDate.Value, Convert.ToDateTime(month1), lastDate3))
                     {
-                        if (!Models.Common.CheckIfNotMonthDateDate(Convert.ToDateTime(month1), Convert.ToDateTime(month2), Convert.ToDateTime(month3), item.StartDate.Value) || !Models.Common.CheckIfNotMonthDateDate(lastDate1, lastDate2, lastDate3, item.EndDate.Value))
+                        if (!Models.Common.CheckIfNotMonthDateDate(Convert.ToDateTime(month1), Convert.ToDateTime(month2), Convert.ToDateTime(month3), item.StartDate.Value) || (item.EndDate <= lastDate3 && !Models.Common.CheckIfNotMonthDateDate(lastDate1, lastDate2, lastDate3, item.EndDate.Value)))
+                        {
+                            model.ShowWarning = true;
+                        }
+                    }
+                    else if (Models.Common.CheckDateRange(item.EndDate.Value, Convert.ToDateTime(month1), lastDate3))
+                    {
+                        if (!Models.Common.CheckIfNotMonthDateDate(Convert.ToDateTime(month1), Convert.ToDateTime(month2), Convert.ToDateTime(month3), item.StartDate.Value) || (item.EndDate <= lastDate3 && !Models.Common.CheckIfNotMonthDateDate(lastDate1, lastDate2, lastDate3, item.EndDate.Value)))
                         {
                             model.ShowWarning = true;
                         }

@@ -35,32 +35,40 @@
     p {
         color: black !important;
     }
-        p.redColor {
+        span.redColor {
             color: red !important;
             font-weight:bold !important;
             font-size: 20px !important;
         }
+
+    .k-dialog .k-content {
+        padding-top: 5px !important;
+    }
+
+   .guttertop {
+       padding-top : 10px !important;
+   }
 </style>
 
 @(Html.Kendo().Dialog()
             .Name("dialog")
             .Title("Warning")
             .Visible(false)
-            .Content("<p class='redColor'>Warning: One or more member start date does not start on first of the month or member end date does not end on the last day of the month.<p>" +
-            "<p>Please ensure to enter actual working days between member start date to member end date (exclude public holidays, all leave types, non-working days). </p> <p>Example: </p><p>TS Entry January 2020</p>" +
-"<p>Public Holiday: 1, 24, 27 Jan 2020</p> <p> Leaves: 28 Jan 2020 </p>"+
-"<table class='table table-bordered'><tr><th>Member Start Date</th><th>Member End Date</th><th>No of working days from member start date and member end date</th><th>Maximum Working Days in TS Entry</th></tr>" +
+            .Content("<span class='redColor'>Warning: One or more member start date does not start on first of the month or member end date does not end on the last day of the month.</span>" +
+            "<br/><br/><span>Please ensure to enter actual working days between member start date to member end date (exclude public holidays, all leave types, non-working days). </span> <br/><br/><span>Example: </span><br/><br/><span class='guttertop'>TS Entry January 2020</span>" +
+"<br/><br/><span class='guttertop'>Public Holiday: 1, 24, 27 Jan 2020</span><br/><br/> <span class='guttertop'> Leaves: 28 Jan 2020 </span>" +
+"<br/><br/><table class='table table-bordered'><tr><th>Member Start Date</th><th>Member End Date</th><th>No of working days from member start date and member end date</th><th>Maximum Working Days in TS Entry</th></tr>" +
 "<tr><td>3 Jan 2020</td><td>31 Mar 2020</td><td>21</td><td>=21-3<br/>=18</td></tr>" +
 "<tr><td>3 Jan 2020</td><td>31 Mar 2020</td><td>21</td><td>=21-3<br/>=18</td></tr>" +
 "<tr><td>3 Jan 2020</td><td>20 Jan 2020</td><td>12</td><td>=12-0<br/>=12</td></tr>" +
 "<tr><td>3 Jan 2020</td><td>20 Jan 2020</td><td>12</td><td>=12-0<br/>=12</td></tr>" +
 "</table>")
             .Modal(true)
-            
+
             .Actions(actions =>
             {
-                actions.Add().Text("OK").Primary(true);
-            })
+        actions.Add().Text("OK").Primary(true);
+    })
 )
 
 @using (Html.BeginForm())

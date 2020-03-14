@@ -51,4 +51,3 @@ C:\Users\A217168\source\repos\RTS\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.Re
 C:\Users\A217168\source\repos\RTS\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.csproj.GenerateResource.cache
 C:\Users\A217168\source\repos\RTS\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.dll
 C:\Users\A217168\source\repos\RTS\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.pdb
-C:\Users\A217168\Source\Repos\RTS\SCTimeSheet_UTIL\obj\Debug\SCTimeSheet_UTIL.csproj.CoreCompileInputs.cache

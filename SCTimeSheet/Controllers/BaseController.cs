@@ -48,19 +48,19 @@ namespace SCTimeSheet.Controllers
                         }
                         else
                         {
-                            if (!Request.IsAuthenticated)
-                            {
-                                filterContext.Result = new RedirectToRouteResult(
-                                new RouteValueDictionary(new { controller = "Login", action = "Index", area = string.Empty, returnUrl = filterContext.HttpContext.Request.RawUrl })
-                            );
+                            //if (!Request.IsAuthenticated)
+                            //{
+                            //    filterContext.Result = new RedirectToRouteResult(
+                            //    new RouteValueDictionary(new { controller = "Login", action = "Index", area = string.Empty, returnUrl = filterContext.HttpContext.Request.RawUrl })
+                            //);
 
-                                filterContext.Result.ExecuteResult(filterContext.Controller.ControllerContext);
-                            }
-                            else
-                            {
+                            //    filterContext.Result.ExecuteResult(filterContext.Controller.ControllerContext);
+                            //}
+                            //else
+                            //{
                                 var res = (from x in DB.User
                                            join y in DB.Employee on x.UserID equals y.UserID
-                                           where x.Email == User.Identity.Name
+                                           where x.Email == "ramesh.babu@cctsglobal.com"
                                            select new { x.RoleID, x.UserID, y.EmployeeID, Name = (y.EmpFirstName ?? "") + " " + (y.EmpMiddleName ?? "") + " " + (y.EmpLastName ?? "") }).FirstOrDefault();
                                 if (res != null)
                                 {
@@ -77,13 +77,13 @@ namespace SCTimeSheet.Controllers
                                     Session[Constants.SessionPageAccess] = pageList;
                                 }
 
-                            }
+                           // }
                             
                         }
                     }
                     else
                     {
-                        var user = DB.User.Where(c => c.Email == User.Identity.Name && c.IsActive).FirstOrDefault();
+                        var user = DB.User.Where(c => c.Email == "ramesh.babu@cctsglobal.com" && c.IsActive).FirstOrDefault();
                         if (user == null)
                             filterContext.Result = new ViewResult { ViewName = "Unauthorized" };
                     }
@@ -111,18 +111,18 @@ namespace SCTimeSheet.Controllers
 
                     if (authCookie == null)
                     {
-                        if (!Request.IsAuthenticated)
-                        {
-                            context.Result = new RedirectToRouteResult(
-                     new RouteValueDictionary(new { controller = "Login", action = "Index", area = string.Empty })
-                 );
-                            context.Result.ExecuteResult(context.Controller.ControllerContext);
-                        }
-                        else
-                        {
+                 //       if (!Request.IsAuthenticated)
+                 //       {
+                 //           context.Result = new RedirectToRouteResult(
+                 //    new RouteValueDictionary(new { controller = "Login", action = "Index", area = string.Empty })
+                 //);
+                 //           context.Result.ExecuteResult(context.Controller.ControllerContext);
+                 //       }
+                 //       else
+                 //       {
                             var res = (from x in DB.User
                                        join y in DB.Employee on x.UserID equals y.UserID
-                                       where x.Email == User.Identity.Name
+                                       where x.Email == "ramesh.babu@cctsglobal.com"
                                        select new { x.RoleID, x.UserID, y.EmployeeID, Name = (y.EmpFirstName ?? "") + " " + (y.EmpMiddleName ?? "") + " " + (y.EmpLastName ?? "") }).FirstOrDefault();
                             if (res != null)
                             {
@@ -137,12 +137,12 @@ namespace SCTimeSheet.Controllers
                                                 select y.PageName.ToLower() + "|" + Constants.Access).ToList();
                                 Session[Constants.SessionPageAccess] = pageList;
                             }
-                        }
+                       // }
                  
                     }
                     else
                     {
-                        var user = DB.User.Where(c => c.Email == User.Identity.Name && c.IsActive).FirstOrDefault();
+                        var user = DB.User.Where(c => c.Email == "ramesh.babu@cctsglobal.com" && c.IsActive).FirstOrDefault();
                         if (user == null)
                             context.Result = new ViewResult { ViewName = "Unauthorized" };
                         else

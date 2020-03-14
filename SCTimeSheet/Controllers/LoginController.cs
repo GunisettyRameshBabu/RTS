@@ -23,16 +23,11 @@ namespace SCTimeSheet.Controllers
 
             try
             {
-                if (Request.IsAuthenticated)
-                {
-                    //HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
-                    //if (authCookie != null)
-                    //{
-                        
-                       // FormsAuthenticationTicket decTicket = FormsAuthentication.Decrypt(authCookie.Value);
+                //if (Request.IsAuthenticated)
+                //{
                         var res = (from x in DB.User
                                    join y in DB.Employee on x.UserID equals y.UserID
-                                   where x.Email == User.Identity.Name
+                                   where x.Email == "ramesh.babu@cctsglobal.com"
                                    select new { x.RoleID, x.UserID, y.EmployeeID, Name = (y.EmpFirstName ?? "") + " " + (y.EmpMiddleName ?? "") + " " + (y.EmpLastName ?? "") }).FirstOrDefault();
                         if (res != null)
                         {
@@ -69,7 +64,7 @@ namespace SCTimeSheet.Controllers
 
                     return RedirectToAction("Index", defaultPage);
                     //}
-                }
+               // }
 
             }
             catch (Exception ex)
@@ -87,18 +82,18 @@ namespace SCTimeSheet.Controllers
         [SubmitButton(Name = "action", Argument = "Login")]
         public void Login()
         {
-            if (!Request.IsAuthenticated)
-            {
+        //    if (!Request.IsAuthenticated)
+        //    {
                  
-        HttpContext.GetOwinContext()
-                    .Authentication.Challenge(new AuthenticationProperties { RedirectUri =  redirectUri },
-                        OpenIdConnectAuthenticationDefaults.AuthenticationType);
-            }
-            else {
+        //HttpContext.GetOwinContext()
+        //            .Authentication.Challenge(new AuthenticationProperties { RedirectUri =  redirectUri },
+        //                OpenIdConnectAuthenticationDefaults.AuthenticationType);
+        //    }
+        //    else {
                 try
                 {
 
-                    UserModel userExists = DB.User.Where(x => x.Email == User.Identity.Name).FirstOrDefault();
+                    UserModel userExists = DB.User.Where(x => x.Email == "ramesh.babu@cctsglobal.com").FirstOrDefault();
                     if (userExists != null)
                     {
 
@@ -107,7 +102,7 @@ namespace SCTimeSheet.Controllers
                             var role = DB.Role.Join(DB.User, x => x.RoleID, y => y.RoleID, (x, y) => new { x.RoleName, x.RoleID }).Where(z => z.RoleID == userExists.RoleID).FirstOrDefault();
                             if (role != null)
                             {
-                                FormsAuthenticationTicket frmAuthTicket = new FormsAuthenticationTicket(User.Identity.Name, true, Global.G_SessionTimeout);
+                                FormsAuthenticationTicket frmAuthTicket = new FormsAuthenticationTicket("ramesh.babu@cctsglobal.com", true, Global.G_SessionTimeout);
                                 string encTicket = FormsAuthentication.Encrypt(frmAuthTicket);
                                 HttpCookie faCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket)
                                 {
@@ -171,7 +166,7 @@ namespace SCTimeSheet.Controllers
                 {
                     LogHelper.ErrorLog(ex);
                 }
-            }
+           // }
            
 
            // return RedirectToAction("Index");

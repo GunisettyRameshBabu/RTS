@@ -33,7 +33,7 @@ namespace SCTimeSheet_DAL.Models
 
         [UIHint("RoleID")]
         [Display(Name = "Roles")]
-        public Int64 RoleID { get; set; }
+        public Int64 EmpRole { get; set; }
 
         public int IsRDProject { get; set; }
 
