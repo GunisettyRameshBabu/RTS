@@ -23,25 +23,30 @@ namespace SCTimeSheet.Controllers
 
             try
             {
-                //if (Request.IsAuthenticated)
-                //{
-                        var res = (from x in DB.User
-                                   join y in DB.Employee on x.UserID equals y.UserID
-                                   where x.Email == "ramesh.babu@cctsglobal.com"
-                                   select new { x.RoleID, x.UserID, y.EmployeeID, Name = (y.EmpFirstName ?? "") + " " + (y.EmpMiddleName ?? "") + " " + (y.EmpLastName ?? "") }).FirstOrDefault();
-                        if (res != null)
-                        {
-                            Session[Constants.SessionEmpID] = res.EmployeeID; //empdetails.empid
-                            Session[Constants.SessionEmpName] = res.Name;
+                if (Request.IsAuthenticated)
+                {
+                    //HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+                    //if (authCookie != null)
+                    //{
 
-                            Session[Constants.SessionUserID] = res.UserID;
-                            Session[Constants.SessionRoleID] = res.RoleID;
+                    // FormsAuthenticationTicket decTicket = FormsAuthentication.Decrypt(authCookie.Value);
+                    var res = (from x in DB.User
+                               join y in DB.Employee on x.UserID equals y.UserID
+                               where x.Email == User.Identity.Name
+                               select new { x.RoleID, x.UserID, y.EmployeeID, Name = (y.EmpFirstName ?? "") + " " + (y.EmpMiddleName ?? "") + " " + (y.EmpLastName ?? "") }).FirstOrDefault();
+                    if (res != null)
+                    {
+                        Session[Constants.SessionEmpID] = res.EmployeeID; //empdetails.empid
+                        Session[Constants.SessionEmpName] = res.Name;
+
+                        Session[Constants.SessionUserID] = res.UserID;
+                        Session[Constants.SessionRoleID] = res.RoleID;
 
                         var pageList = (from x in DB.PageMapping.Where(x => x.IsActive && x.RoleID == res.RoleID)
                                         join y in DB.Page on x.PageID equals y.PageID
                                         select y.PageName.ToLower() + "|" + Constants.Access).ToList();
                         Session[Constants.SessionPageAccess] = pageList;
-                        }
+                    }
 
                     string defaultPage = "NewEntry";
                     if ((long)Session[Constants.SessionRoleID] == Convert.ToInt64(ReadConfig.GetValue("RoleEmployee")))
@@ -64,7 +69,7 @@ namespace SCTimeSheet.Controllers
 
                     return RedirectToAction("Index", defaultPage);
                     //}
-               // }
+                }
 
             }
             catch (Exception ex)
@@ -82,18 +87,19 @@ namespace SCTimeSheet.Controllers
         [SubmitButton(Name = "action", Argument = "Login")]
         public void Login()
         {
-        //    if (!Request.IsAuthenticated)
-        //    {
-                 
-        //HttpContext.GetOwinContext()
-        //            .Authentication.Challenge(new AuthenticationProperties { RedirectUri =  redirectUri },
-        //                OpenIdConnectAuthenticationDefaults.AuthenticationType);
-        //    }
-        //    else {
+            if (!Request.IsAuthenticated)
+            {
+
+                HttpContext.GetOwinContext()
+                            .Authentication.Challenge(new AuthenticationProperties { RedirectUri = redirectUri },
+                                OpenIdConnectAuthenticationDefaults.AuthenticationType);
+            }
+            else
+            {
                 try
                 {
 
-                    UserModel userExists = DB.User.Where(x => x.Email == "ramesh.babu@cctsglobal.com").FirstOrDefault();
+                    UserModel userExists = DB.User.Where(x => x.Email == User.Identity.Name).FirstOrDefault();
                     if (userExists != null)
                     {
 
@@ -102,7 +108,7 @@ namespace SCTimeSheet.Controllers
                             var role = DB.Role.Join(DB.User, x => x.RoleID, y => y.RoleID, (x, y) => new { x.RoleName, x.RoleID }).Where(z => z.RoleID == userExists.RoleID).FirstOrDefault();
                             if (role != null)
                             {
-                                FormsAuthenticationTicket frmAuthTicket = new FormsAuthenticationTicket("ramesh.babu@cctsglobal.com", true, Global.G_SessionTimeout);
+                                FormsAuthenticationTicket frmAuthTicket = new FormsAuthenticationTicket(User.Identity.Name, true, Global.G_SessionTimeout);
                                 string encTicket = FormsAuthentication.Encrypt(frmAuthTicket);
                                 HttpCookie faCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket)
                                 {
@@ -120,7 +126,7 @@ namespace SCTimeSheet.Controllers
                                 // var empDetails = DB.Employee.Where(x => x.UserID == userDetails.UserID).FirstOrDefault(); //employee model
                                 var empDetails = (from x in DB.Employee
                                                   where x.UserID == userExists.UserID
-                                                  select new { x.EmployeeID, Name = (x.EmpFirstName ?? "") +  " " + (x.EmpMiddleName ?? "") + " " + (x.EmpLastName ?? "") }).FirstOrDefault();
+                                                  select new { x.EmployeeID, Name = (x.EmpFirstName ?? "") + " " + (x.EmpMiddleName ?? "") + " " + (x.EmpLastName ?? "") }).FirstOrDefault();
                                 if (empDetails != null)
                                 {
                                     Session[Constants.SessionEmpID] = empDetails.EmployeeID;
@@ -151,7 +157,7 @@ namespace SCTimeSheet.Controllers
                         else
                         {
                             ViewBag.ErrorMsg = ResourceMessage.NotActive;
-                           // return View("Index");
+                            // return View("Index");
                         }
                     }
                     else
@@ -166,10 +172,10 @@ namespace SCTimeSheet.Controllers
                 {
                     LogHelper.ErrorLog(ex);
                 }
-           // }
-           
+            }
 
-           // return RedirectToAction("Index");
+
+            // return RedirectToAction("Index");
         }
 
 

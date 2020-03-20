@@ -231,20 +231,30 @@
                                                                                                                                                                                            {
 
                                                                                                                                                                                                columns.Bound(p => p.EmpName).Width(250);
-                                                                                                                                                                                               columns.Bound(p => p.IsManager).Width(50).Template(@<text></text>).ClientTemplate("#if (data.IsManager == true) " +
+                                                                                                                                                                                               @*columns.Bound(p => p.IsManager).Width(50).Template(@<text></text>).ClientTemplate("#if (data.IsManager == true) " +
                                                                                                                                          "{# <input type='checkbox' checked disabled /> #}" +
-                                                                                                                                         "else {# <input type='checkbox'  disabled /> #}#");
-                                                                                                                                                                                                columns.Bound(p => p.InvPercentage).Width(100);
-                                                                                                                                                                                                columns.Bound(p => p.StartDate).Format("{0:dd MMM yyyy}").Width(150);
-                                                                                                                                                                                                columns.Bound(p => p.EndDate).Format("{0:dd MMM yyyy}").Width(150);
+                                                                                                                                         "else {# <input type='checkbox'  disabled /> #}#");*@
+                                                                                                                                                                                               columns.ForeignKey(p => p.IsManager, new List<SelectListItem>() {
+      new SelectListItem() {
+          Text = "Yes",
+          Value = "true"
+      },
+      new SelectListItem() {
+          Text = "No",
+          Value = "false"
+      },
+              }, "Value", "Text").Width(50);
+                                                                                                                                                                                               columns.Bound(p => p.InvPercentage).Width(100);
+                                                                                                                                                                                               columns.Bound(p => p.StartDate).Format("{0:dd MMM yyyy}").Width(150);
+                                                                                                                                                                                               columns.Bound(p => p.EndDate).Format("{0:dd MMM yyyy}").Width(150);
                                                                                                                                                                                                columns.ForeignKey(p => p.EmpRole, (System.Collections.IEnumerable)ViewData["RoleList"], "RoleID", "RoleName").Width(150).Hidden(Model.IsRDProject != 1).Editable("empRoleEditable");
-                                                                                                                                                                                     columns.Template(p => "EmpRoleReadOnly").Width(150).Hidden(Model.IsRDProject == 1).ClientTemplate("").Title("Roles");
-                                                                                                                                                                                                    columns.Command(command =>
-                                                                                                                                                                                                {
-                                                                                                                                                                                                     command.Custom("Delete").Visible("deleteVisible").Click("deleteEmp");
-                                                                                                                                                                                                 }).Width(50);
+                                                                                                                                                                                               columns.Template(p => "EmpRoleReadOnly").Width(150).Hidden(Model.IsRDProject == 1).ClientTemplate("").Title("Roles");
+                                                                                                                                                                                               columns.Command(command =>
+                                                                                                                                                                                               {
+                                                                                                                                                                                                   command.Custom("Delete").Visible("deleteVisible").Click("deleteEmp");
+                                                                                                                                                                                               }).Width(50);
 
-                                                                                                                                                                                                })
+                                                                                                                                                                                           })
 
 
                                                                                                   .Sortable(x => x.SortMode(GridSortMode.SingleColumn).AllowUnsort(false))
@@ -348,6 +358,47 @@
                 datepicker.value($("#txtstartdate").val());
             }
         }
+        errMessage = '';
+        if ($("#txtenddate").val() != '') {
+            let endDate = new Date($("#txtenddate").val());
+            let startDate = new Date($("#txtstartdate").val());
+            projectMemberGrid = $("#projectMemberList").data("kendoGrid");
+            var data = projectMemberGrid.dataSource.data();
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].EndDate > endDate) {
+                    let dataItem = projectMemberGrid.dataItem($("tr[data-uid='" + data[i].uid + "']"));
+                    dataItem.set("EndDate", endDate);
+                }
+                if (endDate < data[i].StartDate) {
+                    let dataItem = projectMemberGrid.dataItem($("tr[data-uid='" + data[i].uid + "']"));
+                    dataItem.set("StartDate", endDate);
+                    if (!errMessage.includes(data[i].EmpName + " Member Start Date can not be earlier than the Project End date \n")) {
+                        errMessage = errMessage + data[i].EmpName + " Member Start Date can not be earlier than the Project End date \n";
+                    }
+                }
+
+                if (startDate > data[i].StartDate) {
+                    let dataItem = projectMemberGrid.dataItem($("tr[data-uid='" + data[i].uid + "']"));
+                    dataItem.set("StartDate", startDate);
+                    if (!errMessage.includes(data[i].EmpName + " Member Start Date can not be earlier than the Project End date \n")) {
+                        errMessage = errMessage + data[i].EmpName + " Member Start Date can not be earlier than the Project End date \n";
+                    }
+                }
+
+                if (data[i].StartDate > data[i].EndDate) {
+                    let dataItem = projectMemberGrid.dataItem($("tr[data-uid='" + data[i].uid + "']"));
+                    dataItem.set("EndDate", data[i].StartDate);
+                    if (!errMessage.includes(data[i].EmpName + " Member Start Date can not be earlier than the Project End date \n")) {
+                        errMessage = errMessage + data[i].EmpName + " Member Start Date can not be earlier than the Project End date \n";
+                    }
+                }
+            }
+        }
+
+        if (errMessage != '') {
+            alert(errMessage);
+        }
+
     }
     function SetProjectStartDate() {
         var todayDate = kendo.toString(kendo.parseDate(new Date()), 'dd MMM yyyy');
@@ -406,11 +457,13 @@
 
 
     function GetProjectStartDate() {
+        debugger;
         const startDate = new Date($('#txtstartdate').val());
         $('#StartDate').val(startDate);
         grid = $("#projectMemberList").data("kendoGrid");
         dataItem = grid.dataItem($("tr.k-grid-edit-row"));
-        dataItem.set("StartDate", startDate);
+        let joinDate = new Date(dataItem.JoinDate);
+        dataItem.set("StartDate", startDate < joinDate ? joinDate : startDate);
         onMemberStartDateChange();
     }
 
@@ -458,6 +511,20 @@
         }
         if (errMessage != '') {
             alert(errMessage);
+            return false;
+        }
+
+        for (var i = 0; i < data.length; i++) {
+            let startDate = new Date(data[i].StartDate);
+            let endDate = new Date(data[i].EndDate);
+            if (projectStartDate > startDate || endDate > projectEndDate || endDate < startDate) {
+                
+                errMessage = errMessage + "\n" + data[i].EmpName + " start date and end date should be within project start date and end date, please correct accordingly";
+            }
+
+        }
+        if (errMessage != '') {
+            alert(errMessage);
         }
         if (submit && errMessage == '') {
             let items = [];
@@ -469,6 +536,7 @@
                     url: '@Url.Action("checkInvolvementPercentage", "ProjectMaster")',
                     success: function (data) {
                         console.log(data);
+                        console.log(dirty);
                         for (var i = 0; i < data.length; i++) {
                             if ((dirty[i].InvPercentage + (data[i].currentInvolvement == null ? 0 : data[i].currentInvolvement)) > data[i].totalInvolvement) {
                                 errMessage = errMessage + "Employee " + dirty[i].EmpName + " has exceeded the maximum allocation , current allocation is " + data[i].currentInvolvement + " , maximum allocation is " + data[i].totalInvolvement + " and Available allocation is " + (data[i].totalInvolvement - (data[i].currentInvolvement == null ? 0 : data[i].currentInvolvement)) + " \n \n";
@@ -480,7 +548,7 @@
                                     InvPercentage: dirty[i].InvPercentage,
                                     StartDate: dirty[i].StartDate,
                                     EndDate: dirty[i].EndDate,
-                                    RoleID: dirty[i].RoleID,
+                                    EmpRole: dirty[i].EmpRole,
                                     ProjectId: '@Model.ProjectID',
                                     IsRDProject: '@Model.IsRDProject'
                                 });
@@ -529,7 +597,6 @@
     }
 
     function onMemberStartDateOpen(e) {
-        debugger;
         grid = $("#projectMemberList").data("kendoGrid");
         dataItem = grid.dataItem($("tr.k-grid-edit-row"));
         let joinDate = new Date(dataItem.JoinDate);
@@ -537,6 +604,8 @@
         var datepicker = $("#StartDate").data("kendoDatePicker");
         if (joinDate >= selectedDate) {
             datepicker.min(joinDate);
+           // datepicker.value(joinDate);
+            onMemberStartDateChange();
         } else {
             if ($("#txtstartdate").val() != '') {
                 datepicker.min(new Date($('#txtstartdate').val()));
@@ -560,11 +629,13 @@
     }
 
     function onMemberStartDateChange(e) {
+        debugger;
         let selectedDate = new Date($('#StartDate').val());
         let errMessage = '';
         grid = $("#projectMemberList").data("kendoGrid");
         dataItem = grid.dataItem($("tr.k-grid-edit-row"));
         let joinDate = new Date(dataItem.JoinDate);
+        let endDate = new Date(dataItem.EndDate);
 
         if (joinDate > selectedDate) {
             let dateFormatted = joinDate.getDate() + "-"
@@ -576,6 +647,10 @@
 
             datepicker.min(joinDate);
 
+        }
+
+        if (selectedDate > endDate) {
+            errMessage = errMessage + "\n\nEmployee " + dataItem.EmpName + " end date is earlier than start date";
         }
 
         if (errMessage != '') {

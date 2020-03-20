@@ -38,7 +38,7 @@ namespace SCTimeSheet.Models
 
         [UIHint("ProjectMemberRole")]
         [Display(Name ="Roles")]
-        public long? EmpRole { get; set; }
+        public long EmpRole { get; set; }
 
         public bool IsNew { get; set; }
 

@@ -405,7 +405,7 @@ namespace SCTimeSheet.Controllers
                     }
                     else if (Models.Common.CheckDateRange(item.EndDate.Value, Convert.ToDateTime(month1), lastDate3))
                     {
-                        if (!Models.Common.CheckIfNotMonthDateDate(Convert.ToDateTime(month1), Convert.ToDateTime(month2), Convert.ToDateTime(month3), item.StartDate.Value) || (item.EndDate <= lastDate3 && !Models.Common.CheckIfNotMonthDateDate(lastDate1, lastDate2, lastDate3, item.EndDate.Value)))
+                        if ((item.StartDate.Value >= Convert.ToDateTime(month1) && !Models.Common.CheckIfNotMonthDateDate(Convert.ToDateTime(month1), Convert.ToDateTime(month2), Convert.ToDateTime(month3), item.StartDate.Value)) || (item.EndDate <= lastDate3 && !Models.Common.CheckIfNotMonthDateDate(lastDate1, lastDate2, lastDate3, item.EndDate.Value)))
                         {
                             model.ShowWarning = true;
                         }

@@ -262,34 +262,34 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/20/2019 04:17:46</publishTime>
     </File>
     <File Include="bin/SCTimeSheet.dll">
-      <publishTime>03/14/2020 23:08:34</publishTime>
+      <publishTime>03/20/2020 13:59:00</publishTime>
     </File>
     <File Include="bin/SCTimeSheet.pdb">
-      <publishTime>03/14/2020 23:08:34</publishTime>
+      <publishTime>03/20/2020 13:59:00</publishTime>
     </File>
     <File Include="bin/SCTimeSheet_DAL.dll">
-      <publishTime>03/14/2020 22:50:33</publishTime>
+      <publishTime>03/18/2020 14:21:31</publishTime>
     </File>
     <File Include="bin/SCTimeSheet_DAL.dll.config">
       <publishTime>10/13/2019 21:03:30</publishTime>
     </File>
     <File Include="bin/SCTimeSheet_DAL.pdb">
-      <publishTime>03/14/2020 22:50:33</publishTime>
+      <publishTime>03/18/2020 14:21:31</publishTime>
     </File>
     <File Include="bin/SCTimeSheet_HELPER.dll">
-      <publishTime>03/14/2020 22:50:34</publishTime>
+      <publishTime>03/18/2020 14:21:32</publishTime>
     </File>
     <File Include="bin/SCTimeSheet_HELPER.dll.config">
       <publishTime>10/13/2019 21:03:34</publishTime>
     </File>
     <File Include="bin/SCTimeSheet_HELPER.pdb">
-      <publishTime>03/14/2020 22:50:34</publishTime>
+      <publishTime>03/18/2020 14:21:32</publishTime>
     </File>
     <File Include="bin/SCTimeSheet_UTIL.dll">
-      <publishTime>03/10/2020 09:20:34</publishTime>
+      <publishTime>03/18/2020 14:21:29</publishTime>
     </File>
     <File Include="bin/SCTimeSheet_UTIL.pdb">
-      <publishTime>03/10/2020 09:20:34</publishTime>
+      <publishTime>03/18/2020 14:21:29</publishTime>
     </File>
     <File Include="bin/sk-SK/Kendo.Mvc.resources.dll">
       <publishTime>02/20/2019 04:17:46</publishTime>
@@ -8563,10 +8563,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/29/2019 19:24:21</publishTime>
     </File>
     <File Include="Views/ProjectMaster/Index.cshtml">
-      <publishTime>03/14/2020 21:14:55</publishTime>
+      <publishTime>03/20/2020 13:55:44</publishTime>
     </File>
     <File Include="Views/ProjectMaster/ProjectEdit.cshtml">
-      <publishTime>03/14/2020 21:16:30</publishTime>
+      <publishTime>03/20/2020 13:48:40</publishTime>
     </File>
     <File Include="Views/Report/Index.cshtml">
       <publishTime>11/26/2019 07:18:14</publishTime>
@@ -8593,7 +8593,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/13/2019 21:03:28</publishTime>
     </File>
     <File Include="Views/Shared/EditorTemplates/IsManager.cshtml">
-      <publishTime>03/06/2020 09:09:56</publishTime>
+      <publishTime>03/17/2020 21:50:09</publishTime>
     </File>
     <File Include="Views/Shared/EditorTemplates/NumericEditor.cshtml">
       <publishTime>10/13/2019 21:03:28</publishTime>
