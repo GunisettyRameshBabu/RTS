@@ -27,23 +27,23 @@ namespace SCTimeSheet.Controllers
             quarter = quarter ?? GetQuarter();
             long empId = Convert.ToInt64(Session[Constants.SessionEmpID]);
             ViewBag.QuarterList = DropdownList.PreviousAndQuarterList(empId, true);
-            if (TempData["EmailNotificationErrors"] != null)
-            {
-                var emailErrors = (TempData["EmailNotificationErrors"] as List<string>);
-                if (emailErrors.Any())
-                {
-                    ViewBag.EmailNotificationErrors = "Unable to send notification email for the below projects line" + string.Join("lineline", emailErrors);
-                }
-                else
-                {
-                    ViewBag.EmailNotificationErrors = "";
-                }
+            //if (TempData["EmailNotificationErrors"] != null)
+            //{
+            //    var emailErrors = (TempData["EmailNotificationErrors"] as List<string>);
+            //    if (emailErrors.Any())
+            //    {
+            //        ViewBag.EmailNotificationErrors = "Unable to send notification email for the below projects line" + string.Join("lineline", emailErrors);
+            //    }
+            //    else
+            //    {
+            //        ViewBag.EmailNotificationErrors = "";
+            //    }
 
-            }
-            else
-            {
-                ViewBag.EmailNotificationErrors = "";
-            }
+            //}
+            //else
+            //{
+            //    ViewBag.EmailNotificationErrors = "";
+            //}
             return View(BindData(quarter));
 
         }
@@ -104,7 +104,7 @@ namespace SCTimeSheet.Controllers
 
                 if (model != null)
                 {
-
+                    int roleId = Convert.ToInt32(Session[Constants.SessionRoleID]);
                     foreach (BoxItems item in model.Items.Where(x => x.IsEdit1 || x.IsEdit2 || x.IsEdit3))
                     {
 
@@ -123,7 +123,7 @@ namespace SCTimeSheet.Controllers
                             {
                                 bool isEditable = false;
                                 NewEntryModel newEntryModel = new NewEntryModel();
-                                int roleId = Convert.ToInt32(Session[Constants.SessionRoleID]);
+                                
                                 newEntryModel.ApproveRejectStatus = roleId == 1 ? "A" : DB.ProjectEmployee.FirstOrDefault(x => x.EmployeeID == _empId && x.ProjectID == item.ProjectID).CheckRole == true ? "A" : null;
                                 if (month == months[0])
                                 {
@@ -233,28 +233,36 @@ namespace SCTimeSheet.Controllers
                                 {
                                     SubmittedMonths.Add(model.Month3);
                                 }
-
-                                string projectName = DB.ProjectMaster.FirstOrDefault(x => x.ProjectID == item.ProjectID).ProjectName;
-                                var projectManagers = (from x in DB.ProjectEmployee.Where(x => x.ProjectID == item.ProjectID && x.EmployeeID != _empId && x.CheckRole)
-                                                                 join y in DB.Employee on x.EmployeeID equals y.EmployeeID
-                                                                 join z in DB.User on y.UserID equals z.UserID
-                                                                 select new { z.Email, y.EmpFirstName, y.EmpLastName, y.EmpMiddleName }).ToList<dynamic>();
-                                if (SubmittedMonths.Any() && projectManagers.Any())
+                                if (roleId != 1)
                                 {
-                                    bool emailResult = await Email.SendTimeSubmissionEmail(new TimeSheetSubmissionEmailModel()
+                                    bool isProjectManager = DB.ProjectEmployee.FirstOrDefault(x => x.ProjectID == item.ProjectID && x.EmployeeID == _empId).CheckRole;
+                                    if (!isProjectManager)
                                     {
-                                        EmpName = _empName,
-                                        ManagerInfo = projectManagers,
-                                        ProjectName = projectName,
-                                        SubmissionDates = string.Join(", ", SubmittedMonths)
+                                        string projectName = DB.ProjectMaster.FirstOrDefault(x => x.ProjectID == item.ProjectID).ProjectName;
+                                        var projectManagers = (from x in DB.ProjectEmployee.Where(x => x.ProjectID == item.ProjectID && x.EmployeeID != _empId && x.CheckRole)
+                                                               join y in DB.Employee on x.EmployeeID equals y.EmployeeID
+                                                               join z in DB.User on y.UserID equals z.UserID
+                                                               select new { z.Email, y.EmpFirstName, y.EmpLastName, y.EmpMiddleName }).ToList<dynamic>();
+                                        if (SubmittedMonths.Any() && projectManagers.Any())
+                                        {
+                                            bool emailResult = await Email.SendTimeSubmissionEmail(new TimeSheetSubmissionEmailModel()
+                                            {
+                                                EmpName = _empName,
+                                                ManagerInfo = projectManagers,
+                                                ProjectName = projectName,
+                                                SubmissionDates = string.Join(", ", SubmittedMonths)
 
-                                    });
-                                    if (!emailResult)
-                                    {
-                                        emailStatus.Add(projectName);
+                                            });
+                                            if (!emailResult)
+                                            {
+                                                emailStatus.Add(projectName);
+                                            }
+                                        }
                                     }
+
                                 }
-                                
+
+
                             }
                         }
                     }
@@ -265,7 +273,7 @@ namespace SCTimeSheet.Controllers
                 TempData["Error"] = ex.ToString();
                 LogHelper.ErrorLog(ex);
             }
-            TempData["EmailNotificationErrors"] = emailStatus;
+           // TempData["EmailNotificationErrors"] = emailStatus;
             return RedirectToAction("Index");
         }
 

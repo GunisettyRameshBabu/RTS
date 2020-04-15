@@ -518,13 +518,13 @@
                 alert(ErrorMessage);
 
             }
-            var EmailNotificationErrors = '@ViewBag.EmailNotificationErrors';
+            @*var EmailNotificationErrors = '@ViewBag.EmailNotificationErrors';
             if (EmailNotificationErrors != '') {
                 pattern = "line";
                 EmailNotificationErrors = EmailNotificationErrors.replace(new RegExp(pattern, "g"), '\n')
                 alert(EmailNotificationErrors);
 
-            }
+            }*@
 
             var isEdit = '@ViewBag.IsEditable';
             debugger;

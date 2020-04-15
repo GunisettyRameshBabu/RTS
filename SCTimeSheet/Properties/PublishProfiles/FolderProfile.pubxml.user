@@ -262,10 +262,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/20/2019 04:17:46</publishTime>
     </File>
     <File Include="bin/SCTimeSheet.dll">
-      <publishTime>03/20/2020 13:59:00</publishTime>
+      <publishTime>03/24/2020 19:26:45</publishTime>
     </File>
     <File Include="bin/SCTimeSheet.pdb">
-      <publishTime>03/20/2020 13:59:00</publishTime>
+      <publishTime>03/24/2020 19:26:45</publishTime>
     </File>
     <File Include="bin/SCTimeSheet_DAL.dll">
       <publishTime>03/18/2020 14:21:31</publishTime>
@@ -919,7 +919,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/13/2019 21:00:46</publishTime>
     </File>
     <File Include="Contents/css/style.css">
-      <publishTime>03/02/2020 01:02:52</publishTime>
+      <publishTime>02/03/2020 01:02:52</publishTime>
     </File>
     <File Include="Contents/fonts/glyphicons-halflings-regular.eot">
       <publishTime>10/13/2019 21:00:46</publishTime>
@@ -2098,190 +2098,190 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/13/2019 21:00:58</publishTime>
     </File>
     <File Include="Contents/kendo/Office365/slider-h.gif">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Office365/slider-v.gif">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Office365/sprite.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Office365/sprite_2x.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Office365/sprite_kpi.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Office365/sprite_kpi_2x.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Silver/editor.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Silver/imagebrowser.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Silver/indeterminate.gif">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Silver/loading-image.gif">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Silver/loading.gif">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Silver/loading_2x.gif">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Silver/markers.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Silver/markers_2x.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Silver/slider-h.gif">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Silver/slider-v.gif">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Silver/sprite.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Silver/sprite_2x.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Silver/sprite_kpi.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Silver/sprite_kpi_2x.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/brushed-metal.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/dots1.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/dots10.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/dots11.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/dots12.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/dots13.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/dots2.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/dots3.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/dots4.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/dots5.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/dots6.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/dots7.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/dots8.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/dots9.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/glass-lighter.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/glass.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/highlight.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/hsv-gradient.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/hue.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/leather1.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/leather2.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/noise.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/stripe1.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/stripe2.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/stripe3.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/stripe4.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/stripe5.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/stripe6.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/transparency.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/textures/transtexture.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Uniform/editor.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Uniform/imagebrowser.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Uniform/indeterminate.gif">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Uniform/loading-image.gif">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Uniform/loading.gif">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Uniform/loading_2x.gif">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Uniform/markers.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Uniform/markers_2x.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Uniform/slider-h.gif">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Uniform/slider-v.gif">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Uniform/sprite.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Uniform/sprite_2x.png">
-      <publishTime>10/13/2019 21:01:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Contents/kendo/Uniform/sprite_kpi.png">
       <publishTime>10/13/2019 21:01:02</publishTime>
@@ -4447,22 +4447,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/13/2019 21:02:58</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.gsw-CH.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.gsw-CH.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.gsw-FR.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.gsw-FR.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.gsw-LI.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.gsw-LI.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.gsw.min.js">
       <publishTime>10/13/2019 21:02:58</publishTime>
@@ -4471,178 +4471,178 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/13/2019 21:02:58</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.gu-IN.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.gu-IN.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.gu.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.gu.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.guz-KE.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.guz-KE.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.guz.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.guz.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.gv-IM.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.gv-IM.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.gv.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.gv.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.ha-Latn-GH.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.ha-Latn-GH.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.ha-Latn-NE.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.ha-Latn-NE.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.ha-Latn-NG.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.ha-Latn-NG.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.ha-Latn.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.ha-Latn.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.ha.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.ha.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.haw-US.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.haw-US.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.haw.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.haw.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.he-IL.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.he-IL.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.he.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.he.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.hi-IN.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.hi-IN.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.hi.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.hi.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.hr-BA.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.hr-BA.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.hr-HR.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.hr-HR.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.hr.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.hr.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.hsb-DE.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.hsb-DE.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.hsb.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.hsb.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.hu-HU.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.hu-HU.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.hu.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.hu.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.hy-AM.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.hy-AM.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.hy.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.hy.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.ia-001.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.ia-001.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.ia-FR.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.ia-FR.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.ia.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.ia.min.js.map">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.ibb-NG.min.js">
       <publishTime>10/13/2019 21:03:02</publishTime>
@@ -4651,7 +4651,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/13/2019 21:03:02</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.ibb.min.js">
-      <publishTime>10/13/2019 21:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/kendo/cultures/kendo.culture.ibb.min.js.map">
       <publishTime>10/13/2019 21:03:02</publishTime>
@@ -8545,13 +8545,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/13/2019 21:03:28</publishTime>
     </File>
     <File Include="Views/NewEntry/Index.cshtml">
-      <publishTime>03/09/2020 21:07:54</publishTime>
+      <publishTime>03/24/2020 11:00:05</publishTime>
     </File>
     <File Include="Views/NewEntryOnBehalf/Index.cshtml">
       <publishTime>09/04/2019 23:37:45</publishTime>
     </File>
     <File Include="Views/NewEntryOnBehalfOne/Index.cshtml">
-      <publishTime>03/09/2020 21:08:07</publishTime>
+      <publishTime>03/24/2020 10:44:16</publishTime>
     </File>
     <File Include="Views/ProjectEmployee/Index.cshtml">
       <publishTime>09/04/2019 23:37:45</publishTime>
@@ -8572,13 +8572,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/26/2019 07:18:14</publishTime>
     </File>
     <File Include="Views/SendEmail/Index.cshtml">
-      <publishTime>03/02/2020 01:03:02</publishTime>
+      <publishTime>02/03/2020 01:03:02</publishTime>
     </File>
     <File Include="Views/Settings/Index.cshtml">
       <publishTime>10/13/2019 21:03:28</publishTime>
     </File>
     <File Include="Views/Shared/EditorTemplates/CustomStartDate.cshtml">
-      <publishTime>03/02/2020 23:25:06</publishTime>
+      <publishTime>02/03/2020 23:25:06</publishTime>
     </File>
     <File Include="Views/Shared/EditorTemplates/EndDateEditor.cshtml">
       <publishTime>10/13/2019 21:03:28</publishTime>
@@ -8599,13 +8599,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/13/2019 21:03:28</publishTime>
     </File>
     <File Include="Views/Shared/EditorTemplates/ProjectMemberEndDate.cshtml">
-      <publishTime>03/13/2020 15:03:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Views/Shared/EditorTemplates/ProjectMemberInvPercentage.cshtml">
-      <publishTime>03/02/2020 00:02:36</publishTime>
+      <publishTime>02/03/2020 00:02:36</publishTime>
     </File>
     <File Include="Views/Shared/EditorTemplates/ProjectMemberRole.cshtml">
-      <publishTime>03/02/2020 00:57:48</publishTime>
+      <publishTime>02/03/2020 00:57:48</publishTime>
     </File>
     <File Include="Views/Shared/EditorTemplates/ProjectMemberStartDate.cshtml">
       <publishTime>03/13/2020 11:53:01</publishTime>
@@ -8620,7 +8620,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/13/2019 21:03:28</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>03/01/2020 22:21:16</publishTime>
+      <publishTime>01/03/2020 22:21:16</publishTime>
     </File>
     <File Include="Views/TimesheetApproval/Index.cshtml">
       <publishTime>10/13/2019 21:03:28</publishTime>

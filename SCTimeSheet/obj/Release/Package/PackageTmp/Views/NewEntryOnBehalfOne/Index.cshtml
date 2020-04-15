@@ -687,11 +687,11 @@
         })
             .done(function (data) {
                 //do something with the response if necessary
-                if (data.emailStatus.length > 0) {
-                    let projects = data.emailStatus.map(x => x.Key).toString();
-                    projects = projects.replace(new RegExp(",", "g"), '\n')
-                    alert("Unable to send notification email for the below Employees \n" + projects );
-                }
+                //if (data.emailStatus.length > 0) {
+                //    let projects = data.emailStatus.map(x => x.Key).toString();
+                //    projects = projects.replace(new RegExp(",", "g"), '\n')
+                //    alert("Unable to send notification email for the below Employees \n" + projects );
+                //}
                 $.notify("Timesheet updated successfully", "success");
                 $("#grid").data().kendoGrid.dataSource.read();
                 $("#update").hide();
@@ -711,11 +711,11 @@
             contentType: 'application/json; charset=utf-8'
         })
             .done(function (data) {
-                if (data.emailStatus.length > 0) {
-                    let projects = data.emailStatus.map(x => x.Value).toString();
-                    projects = projects.replace(new RegExp(",", "g"), '\n')
-                    alert("Unable to send notification email for the below projects \n" + projects);
-                }
+                //if (data.emailStatus.length > 0) {
+                //    let projects = data.emailStatus.map(x => x.Value).toString();
+                //    projects = projects.replace(new RegExp(",", "g"), '\n')
+                //    alert("Unable to send notification email for the below projects \n" + projects);
+                //}
                 $.notify("Timesheet updated successfully", "success");
                 $("#empGrid").data().kendoGrid.dataSource.read();
                 $("#empupdate").hide();

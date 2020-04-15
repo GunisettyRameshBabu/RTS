@@ -475,30 +475,32 @@ namespace SCTimeSheet.Controllers
                                 {
                                     SubmittedMonths.Add(product.Month3 + " " + Convert.ToDateTime(month3).Year);
                                 }
+                                //bool isProjectManager = DB.ProjectEmployee.FirstOrDefault(x => x.ProjectID == product.ProjectID && x.EmployeeID == product.EmployeeID).CheckRole;
+                                //if (!isProjectManager)
+                                //{
+                                //    string projectName = DB.ProjectMaster.FirstOrDefault(x => x.ProjectID == product.ProjectID).ProjectName;
+                                //    var projectManagers = (from x in DB.ProjectEmployee.Where(x => x.ProjectID == product.ProjectID && x.EmployeeID != product.EmployeeID && x.CheckRole)
+                                //                           join y in DB.Employee on x.EmployeeID equals y.EmployeeID
+                                //                           join z in DB.User on y.UserID equals z.UserID
+                                //                           select new { z.Email, y.EmpFirstName, y.EmpLastName, y.EmpMiddleName }).ToList<dynamic>();
+                                //    if (SubmittedMonths.Any() && projectManagers.Any())
+                                //    {
+                                //        var emp = DB.Employee.FirstOrDefault(x => x.EmployeeID == product.EmployeeID);
+                                //        var emailObj = new TimeSheetSubmissionEmailModel()
+                                //        {
+                                //            EmpName = Models.Common.GetName(emp.EmpFirstName, emp.EmpLastName, emp.EmpMiddleName),
+                                //            ManagerInfo = projectManagers,
+                                //            ProjectName = projectName,
+                                //            SubmissionDates = string.Join(", ", SubmittedMonths)
 
-                                string projectName = DB.ProjectMaster.FirstOrDefault(x => x.ProjectID == product.ProjectID).ProjectName;
-                                var projectManagers = (from x in DB.ProjectEmployee.Where(x => x.ProjectID == product.ProjectID && x.EmployeeID != product.EmployeeID && x.CheckRole)
-                                                       join y in DB.Employee on x.EmployeeID equals y.EmployeeID
-                                                       join z in DB.User on y.UserID equals z.UserID
-                                                       select new { z.Email, y.EmpFirstName, y.EmpLastName, y.EmpMiddleName }).ToList<dynamic>();
-                                if (SubmittedMonths.Any() && projectManagers.Any())
-                                {
-                                    var emp = DB.Employee.FirstOrDefault(x => x.EmployeeID == product.EmployeeID);
-                                    var emailObj = new TimeSheetSubmissionEmailModel()
-                                    {
-                                        EmpName = Models.Common.GetName(emp.EmpFirstName, emp.EmpLastName, emp.EmpMiddleName),
-                                        ManagerInfo = projectManagers,
-                                        ProjectName = projectName,
-                                        SubmissionDates = string.Join(", ", SubmittedMonths)
-
-                                    };
-                                    bool emailResult = await Email.SendTimeSubmissionEmail(emailObj);
-                                    if (!emailResult)
-                                    {
-                                        emailStatus.Add(new KeyValuePair<string, string>(emailObj.EmpName, projectName));
-                                    }
-                                }
-
+                                //        };
+                                //        bool emailResult = await Email.SendTimeSubmissionEmail(emailObj);
+                                //        if (!emailResult)
+                                //        {
+                                //            emailStatus.Add(new KeyValuePair<string, string>(emailObj.EmpName, projectName));
+                                //        }
+                                //    }
+                                //}
                             }
                         }
 
